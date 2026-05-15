@@ -1,0 +1,1623 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.4/staging' branch; Version is '6000.4.6f1 (0b051c2e5d54) revision 722204'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) Core' Language: 'da' Physical Memory: 16107 MB
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo" at "2026-05-15T21:53:13.2490654Z"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-05-15T21:53:13Z
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.4.6f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+C:/Users/ChrHo/Unity/Randomation
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+53077
+-licensingIpc
+LicenseClient-ChrHo
+-force-d3d12
+-job-worker-count
+5
+-background-job-worker-count
+8
+-gc-helper-count
+1
+-name
+AssetImport
+Successfully changed project path to: C:/Users/ChrHo/Unity/Randomation
+C:/Users/ChrHo/Unity/Randomation
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Player connection [15856]  Target information:
+
+Player connection [15856]  * "[IP] 10.105.26.143 [Port] 0 [Flags] 2 [Guid] 561539570 [EditorId] 561539570 [Version] 1048832 [Id] WindowsEditor(7,CLenovo) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [15856] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [15856] Host joined alternative multi-casting on [225.0.0.222:34997]...
+JobSystem: Creating JobQueue using job-worker-count value 5
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Initialize engine version: 6000.4.6f1 (0b051c2e5d54)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/ChrHo/Unity/Randomation/Assets
+Forcing GfxDevice: Direct3D 12
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+d3d12: failed to query info queue interface (0x80004002).
+Direct3D:
+    Version:         Direct3D 12 [level 12.2]
+    Renderer:        NVIDIA GeForce RTX 3050 6GB Laptop GPU (ID=0x25ac)
+    Vendor:          NVIDIA
+    VRAM:            6001 MB
+    App VRAM Budget: 5233 MB
+    Driver:          32.0.15.9597
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56960
+CodeReloadManager initialized
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.005934 seconds.
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.18.1'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-ChrHo"
+[Licensing::IpcConnector] LicenseClient-ChrHo channel disconnected successfully.
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo-6000.4.6" at "2026-05-15T21:53:19.5510446Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 9740, path: "C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.1+9fbee8e
+  Session Id:              57fe3a45df3447b388f3bf1421552209
+  Correlation Id:          749db7514206b4487777e86b791fe774
+  External correlation Id: 8594732286533155585
+  Machine Id:              wugyHCEIeJbQTNWWa7btAHWNNKM=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-ChrHo-6000.4.6" (connect: 0.00s, validation: 0.03s, handshake: 0.02s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo-6000.4.6-notifications" at "2026-05-15T21:53:19.6063647Z"
+[Licensing::Module] Licensing Background thread has ended after 6.36s
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.087 seconds
+Domain Reload Profiling: 3420ms
+	BeginReloadAssembly (1347ms)
+	RebuildCommonClasses (160ms)
+	RebuildNativeTypeToScriptingClass (45ms)
+	initialDomainReloadingComplete (249ms)
+	LoadAllAssembliesAndSetupDomain (527ms)
+		LoadAssemblies (1324ms)
+		AnalyzeDomain (505ms)
+			TypeCache.Refresh (502ms)
+				TypeCache.ScanAssembly (460ms)
+	FinalizeReload (1091ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (114ms)
+			BeforeProcessingInitializeOnLoad (300ms)
+			ProcessInitializeOnLoadAttributes (312ms)
+			ProcessInitializeOnLoadMethodAttributes (213ms)
+========================================================================
+Worker process is ready to serve import requests
+Import Worker Mode flag is 0x00
+Begin MonoManager ReloadAssembly
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 5772769336799-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+Assembly Assembly-CSharp-Editor-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-Editor.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll not valid. Loading of assembly skipped.
+Assembly TestNewCustomAssembly.dll at Library/ScriptAssemblies/TestNewCustomAssembly.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Editor.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.TextMeshPro.Editor.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshPro.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.TextMeshPro.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshPro.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.UI.Common.Tests.dll at Library/ScriptAssemblies/UnityEditor.UI.Common.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.UI.EditorTests.dll at Library/ScriptAssemblies/UnityEditor.UI.EditorTests.dll not valid. Loading of assembly skipped.
+Assembly UnityEngine.UI.Tests.dll at Library/ScriptAssemblies/UnityEngine.UI.Tests.dll not valid. Loading of assembly skipped.
+Native extension for WindowsStandalone target not found
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.009 seconds
+Domain Reload Profiling: 2461ms
+	BeginReloadAssembly (740ms)
+		DisableScriptedObjects (25ms)
+		CreateAndSetChildDomain (91ms)
+	RebuildCommonClasses (114ms)
+	RebuildNativeTypeToScriptingClass (29ms)
+	initialDomainReloadingComplete (154ms)
+	LoadAllAssembliesAndSetupDomain (411ms)
+		LoadAssemblies (683ms)
+		AnalyzeDomain (96ms)
+			TypeCache.Refresh (65ms)
+				TypeCache.ScanAssembly (48ms)
+			BuildScriptInfoCaches (21ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (1014ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			BeforeProcessingInitializeOnLoad (260ms)
+			ProcessInitializeOnLoadAttributes (245ms)
+			ProcessInitializeOnLoadMethodAttributes (111ms)
+			AfterProcessingInitializeOnLoad (20ms)
+		AwakeInstancesAfterBackupRestoration (28ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 947 unused Assets / (60.8 KB). Loaded Objects now: 1554.
+Memory consumption went from 73.2 MB to 73.2 MB.
+Total: 8.608600 ms (FindLiveObjects: 0.253200 ms CreateObjectMapping: 0.083400 ms MarkObjects: 7.760100 ms  DeleteObjects: 0.507800 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 104149.493499 seconds.
+  path: Assets/Audio/Mixers/MasterMixer.mixer
+  importAddress: Guid(c5f923143ad9e1c418a1d20196290002) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Mixers/MasterMixer.mixer using Guid(c5f923143ad9e1c418a1d20196290002) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '9436cf955f45b169fa1e1fd09cfdfe94') in 0.3823492 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7010998191aa4bc060d13ffa0d153fec DependenciesID=699c470d506a602a874716325f9870ea StaticDependenciesID=7a19757ce5f42ecde1b35fb3bb8fa206 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 8
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Assets/Fonts/Roboto/Roboto-Bold.ttf
+  importAddress: Guid(93e4687a2b9cab34aa842866be12bb4b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Fonts/Roboto/Roboto-Bold.ttf using Guid(93e4687a2b9cab34aa842866be12bb4b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '0e64f28901e91f837aa5aea26dbc096d') in 0.1619736 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=32a355a72b25f2d3189444ab1d954b1f DependenciesID=60b68b7fe96b28998ae7a4890c238a7e StaticDependenciesID=3cd16b2ae87f4c8c08f577e6b9a27b26 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/Textures/icenormalmap.png
+  importAddress: Guid(2e3ced53d14c6a94198d7f9690510ce8) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/icenormalmap.png using Guid(2e3ced53d14c6a94198d7f9690510ce8) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '409b291f2e725cf122dc26ec3541b571') in 0.1330836 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0f69348040a30ba6295e311e6fe5c1bd DependenciesID=86772f4d94f26fc8734c92d99bb5d14f StaticDependenciesID=957a913ddf34c235cb0d088130ac593f 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002871 seconds.
+  path: Assets/Audio/Wheels/dirt.wav
+  importAddress: Guid(4bb9e24bfe112de4a85ee3ffb091fe0f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Wheels/dirt.wav using Guid(4bb9e24bfe112de4a85ee3ffb091fe0f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'a197257329f191d0c0aa259475f61dd5') in 0.0727687 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=64f1d094363a960eda21cb78e138b0e7 DependenciesID=22aa46545e58058fd7c16af00c2da41f StaticDependenciesID=6f48e4df26d0d0969b3565af9809cf75 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000977 seconds.
+  path: Assets/Textures/Glass_Particles_Bump.psd
+  importAddress: Guid(081f3a1b05662ed408ade09a185f4691) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Glass_Particles_Bump.psd using Guid(081f3a1b05662ed408ade09a185f4691) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'a056e3ddad0163826a3f114b14b6480e') in 0.0396715 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=be9daff465b7914b38a475c3e81c41fd DependenciesID=b7c1f227ae24c202c44a2728a3b0093d StaticDependenciesID=3fdd146b74ce49fa0b3c1bfc551513ab 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001429 seconds.
+  path: Assets/Audio/Collisions/carhit3.wav
+  importAddress: Guid(1ef2729a32265a04999ec786c3be0a5e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Collisions/carhit3.wav using Guid(1ef2729a32265a04999ec786c3be0a5e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '1cb69e1bb5aff83455a2f2f3362f05dc') in 0.0342618 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1fb1203795e865555f53c71728adb0e7 DependenciesID=4509534d78213824b9ce381408ea41db StaticDependenciesID=3d3728cd72283ecb19cab39a896d0d3b 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.010437 seconds.
+  path: Assets/Materials/Headlight Particles.mat
+  importAddress: Guid(b49190d3e8d9afc47a53bde9e3532bef) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Headlight Particles.mat using Guid(b49190d3e8d9afc47a53bde9e3532bef) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '8c8fde54ad04b97c963d93085fdb258e') in 0.1818343 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=44810ae032bf480f3902ec8da482b52c DependenciesID=791744234081c35a5fe35c9ff5251e44 StaticDependenciesID=32f787a92579212520940693b17d1c8b 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000706 seconds.
+  path: Assets/Models/Vehicles/limo.fbx
+  importAddress: Guid(14dee360a544a6c49952b0642efe071d) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Models/Vehicles/limo.fbx using Guid(14dee360a544a6c49952b0642efe071d) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'caf07ac059363b018b59927abe2a95e1') in 0.1251852 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9bafb92230a62b2e2fd7746be8b81f1e DependenciesID=cd32f57399faabca1d525bea457db03c StaticDependenciesID=61ea5c0802f7f736a4aabdcf16b2adb8 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 39
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002443 seconds.
+  path: Assets/Prefabs/Mobile Vehicles/Motorcycle.prefab
+  importAddress: Guid(8e3935a8ac782d0409d9707b65c5879c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Mobile Vehicles/Motorcycle.prefab using Guid(8e3935a8ac782d0409d9707b65c5879c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'cc21923d4b497fc2d70608451fef1da8') in 0.1433215 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ed73f9a0d427c4353b41c305ebcb1d88 DependenciesID=b91fe6a60e93f39371ba99113b085486 StaticDependenciesID=60bbd3f6b8057a38dc0e26a8e3529c4f 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 111
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Fonts/Roboto/Roboto-BoldItalic.ttf
+  importAddress: Guid(949fbb491e2a15c46ac33d5d0a8eaf3e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Fonts/Roboto/Roboto-BoldItalic.ttf using Guid(949fbb491e2a15c46ac33d5d0a8eaf3e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'feb22c509e61dcd0729f11945c39a35b') in 0.0239329 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7da2ac2af2321e3c67e8c7c85976f68f DependenciesID=f6b6682ba3a6d610df43c59f816969db StaticDependenciesID=e8b3926716864563c36a7beeb7105550 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000069 seconds.
+  path: Assets/Models/Vehicles/monstertruck.fbx
+  importAddress: Guid(5bfe09224e072b14f915c4850d2e32a7) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Models/Vehicles/monstertruck.fbx using Guid(5bfe09224e072b14f915c4850d2e32a7) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '5949b88c7302b3b7f2edcf3e20febd4c') in 0.0422641 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4866975d7409efe773a9500f0bc9ff6d DependenciesID=b693fa7e3dd80ed44c125149bd1394c3 StaticDependenciesID=903cfbec431dc743a35c9423f21fe5c9 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 54
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000330 seconds.
+  path: Assets/Shaders/Tires.shader
+  importAddress: Guid(a3c9e0ef3af6a3e4e8df4c59fdc923a8) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Shaders/Tires.shader using Guid(a3c9e0ef3af6a3e4e8df4c59fdc923a8) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'fed50dea39a04b7babe8153a19ccc883') in 0.0268615 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=dcfdd0320234843f52c76055edc75a5a DependenciesID=fa2fb7ef7046c32760cb81427e2543f8 StaticDependenciesID=aa89fa23d37e8fb273f304053c20e02a 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000563 seconds.
+  path: Assets/Audio/Wheels/rimscrape.wav
+  importAddress: Guid(ed5fa181564244d48b0e4b4f6a897c21) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Wheels/rimscrape.wav using Guid(ed5fa181564244d48b0e4b4f6a897c21) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'e182b9f2c81040299e0ae30f71355d4f') in 0.0312662 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3a999a7a27ae15a3c8dd45b0fc19447d DependenciesID=c0b2fadfbe84bb93e71887b308506daa StaticDependenciesID=3990ff928ee52aece38a0ac295cd5200 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000646 seconds.
+  path: Assets/Textures/rimmark.png
+  importAddress: Guid(290a94a67d31d65459bdeab991a8ef20) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/rimmark.png using Guid(290a94a67d31d65459bdeab991a8ef20) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'bee2c2e89f9b8df90ef1f75f7abd02b3') in 0.0276328 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=54c7dc22cce75780cc7a6b37aa905633 DependenciesID=10c614d1bd6f8b6b84b18b170a39a465 StaticDependenciesID=696b91a637f229757a77138aa3e1c833 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000164 seconds.
+  path: Assets/Models/Vehicles/3wheeler.fbx
+  importAddress: Guid(c353447f836d7a04ea21c2b6232b5737) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Models/Vehicles/3wheeler.fbx using Guid(c353447f836d7a04ea21c2b6232b5737) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '7ba4f96a6be132a928f16d7f2fc1970e') in 0.0376923 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=337e276e125261deccbbdde5c0a4fb2e DependenciesID=9cacdb7b877dbcfc1874476377e8a538 StaticDependenciesID=a1fa2d59c5b36cc007d8ae53f11b51af 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 34
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001145 seconds.
+  path: Assets/Audio/Collisions/carhit2.wav
+  importAddress: Guid(d9ffa9b1472a8b440886f4e4423c0b92) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Collisions/carhit2.wav using Guid(d9ffa9b1472a8b440886f4e4423c0b92) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '9990a68d3201fec79704d095eda082d8') in 0.0296483 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f05e8cf9e8036888a8ff7e6f6ea358c6 DependenciesID=348187c66f66a39190ca09bc383bb7d1 StaticDependenciesID=d2d01e2c77f10efdc0e325a875fe832a 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000312 seconds.
+  path: Assets/Audio/Engines/engine.wav
+  importAddress: Guid(2c3d914dbaa4b7d4a90dedb7e6ea952a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Engines/engine.wav using Guid(2c3d914dbaa4b7d4a90dedb7e6ea952a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'cfe568b15af74b0cd8ff08f5b57c1ab9') in 0.0269478 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d39ecf1a041891a5b3a5fa1871e727c6 DependenciesID=179821ae8d85ee1eda2c23be325305b4 StaticDependenciesID=5ede8d4e657e89e38ed65771d65c3b69 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000592 seconds.
+  path: Assets/Audio/Misc/boostloop.wav
+  importAddress: Guid(7eaac2eb43881414c9ba43d3322a0ab9) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Misc/boostloop.wav using Guid(7eaac2eb43881414c9ba43d3322a0ab9) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '9c369bd5cd8c2ee808949f04196d17f1') in 0.0400147 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c8e6b75aa24e4ec1d1ce998c2c28e0c3 DependenciesID=c8456c6ae772011313fc4c0d57705e7d StaticDependenciesID=e8aef78bfae601db9db3d1d92e0cd802 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000333 seconds.
+  path: Assets/Audio/Wheels/tirescreech.wav
+  importAddress: Guid(0debe53a9c4cef54f95b55f393937edf) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Wheels/tirescreech.wav using Guid(0debe53a9c4cef54f95b55f393937edf) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '4beead2e20a6e4a5b4a47816812e3653') in 0.0414653 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e3c8ba38635b29f5dfaac6724c35d394 DependenciesID=8add98fa5adebc31173090d58efabf77 StaticDependenciesID=84bfb2e6d8fcc598e8958e3861f3abc5 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000440 seconds.
+  path: Assets/Prefabs/Vehicles/Motorcycle.prefab
+  importAddress: Guid(33c6a6d062ad9c646ad581e41024f891) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/Motorcycle.prefab using Guid(33c6a6d062ad9c646ad581e41024f891) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '07effa4aa43fcd136d7105e47cefa0bb') in 0.0681837 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2496db0caab88846346909143f6594ca DependenciesID=d6c3112200ea1d257ae62491d7edd39f StaticDependenciesID=a504f4475dac6425b154e12a091bc4f5 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 111
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Prefabs/Vehicles/Hover Car.prefab
+  importAddress: Guid(e3e5a43ac8738034eb7677ac8dd6afff) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/Hover Car.prefab using Guid(e3e5a43ac8738034eb7677ac8dd6afff) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'f13b2387cdd54e6baa9afe7d4b0ac7a4') in 0.0571002 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3c334fa1dc83d2d16ed3e47872c70b53 DependenciesID=613a6f22366cb6c4ddae874cdfe39132 StaticDependenciesID=bad71593e0e792f0c302bbb0d713cb0e 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 93
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Prefabs/Vehicles/Car FWD.prefab
+  importAddress: Guid(f77f093a046ab3b41b7dba5c30ee928c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/Car FWD.prefab using Guid(f77f093a046ab3b41b7dba5c30ee928c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '2195920c6436c0a91ba2442a0ffb34cf') in 0.0861122 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bd114c8ecd93ce58b5d6c2a598dbb9f5 DependenciesID=5842bc9ceed26afffdd4e1c5828d8d71 StaticDependenciesID=0c12fffd99e4cbe374c8833dbc9378f1 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 152
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000066 seconds.
+  path: Assets/Prefabs/Vehicles/Dragster.prefab
+  importAddress: Guid(8fe6b4158ceecd34aa363cafb6606dae) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/Dragster.prefab using Guid(8fe6b4158ceecd34aa363cafb6606dae) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '04781b38a1ebecf6df4e03e085cc7df4') in 0.0928213 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=64edcb351d6021a03346cc79af829f02 DependenciesID=bdf347d351fc9bf819f218d9b0a96e44 StaticDependenciesID=9ebb9da949655aa7a8d7569940db359e 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 151
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000057 seconds.
+  path: Assets/Prefabs/Vehicles/Trailer.prefab
+  importAddress: Guid(b933809ffa601874fa0ca78ce9e77998) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/Trailer.prefab using Guid(b933809ffa601874fa0ca78ce9e77998) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'c89716f71bfcc7acf4ab0a0d6fc53d0e') in 0.197098 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d96e8179623ae1a5fa939a224fc58bbc DependenciesID=b1919b9a7c5a4081730da5dbd97cdfd0 StaticDependenciesID=99d78108cb17de709ece137762b92ab3 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 116
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000058 seconds.
+  path: Assets/Materials/Dirt.mat
+  importAddress: Guid(ad2830024834bb24ebbb1bd641442e08) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Dirt.mat using Guid(ad2830024834bb24ebbb1bd641442e08) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '7e1228d7b3215b251cf04b5415ce65ba') in 0.0617854 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=11c675ea89c22dd0187d5c666f2d919b DependenciesID=bef3865d3128c2b110e5a7fdb129f925 StaticDependenciesID=dfe824a966c8c8bdcc35f125a2554f53 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001173 seconds.
+  path: Assets/Scenes/Terrain Example/ReflectionProbe-0.exr
+  importAddress: Guid(d01e26977865c8c43982af81c6e06bb5) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scenes/Terrain Example/ReflectionProbe-0.exr using Guid(d01e26977865c8c43982af81c6e06bb5) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '1799e06b55ccd2db38722cffb2eee188') in 0.0556802 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=678e9849dcad0d09ea4723e4da1262a2 DependenciesID=ae37c847c33e93d32c000e4640a072a8 StaticDependenciesID=36c4a33e0905b3d3bfa1dd3fdd8e1bea 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/Prefabs/Mobile Vehicles/Double Bus.prefab
+  importAddress: Guid(f6a01a97b3cef9445a830432873f149c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Mobile Vehicles/Double Bus.prefab using Guid(f6a01a97b3cef9445a830432873f149c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '950c231d792af6e6a79ac952e4b2009a') in 0.0748681 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=74186b5d1739909fa98deac8234156ea DependenciesID=d32c5fbd61a3b96cc9dedfd1df46f3df StaticDependenciesID=3427e8b00a109f73c2202a1d469cfc15 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 144
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/Prefabs/Mobile Vehicles/Limo.prefab
+  importAddress: Guid(729aed0804ad6e147928f9416477916a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Mobile Vehicles/Limo.prefab using Guid(729aed0804ad6e147928f9416477916a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'a9c34bfa3d31314cf8be89a65822e3f9') in 0.0677578 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3f04e04e65fc8c0b347a8ca25f982ecc DependenciesID=23fa1ddf165f8fc8f4f8291a1f7117bd StaticDependenciesID=dfba69b1b9856b24989875a144114f06 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 152
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Scripts/Damage/DetachablePart.cs
+  importAddress: Guid(7de95431dcd31e44391431372760919c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Damage/DetachablePart.cs using Guid(7de95431dcd31e44391431372760919c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'ea4fc949e5cf609af68aedb50c59f661') in 0.0173764 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6d6732a14f64c7108596f7d4e4fc9323 DependenciesID=f8c37fdca59411bb9bab94d2cac9932c StaticDependenciesID=3b4a12410c5b818e52375fae33e98895 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000051 seconds.
+  path: Assets/Prefabs/Vehicles/Short Car.prefab
+  importAddress: Guid(fb627071722155d46b3cfd6b04b7fdff) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/Short Car.prefab using Guid(fb627071722155d46b3cfd6b04b7fdff) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '14a3e2392160eb64437c457c1d414958') in 0.0836076 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ab9cc2f9d36abde6aff9814fae20efb1 DependenciesID=41c785f1b8a95dedab723c71f2e5f4de StaticDependenciesID=049f9e6a4456ae17622062abd56dbf7d 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 152
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Prefabs/Vehicles/Wheeled Tank.prefab
+  importAddress: Guid(546814be01798574790b0ee4b1a6da6e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/Wheeled Tank.prefab using Guid(546814be01798574790b0ee4b1a6da6e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'a6a77af08d429e39bf462aec3740769d') in 0.0735659 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c10c2eb92606719712ef9d2b458b7141 DependenciesID=29ba5d7086fd510c6e99348aa0dc32dc StaticDependenciesID=e0dde0c07386e234aea99906108b119d 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 210
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Materials/Smoke.mat
+  importAddress: Guid(058da71785b200a4eb075d4b8393ddb1) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Smoke.mat using Guid(058da71785b200a4eb075d4b8393ddb1) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '755e1a36aaee4cdddefb6445330964fc') in 0.0206347 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=64dc48b9ca789b6b28f81a70214aceae DependenciesID=3fe1a6e76b166372ad33786aa5bde081 StaticDependenciesID=89fee2c5610aa2ba1dea87190cf155b9 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000115 seconds.
+  path: Assets/Scripts/AI/FollowAI.cs
+  importAddress: Guid(b9e79fd276225c249ba662e7605e2068) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/AI/FollowAI.cs using Guid(b9e79fd276225c249ba662e7605e2068) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'e595a83fbc0410656e981d039fb79d82') in 0.0190734 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=fb502f6bcea9eccff50bc3cb21f06536 DependenciesID=eb08810de64bff351daba5e74299b83e StaticDependenciesID=b3b2bdfd8fd4dc3a8b44d64b55f7f026 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000642 seconds.
+  path: Assets/Textures/muddiffuse.png
+  importAddress: Guid(5b5f709ed64821549ab01c9aa8026f2e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/muddiffuse.png using Guid(5b5f709ed64821549ab01c9aa8026f2e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '12ea43eea3cfccdf052a2be765458960') in 0.0320666 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1feaff660450a083ac4ad597fa5e808a DependenciesID=7b6ca0b9861167beb9d7ca9fe56d36a8 StaticDependenciesID=4497bdbe1e9da75bbef1ad7d7b38c4f3 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000094 seconds.
+  path: Assets/Scripts/Editors/GearboxTransmissionEditor.cs
+  importAddress: Guid(050306676b70fe3468ef1e8555632978) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Editors/GearboxTransmissionEditor.cs using Guid(050306676b70fe3468ef1e8555632978) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '9a5ed4a0a65e84f63e5039d16281c46f') in 0.0239692 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2fb4f139ecbeece970dcb89ca4ad8778 DependenciesID=bb0505fcb2b983f43d6fe892bfe317c3 StaticDependenciesID=2b359f8c3e243cbf032283519bbda606 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000385 seconds.
+  path: Assets/Scripts/Editors/TerrainSurfaceEditor.cs
+  importAddress: Guid(2f77f6c7015e70b4a8c406ff42242306) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Editors/TerrainSurfaceEditor.cs using Guid(2f77f6c7015e70b4a8c406ff42242306) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '6c005962534a78b71412748d321d2025') in 0.0197064 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=610452eb32346d4315ba66bd94fd7a29 DependenciesID=34ee2008bc3f1b4e4d4a60c3ae8fe116 StaticDependenciesID=deb70784e2a27c4cbb75586bb0c2cad9 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000433 seconds.
+  path: Assets/Scripts/Damage/VehicleDamage.cs
+  importAddress: Guid(e257c00b8e7157549bd9948d680b6d9b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Damage/VehicleDamage.cs using Guid(e257c00b8e7157549bd9948d680b6d9b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '4d759bca7ef31daa2904f939941f60f6') in 0.0197713 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3fce8b36694451b1cb221ea523f59863 DependenciesID=9500c519240f309d434127f5f8315639 StaticDependenciesID=e45b3c9b1f39fb58d889a03e1d059f1f 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001176 seconds.
+  path: Assets/Scripts/Demo/PerformanceStats.cs
+  importAddress: Guid(345fcc47ff3b91d498954602337e68fe) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Demo/PerformanceStats.cs using Guid(345fcc47ff3b91d498954602337e68fe) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '11d3886cb7d37b6fea60eadf8bcf1179') in 0.0249912 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ea1ff451956ec8e4c704aeeb6cf764f0 DependenciesID=83699c49f396557aba8eb1f5de12cd67 StaticDependenciesID=48825409dce807f19aea9eb05e995054 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002480 seconds.
+  path: Assets/Scripts/Drivetrain/Motor.cs
+  importAddress: Guid(56aaf7efc826f96469b4d29a4218e127) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Drivetrain/Motor.cs using Guid(56aaf7efc826f96469b4d29a4218e127) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '28af20d0532f256e6f347cf7a11156bd') in 0.0229387 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2f1bcc4b57b5c1f0b012631c5e46f818 DependenciesID=ab5c4a247e2a1f8e8162ebcd41acd0cf StaticDependenciesID=7c583e9b17edb9ea2c996fd7a7ba53fb 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000630 seconds.
+  path: Assets/Scripts/Editors/GroundSurfaceInstanceEditor.cs
+  importAddress: Guid(52e4de3a67d2fd14aa88da66d3c83402) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Editors/GroundSurfaceInstanceEditor.cs using Guid(52e4de3a67d2fd14aa88da66d3c83402) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '3ab288db1199d0f444dc98558d3b831e') in 0.0181123 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=72eb0965d30421c08f0f0c1b18267993 DependenciesID=21b02d06f35b80574805203a85999d1f StaticDependenciesID=1c5cd54b25aaa276e7a732ccd91f108e 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000295 seconds.
+  path: Assets/Scenes/Demo Mobile/LightingData.asset
+  importAddress: Guid(60784bee8bf2be44cb35cbb93968db24) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scenes/Demo Mobile/LightingData.asset using Guid(60784bee8bf2be44cb35cbb93968db24) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'd3ec3f08a4258df21b31f961f7b50fee') in 0.021693 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=53afcee78df48d3322a38689f53647e0 DependenciesID=16ae20e4509a9477c8fd3afd7e645abe StaticDependenciesID=2875c0b2491d854403bcce629d20192d 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000726 seconds.
+  path: Assets/PhysicMaterials/Frictionless.physicMaterial
+  importAddress: Guid(d7b4b54ae22f5244998b245005d1d2ac) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/PhysicMaterials/Frictionless.physicMaterial using Guid(d7b4b54ae22f5244998b245005d1d2ac) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '589f4023de0c944a86471cab25a29c65') in 0.0245652 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9723f4d20a8ee231da56ffe90a4d8001 DependenciesID=67578d97f67f52fb0f1a20d305bf1fe9 StaticDependenciesID=da6de7c43789c7f65343126286e40fcc 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000064 seconds.
+  path: Assets/Scripts/Editors/GasMotorEditor.cs
+  importAddress: Guid(a1072c39731a6c442ab44559f3cf58e3) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Editors/GasMotorEditor.cs using Guid(a1072c39731a6c442ab44559f3cf58e3) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '3ec3597c17d5a9165c41dc84e6f051d3') in 0.0294887 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a9d22739af94e2937e86ee43f1d9a40a DependenciesID=a1dacdada2cffc5b9e1dd3bed914fe9c StaticDependenciesID=f68ca9aad45ac05b18644e18e224d682 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000546 seconds.
+  path: Assets/Audio/Wheels/tireair.wav
+  importAddress: Guid(b56536ff38727b14faa0699725a00a46) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Wheels/tireair.wav using Guid(b56536ff38727b14faa0699725a00a46) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '16eb6f8be3ab145255ee01a24091f2fd') in 0.0325123 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0c869fd4356b55b072ba5eba83680d40 DependenciesID=0605275b5a32a486f1c3cec9230787be StaticDependenciesID=df0b93246c2972f699f7b6fea81c0358 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000483 seconds.
+  path: Assets/PhysicMaterials/Car Body.physicMaterial
+  importAddress: Guid(54a777298baef2c4f9c84ebdc5c57029) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/PhysicMaterials/Car Body.physicMaterial using Guid(54a777298baef2c4f9c84ebdc5c57029) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'fb0d39420ff32dad74ebe2658c5787ae') in 0.022726 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3846144d7a8a66c070389af2030a1dbe DependenciesID=c8d1914a3d1dd0bfd047efa3f59ba415 StaticDependenciesID=c3cedae855b2c2a0494835ca3dcf7e16 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000787 seconds.
+  path: Assets/Audio/Wheels/ice.wav
+  importAddress: Guid(44823a766a5530d45a27cd2d7d833e32) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Wheels/ice.wav using Guid(44823a766a5530d45a27cd2d7d833e32) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '682b86fe36d2d4d4fc8dc6ee43cc49f4') in 0.0322927 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5d5462f5ae9ea238dce5c70634a6eeb1 DependenciesID=0a459c093c86d9aed81ce1b9f476042b StaticDependenciesID=0c67a50da2a3964c2266932bff1f0c5c 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000130 seconds.
+  path: Assets/Models/Vehicles/wheeledtank.fbx
+  importAddress: Guid(391b6d5d8f090b247a5a64590b2de065) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Models/Vehicles/wheeledtank.fbx using Guid(391b6d5d8f090b247a5a64590b2de065) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'cb605a34e712b5a06ed8d48d0d969e49') in 0.044557 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7760cf7dde7cec04ac113c9f18536c9d DependenciesID=2c0337b3b35f0aacdb97401fff186f5f StaticDependenciesID=f790c4706c7101416c3c7a52d97939b8 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 29
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Prefabs/Mobile Vehicles/Chase Car.prefab
+  importAddress: Guid(86dd444a2fa33b94484c272ce4157a30) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Mobile Vehicles/Chase Car.prefab using Guid(86dd444a2fa33b94484c272ce4157a30) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'c9075c8ed322e97da9c49227c5929eeb') in 0.1080565 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d707c76c27c8eb73f5bdc68e173ccfc5 DependenciesID=be95008845948c5f3db227e06178b991 StaticDependenciesID=49915d43de45388cfa8e7bd91b40bab0 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 151
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/Prefabs/Mobile Vehicles/Special Car.prefab
+  importAddress: Guid(74657ea5eb1e9d54981598a04af6b98a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Mobile Vehicles/Special Car.prefab using Guid(74657ea5eb1e9d54981598a04af6b98a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '0817e314076f8663d6de8a9b3d3216de') in 0.0761643 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ae206761f82aaafb4b6be4032b47a56b DependenciesID=bc7e1c73ce41de1ee0e30a5d9dc005a1 StaticDependenciesID=e1496974e48fa9863f02e4bba6a799cb 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 157
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000090 seconds.
+  path: Assets/Materials/Vehicles/Muscle Car/Blinker Front Broken.mat
+  importAddress: Guid(e2eb1602ccf26b84c99ce57c5dc9c8a7) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Muscle Car/Blinker Front Broken.mat using Guid(e2eb1602ccf26b84c99ce57c5dc9c8a7) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '36530f5414f92bd3b4c3324e5cb704a8') in 0.0261616 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=31cd707433ede68211faa247aeacc977 DependenciesID=ba1a7a4812e85216a4bbe5195e0b563d StaticDependenciesID=a2b6a6a90d84131881cac1e51a26f3b2 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000670 seconds.
+  path: Assets/Materials/Vehicles/Muscle Car/Blinker Rear On.mat
+  importAddress: Guid(e77742d0978bbbe41af09e23c68350b9) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Muscle Car/Blinker Rear On.mat using Guid(e77742d0978bbbe41af09e23c68350b9) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '03ffc8c46efc5afc043cf7967267b3ec') in 0.023331 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e89906bb6d6003c80c57a6bd6cd48d88 DependenciesID=c020e62ef5ccf3a474b4fdaeea35b35d StaticDependenciesID=ea0425af1e46ec898cd973dc9001ddd6 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Scripts/Ground/TerrainSurface.cs
+  importAddress: Guid(b9d0fd5d3d0022247b7aacc11fbf6689) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Ground/TerrainSurface.cs using Guid(b9d0fd5d3d0022247b7aacc11fbf6689) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'cd0fe7572d34ecd2f03d86d1fab2f218') in 0.017208 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5b8b2b02a37b8a18779985cf1770ed7c DependenciesID=c541ab3e311e6243c383e94bf7c10680 StaticDependenciesID=ee4476739ef72691f4680783b1707517 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000313 seconds.
+  path: Assets/Scripts/Vehicle Control/VehicleParent.cs
+  importAddress: Guid(1e173e117282a9d41a1c848fb0281a21) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Vehicle Control/VehicleParent.cs using Guid(1e173e117282a9d41a1c848fb0281a21) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '4afe687b8078159370809b4c9e032227') in 0.0167965 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e50c2c1b32e4a7b0af1bcde3d64e7316 DependenciesID=0814da2b3b5dbd89aff1234de64e3515 StaticDependenciesID=fb4e8bb9c952a00e380f7a1105ff0dbb 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000489 seconds.
+  path: Assets/Materials/Vehicles/Fancy Kart/Headlights.mat
+  importAddress: Guid(ebb392f79435bc146995cc34472d8946) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Fancy Kart/Headlights.mat using Guid(ebb392f79435bc146995cc34472d8946) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '442981bfcffdc6b5976da96808c64bfe') in 0.0252469 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=cb55bff1db7d37639b21f10a47ad3a2d DependenciesID=ced4aa09406ba43f28adc7246a91a686 StaticDependenciesID=2c9234f45cd396d723b20416da3fbe75 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001908 seconds.
+  path: Assets/Scripts/Input/MobileInputGet.cs
+  importAddress: Guid(8332f73468ad2e64bb77db01103ccc6b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Input/MobileInputGet.cs using Guid(8332f73468ad2e64bb77db01103ccc6b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'bee4151554b470a61e2109a5c1367856') in 0.0211791 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b5c7600c499b9022c79f0033f207e2b1 DependenciesID=150a0acd848ad191437be48d1ced8445 StaticDependenciesID=15c7875ab67f83eb895ca874d46e56e2 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000608 seconds.
+  path: Assets/Scripts/Stunt/StuntDetect.cs
+  importAddress: Guid(c88eb2f37da04ae48b060089a3929a72) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Stunt/StuntDetect.cs using Guid(c88eb2f37da04ae48b060089a3929a72) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '09a87ac9e5ac19b8fdc73764edb1375a') in 0.0193214 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ba76ff0ad60a99bd83d22cdfe713afef DependenciesID=db472305e6b2da7908c214af8c8b1e6f StaticDependenciesID=e1a2564bd1e7811611c1e3ed0da88b92 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000254 seconds.
+  path: Assets/Scripts/Hover/HoverMotor.cs
+  importAddress: Guid(458dda5154ccc8040863a96f6af0e022) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Hover/HoverMotor.cs using Guid(458dda5154ccc8040863a96f6af0e022) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '93d687216e6d4d144f2f810d87dede64') in 0.0193523 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9c89434613cf606cb90df40482de9635 DependenciesID=90a69cdad185a3789b99f1f5a93188a7 StaticDependenciesID=b5f1706b7f3de3a5ec614fa352d8231a 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000714 seconds.
+  path: Assets/Scripts/Suspension/Suspension.cs
+  importAddress: Guid(59243471c15e1fb45a37049837840b9f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Suspension/Suspension.cs using Guid(59243471c15e1fb45a37049837840b9f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '86873b8e1e8c82d7f52a9ab99ac6f9b0') in 0.0226046 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bc6303df4b5b056df70bcc39a5f10228 DependenciesID=d2b7afff5cebb5f7848b18d33210598c StaticDependenciesID=ac7be6455ced99023faa0021b2fd8eb7 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000205 seconds.
+  path: Assets/Scripts/Input/MobileInput.cs
+  importAddress: Guid(1d068e7f9da63a54aaa284027dd960d5) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Input/MobileInput.cs using Guid(1d068e7f9da63a54aaa284027dd960d5) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'e0466552db31ea8859de2f9ed125d0f8') in 0.020614 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9221504463c64ef4191fdfc44bb16a60 DependenciesID=6149cb2510269898c9b8a53aa53288b1 StaticDependenciesID=fc06e7cee2350f7c175e28756c98f32c 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000394 seconds.
+  path: Assets/Materials/Vehicles/Fancy Kart/Rim.mat
+  importAddress: Guid(23c16dbb42ed1c745b4f6fc4e5492bf1) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Fancy Kart/Rim.mat using Guid(23c16dbb42ed1c745b4f6fc4e5492bf1) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '188b16d776ea89d7f70980d54f496f9b') in 0.0634679 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ae94ddd093ffbe4a78fa83830d11d6d2 DependenciesID=3798c417e98f7bdb91df8916200edd7d StaticDependenciesID=91e7e0fc8d7fe39d1b02f82593c61c1c 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 5
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/Fonts/Roboto/Roboto-Black.ttf
+  importAddress: Guid(4bdf213498378144eac7213dccbc0e25) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Fonts/Roboto/Roboto-Black.ttf using Guid(4bdf213498378144eac7213dccbc0e25) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'a726a1ee299fd74bfbb921a9eedaf8a9') in 0.0235396 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4770a472a080bd5866e6873e91779b5c DependenciesID=5aa77fa5c3773cc9f9ed57700e4d4bee StaticDependenciesID=1e29cd7d3cd0e4607f3e11e4812cfdff 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001697 seconds.
+  path: Assets/Materials/Ice.mat
+  importAddress: Guid(8a83af6790847414587b5827a1bd7203) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Ice.mat using Guid(8a83af6790847414587b5827a1bd7203) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'ea2372bb48abcc707f6f61e84cff300c') in 0.0244533 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9eb8f88742d9145b9aa9861a41a0bd5d DependenciesID=4f5442748088d20bdd6710dc27686b57 StaticDependenciesID=1ed6e0d312fe0c3142a2bf8a37484cb8 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001106 seconds.
+  path: Assets/Audio/Collisions/carhit1.wav
+  importAddress: Guid(88d4c97f8a4badc408c065398037b6c0) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Collisions/carhit1.wav using Guid(88d4c97f8a4badc408c065398037b6c0) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'fed659b3a0a13fa29d3e8e3174eaf128') in 0.0208526 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=904616c5d8a9628eb4e8bce126b66d9f DependenciesID=ceb20bdaee760fc92c213dc52990020b StaticDependenciesID=07651f19663fd76bfcecf4d959d5c8cb 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/PhysicMaterials/Tire.physicMaterial
+  importAddress: Guid(b60d5265e0b213641b6c72e72c25f25f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/PhysicMaterials/Tire.physicMaterial using Guid(b60d5265e0b213641b6c72e72c25f25f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '56b1c8185f3567c8c6df6cab5edf81b6') in 0.0160688 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3979b8f4bd72f8ff103db0fb34abf2df DependenciesID=3120b6bae161af451f16d759b3000608 StaticDependenciesID=f5360a7ad4e40696e1d3b83ca4c5fb53 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000518 seconds.
+  path: Assets/Prefabs/Vehicles/F1.prefab
+  importAddress: Guid(b1c1129af0ecd2e43b52fd021a98cc03) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/F1.prefab using Guid(b1c1129af0ecd2e43b52fd021a98cc03) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '60ccb24a99e68f4fb9231dfea75313a4') in 0.0852075 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6e42ef229b3f43e064ed5972d469321c DependenciesID=0a3cb99ffdc117a8bcd66b0a2ac0816d StaticDependenciesID=831a31d91fca4da8fcb0effe20f88d2b 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 255
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Scripts/Editors/HoverWheelEditor.cs
+  importAddress: Guid(5b02625134dd23b418e2657a7eab9782) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Editors/HoverWheelEditor.cs using Guid(5b02625134dd23b418e2657a7eab9782) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'ca48c5a1c827ee493cf8eaf57646b2b2') in 0.017439 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ee921213a8a4347dceb22f15d617260b DependenciesID=5fb49b510b003dcc8d02cab1fc5d2fc0 StaticDependenciesID=f2be34051aa71925ed72d8550d0ca41b 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000266 seconds.
+  path: Assets/Materials/Vehicles/Muscle Car/Brakelight.mat
+  importAddress: Guid(bfd0b1edc69b2534fb4eb856556d134a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Muscle Car/Brakelight.mat using Guid(bfd0b1edc69b2534fb4eb856556d134a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '875794e7fb83ab96f9273191cec5cba8') in 0.0207794 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=fd55c0dcdfd94878737bf85acfb66151 DependenciesID=3cb2e632a30afef7b838bac2c2bdc68a StaticDependenciesID=80ad6708d44f8aa53e8499841ae36ef8 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000097 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Body_Diffuse.psd
+  importAddress: Guid(96f460896c8e6564bbfc99db76d9fe17) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Body_Diffuse.psd using Guid(96f460896c8e6564bbfc99db76d9fe17) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '33014c653b56ae8f8626ee40acabee3f') in 0.0326798 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=f9edba5337e4e48d967c44775bc4ce7c DependenciesID=350bd717bd2634a01ed06758330456c7 StaticDependenciesID=66ea425d914bc962dff8f5697d9a7d3c 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000116 seconds.
+  path: Assets/Materials/Vehicles/Muscle Car/Reverselight Broken.mat
+  importAddress: Guid(72602d5d3f01e7c459c7a56c01609979) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Muscle Car/Reverselight Broken.mat using Guid(72602d5d3f01e7c459c7a56c01609979) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '0a81334ff9054d51da9bbe1ec5799a0d') in 0.0257334 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=207bf00ae8f5a27b0206ad47739eb028 DependenciesID=dc84b8bd4aa5f7a8fef59a7b7af80173 StaticDependenciesID=c7c417014398271e76f40b6a4742fafa 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000301 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/LicensePlate_Ambient.png
+  importAddress: Guid(cfd71520c7d040b4ba4cbaf4e7aa9f54) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/LicensePlate_Ambient.png using Guid(cfd71520c7d040b4ba4cbaf4e7aa9f54) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'dba0c15d3775cdd5504ee354691205b8') in 0.0288133 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c300d7c0a58202b7040d33fbdb4bd31a DependenciesID=91e57a7abeee25fcc57a14efeeb81fdc StaticDependenciesID=7cbbaf02157017db39a03e57d08eed58 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002107 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Headlight.psd
+  importAddress: Guid(6a67d6ce57ca8fc4eba344e699b20676) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Headlight.psd using Guid(6a67d6ce57ca8fc4eba344e699b20676) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '6d67b68183368c46a786d0a544de8ca2') in 0.0261231 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=191e482640d144b469ce57c0aa24168c DependenciesID=b1eb10dd85460cbb8733898d86526e7e StaticDependenciesID=557487206cd874b7a6b01fe7043d54fa 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000186 seconds.
+  path: Assets/Textures/Vehicles/Fancy Kart/Taillight_Ambient.png
+  importAddress: Guid(c8aa8458518e66b4e8a67fc8059567fc) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Fancy Kart/Taillight_Ambient.png using Guid(c8aa8458518e66b4e8a67fc8059567fc) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '3d88ecbb016cbd014fe45321945cac19') in 0.0245054 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6e134896356f2e2f1387f6050e33d151 DependenciesID=bdd9aa39b293b5f5aa346635763c517b StaticDependenciesID=758c8fd3f6bd8cd34860569cf3ff2571 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000712 seconds.
+  path: Assets/Materials/Vehicles/Muscle Car/Tire Simple.mat
+  importAddress: Guid(595a27f2174a0e24f881c44bdabc7434) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Muscle Car/Tire Simple.mat using Guid(595a27f2174a0e24f881c44bdabc7434) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'd2e1461b3c0dc1509868ca8de8d639c7') in 0.0282197 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c3de2d437557912e6c30a486ed8b9f2d DependenciesID=b91496c80d4091d1fd8992dcab91e5b0 StaticDependenciesID=9f0ae1538663d3053aa683e35d0311fa 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 4
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000193 seconds.
+  path: Assets/Textures/Vehicles/Fancy Kart/Headlight_Broken.psd
+  importAddress: Guid(46116748881443e4b9aeaccdf82a221b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Fancy Kart/Headlight_Broken.psd using Guid(46116748881443e4b9aeaccdf82a221b) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'c0a4e74b50b92628e8d9223949f4148f') in 0.0244042 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c92e227be145d840a75032ea03948209 DependenciesID=c4e2eff0e7c9ac4d03e7c754899b7b7a StaticDependenciesID=55814e83ead869e543e898617a8dae0b 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Brakelight Broken.psd
+  importAddress: Guid(4ff6de5b11ba40a4a8c9aeb44a049e8a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Brakelight Broken.psd using Guid(4ff6de5b11ba40a4a8c9aeb44a049e8a) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '18d0148abf8bf02954c18bf108bec34c') in 0.0250245 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=0b65d75eb4981611968aead3423188eb DependenciesID=f2867b9ad8c7c2b427617af32a6706e9 StaticDependenciesID=9c594b076029433f84e20058830be4c2 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000123 seconds.
+  path: Assets/Materials/Vehicles/Muscle Car/LicensePlate.mat
+  importAddress: Guid(256e3b3d69fa6914ba995bfe0568abeb) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Muscle Car/LicensePlate.mat using Guid(256e3b3d69fa6914ba995bfe0568abeb) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'dd62440d09dce08d0713223f4ea48cbe') in 0.0234449 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5a9d473d4a5d50947387d778148b414e DependenciesID=ce7f40eec38318177a2527ab3a354dc1 StaticDependenciesID=8347a79ad1ece3bb109104deb924e243 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 4
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000407 seconds.
+  path: Assets/Textures/Vehicles/Fancy Kart/Body_Metal.psd
+  importAddress: Guid(f26f48a3bd995f045a637ef8b91522fe) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Fancy Kart/Body_Metal.psd using Guid(f26f48a3bd995f045a637ef8b91522fe) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '49991c18544d344444ed4e9ce12ebda4') in 0.0341238 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bf963b5e7f4598a04ffdd8a4a81cf6d9 DependenciesID=9424dc685d5495d846dce280d9ffe795 StaticDependenciesID=b7d5e5a54e91f335c834db7f5682ad4a 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001272 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Blinker_Rear Broken.psd
+  importAddress: Guid(087e458a33ff2234d82ed32e91d40f1d) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Blinker_Rear Broken.psd using Guid(087e458a33ff2234d82ed32e91d40f1d) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '25ddc95dcee1b9a77d4832c30816809f') in 0.0327013 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=390c7e57794bf9590fe28cf29d9d8de6 DependenciesID=08f7b22619884b2a8b8840568dcba933 StaticDependenciesID=4925276062ba8d535f846f915725dbaa 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000774 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Body_BrokenWindows_Diffuse.psd
+  importAddress: Guid(f36e05a3cddd77e48b703bdb9d541a06) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Body_BrokenWindows_Diffuse.psd using Guid(f36e05a3cddd77e48b703bdb9d541a06) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'd19a63024d8eb0c3bf90ed82c5073ce2') in 0.0346217 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=07e1f497dfc3c4b267dedf8bbb9257c5 DependenciesID=032eecbfa38cfeb08526b6cdda0d8381 StaticDependenciesID=a4176f54787599fcb3eb4f163c0a3ffd 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000293 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Headlight_Broken.psd
+  importAddress: Guid(8ce44c3936c5f804993df780cce46af9) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Headlight_Broken.psd using Guid(8ce44c3936c5f804993df780cce46af9) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '2c0af054d45e88bac7d9171268e874b7') in 0.033375 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e2b143eb50a4e495f24ef88e80e78dd8 DependenciesID=df10bb8aa3ba69fd126da49affbdaff4 StaticDependenciesID=c4d91a0471ae84a74a192683b312ccc0 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000490 seconds.
+  path: Assets/Materials/Vehicles/Muscle Car/Reverselight On.mat
+  importAddress: Guid(2c9b0e036f787c0438e92af26f8bc1fa) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Muscle Car/Reverselight On.mat using Guid(2c9b0e036f787c0438e92af26f8bc1fa) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'eef534b358085697a7caf54ad766b9f1') in 0.0196578 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2fb77e307c9b14ff5c84db0a823d966c DependenciesID=9f8f170e52d50449f5d5b251927a624e StaticDependenciesID=f394f3033a759bd5d44b4fd8e489eba6 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/Textures/Vehicles/Fancy Kart/Wheel_Emission.psd
+  importAddress: Guid(d1b855a33f9f6fe45b247f8090a741fa) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Fancy Kart/Wheel_Emission.psd using Guid(d1b855a33f9f6fe45b247f8090a741fa) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '78992cc3a5ce218c83cfd1b8ecbc7f2b') in 0.0282409 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4fb36dbaba8475bb72413313e1cc6d70 DependenciesID=8b8acbeb4ec1de27fc1e255a775d95ce StaticDependenciesID=b3c22e0cfd927832e9445bb8da5f042e 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001957 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/LicensePlate_Diffuse.psd
+  importAddress: Guid(27522f77701a7c54d80d3b307ab4843f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/LicensePlate_Diffuse.psd using Guid(27522f77701a7c54d80d3b307ab4843f) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'cb1812abf4716655260ae876224c8cfc') in 0.0274541 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=01d94d6ec9d42f64ef0f2ff49a8a5829 DependenciesID=d155d61407c1fb2ca119dd434a4cf223 StaticDependenciesID=3ba6d8cae0d8c4cd2c70cebadafcb0cf 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000275 seconds.
+  path: Assets/Textures/Vehicles/Fancy Kart/Headlight_Ambient.png
+  importAddress: Guid(a8094b0d9fc37ba4d813515b95edd6fa) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Fancy Kart/Headlight_Ambient.png using Guid(a8094b0d9fc37ba4d813515b95edd6fa) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'dad4361d35d338cbfd5f36efdb4c58ed') in 0.0305947 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=49f59c53dc5ca11d7e73d08e78969f48 DependenciesID=144a5bc4219e5c3a7b12c32fa86ee2ea StaticDependenciesID=9b8e14d1fb39276c3c1010b0feb6668f 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000141 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Tire_Ambient.psd
+  importAddress: Guid(44726afc901a0664c8eb77a55605e547) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Tire_Ambient.psd using Guid(44726afc901a0664c8eb77a55605e547) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'd2efd29c82b3caf97f73d2c7c56d0483') in 0.0307798 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=415a4b2a6792d9fd1abdc2e69564ebf4 DependenciesID=c418a3b2a77192dfce77a25226efb5c9 StaticDependenciesID=6fe8d29bcf2b3f9e7acd61c2e00762f9 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000553 seconds.
+  path: Assets/Textures/mudnormalmap.png
+  importAddress: Guid(937fc3ab7a14cdb499c8fcbb14d9c457) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/mudnormalmap.png using Guid(937fc3ab7a14cdb499c8fcbb14d9c457) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '26848f03d657dbf65fb0bbb1fdfdb92b') in 0.0302716 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=757f00800d7123e43ecef806b432ca80 DependenciesID=be978b8954728e38c56091c5baf301ce StaticDependenciesID=3354e4045eeb828a62c7ecf51674ad78 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000990 seconds.
+  path: Assets/Scripts/Ground/GroundSurfaceInstance.cs
+  importAddress: Guid(1a913f46a2393e24a8d0a5a11cb76d54) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Ground/GroundSurfaceInstance.cs using Guid(1a913f46a2393e24a8d0a5a11cb76d54) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'b378c4264d8e64417973d0e869873d8f') in 0.0176265 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=3a77f8f7eb2b0a58d01622e229bb13f5 DependenciesID=56516608f2b3a6ebc4a21d63294258a3 StaticDependenciesID=34e32252f6dcf7c605e5e854017da185 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000531 seconds.
+  path: Assets/Scripts/Effects/VehicleLight.cs
+  importAddress: Guid(3cd23f5938333874697dba7612e537ff) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Effects/VehicleLight.cs using Guid(3cd23f5938333874697dba7612e537ff) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '51aec4a16a99df6adff2be77d204861a') in 0.0228531 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5f619c60deff595c8bde097b31ad8c4f DependenciesID=f80a4a8d1a25cad2462c1b5ef6fd2839 StaticDependenciesID=1eac76c451f1f5ece859bdc2b04217b7 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000528 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Reverselight.psd
+  importAddress: Guid(3b22f4ec6ac16594885e9baa4f6576b4) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Reverselight.psd using Guid(3b22f4ec6ac16594885e9baa4f6576b4) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'e91777c4ef08d0f3085bf673963e2e18') in 0.0242596 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e9fce3684d4ef985479f9814dcf61447 DependenciesID=45a5bdd7afc5795eca026356f32ced42 StaticDependenciesID=64ef915afb66b66fdeaf58bc06a7af5d 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000379 seconds.
+  path: Assets/Models/Vehicles/bigrig.fbx
+  importAddress: Guid(4b727369d879a7e4498feb88136deb66) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Models/Vehicles/bigrig.fbx using Guid(4b727369d879a7e4498feb88136deb66) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'd158ea63661b35fac7922a0ab67c55fb') in 0.0435808 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c95b1791f12067d596af3f6511dde7ae DependenciesID=fffbdfb7b32a30dda4bf6cecfc9f49c1 StaticDependenciesID=b8f3c199fc9fdc16d936be773efd04c1 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 54
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002002 seconds.
+  path: Assets/Scripts/Effects/TireScreech.cs
+  importAddress: Guid(fa21782954bb0f048bdc8f34cba97945) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Effects/TireScreech.cs using Guid(fa21782954bb0f048bdc8f34cba97945) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '971d1a886c75b85056ffcd9645a89996') in 0.0169553 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=bcc53a4768ba20605060098d4b0b81b4 DependenciesID=813b592c15ffd896f168ea0dd5ce2940 StaticDependenciesID=4ffb8ae7dff0d3cb1847be4fb59ff614 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000586 seconds.
+  path: Assets/Textures/tiremarknormalmap.png
+  importAddress: Guid(d6af22901b62b8541bae463cbd059ce4) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/tiremarknormalmap.png using Guid(d6af22901b62b8541bae463cbd059ce4) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '1dc0a4849f4e76bda96931046dfc76e7') in 0.0232801 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9890cba824496af283cdf70dc7cc4142 DependenciesID=fdff4e8367ff468ab5a8e80457f96ec4 StaticDependenciesID=19cf73e49793d8237ff92908577fedc7 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000479 seconds.
+  path: Assets/Prefabs/Vehicles/3 Wheeler.prefab
+  importAddress: Guid(9dd9e302d64a2b448aa68e3aa257de60) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/3 Wheeler.prefab using Guid(9dd9e302d64a2b448aa68e3aa257de60) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'aedf208f61f88695a7446f5f8b91c65c') in 0.0695095 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=028df9ff3fc9914d4d7ea1f2357fd43e DependenciesID=d48c29804521a367d2c200adaa57c5fd StaticDependenciesID=738e2151402632c2e2bdb98a862e9066 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 128
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000196 seconds.
+  path: Assets/Prefabs/Vehicles/Pickup.prefab
+  importAddress: Guid(673781bc0be87c245876615e61577aaf) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Vehicles/Pickup.prefab using Guid(673781bc0be87c245876615e61577aaf) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '6c90f9c197bee851d3f1d70f194eafa2') in 0.0698649 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=b8c34407557c2eb93fd8255606c09d37 DependenciesID=6bdd32616800d0995ff72c8d617fd279 StaticDependenciesID=8820a5ca2e16e342c33852e119d97850 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 148
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Scripts/Demo/VehicleMenu.cs
+  importAddress: Guid(5ae4bad98c09405459993b12bcbd6d92) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Demo/VehicleMenu.cs using Guid(5ae4bad98c09405459993b12bcbd6d92) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '549defeb4631ada68f2c675fb0966c03') in 0.0198966 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=04f617cb1c2bc56a05253f82cf334340 DependenciesID=8b5d59e5a6ee4e3ecc83ba9da4eb4ed2 StaticDependenciesID=1c5ccebcb2b168d8e1aa1cbd480b94df 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001466 seconds.
+  path: Assets/Fonts/Roboto/Roboto-BlackItalic.ttf
+  importAddress: Guid(fe47e844f2e4f91479004e48ea13b61c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Fonts/Roboto/Roboto-BlackItalic.ttf using Guid(fe47e844f2e4f91479004e48ea13b61c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '2b6484d545ac6b8494829b564315b404') in 0.0213738 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=ae5ea7ab41d425b2f174c958ef8e334a DependenciesID=989adcf54c4501a26f9bf9cc1fe920b7 StaticDependenciesID=960a5eb20a1fd6f96a20299b2574b24b 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000391 seconds.
+  path: Assets/Materials/Vehicles/Muscle Car/Blinker Rear.mat
+  importAddress: Guid(290fcfe8ca436c341a98a4a884ab6c18) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Muscle Car/Blinker Rear.mat using Guid(290fcfe8ca436c341a98a4a884ab6c18) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'a97645bd9367b31f8018a08141ddbdf6') in 0.024625 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=dacc5388ad08c37a63993aac742ed5db DependenciesID=b9259a127c891f716a267660483b5811 StaticDependenciesID=099f307af3ed0d09d611506528aee3e6 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000400 seconds.
+  path: Assets/Prefabs/Mobile Vehicles/Car FWD.prefab
+  importAddress: Guid(9efd45d49f03e734f887cfc2b11cd426) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/Mobile Vehicles/Car FWD.prefab using Guid(9efd45d49f03e734f887cfc2b11cd426) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '285c47b6f3314d5a9fa9c937c39733f8') in 0.0723182 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7fae36b7d700917cfd2c3bbedc151ac2 DependenciesID=46afbf8efc5d81b6d3f816f703f0f056 StaticDependenciesID=08ae1ee3a66de15439ecdce637fde32c 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 152
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000358 seconds.
+  path: Assets/Scripts/Editors/VehicleParentEditor.cs
+  importAddress: Guid(237da826e2e17fa4e9208e630d5fae7e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Editors/VehicleParentEditor.cs using Guid(237da826e2e17fa4e9208e630d5fae7e) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'd2bd9b13527ee8473450a5ffbea42e65') in 0.0157845 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=885b03231e37f9bb4fcd53b25cdfc468 DependenciesID=afce215699d6287dd43dc25a1e757c1a StaticDependenciesID=a2a7ba70894e608fc1ea2ab2c8e73aaa 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000449 seconds.
+  path: Assets/Materials/Vehicles/Fancy Kart/Brakelight On.mat
+  importAddress: Guid(19c6dcda0c8ac6f45b1bfbf796c13518) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Materials/Vehicles/Fancy Kart/Brakelight On.mat using Guid(19c6dcda0c8ac6f45b1bfbf796c13518) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '449a6d6860812ca351ba4f0e046b906e') in 0.0215021 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4e1dd36cabb06d454346552da0741c04 DependenciesID=0de832376898c40df8df458a7b1ee319 StaticDependenciesID=9f2c227885ea281564bea799588b84d8 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000847 seconds.
+  path: Assets/Audio/Engines/engine2.wav
+  importAddress: Guid(dfea4b9d79f27af499970634902d8150) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Audio/Engines/engine2.wav using Guid(dfea4b9d79f27af499970634902d8150) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '0fb253fc15da315443ccf95e6f6b01dc') in 0.0408274 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=da388526ed008331d39ec6f581a91cba DependenciesID=24b9ba9c6436039c684b2da57d1af1bf StaticDependenciesID=561c18919a3979df4abe6366b70b4e69 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Prefabs/GlobalControl.prefab
+  importAddress: Guid(e33cb74b36f03154fbe8044f3d5a7842) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/GlobalControl.prefab using Guid(e33cb74b36f03154fbe8044f3d5a7842) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '10f58d3ea1e06b7434271ef9dde8c382') in 0.1537024 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9567b4a0ae99fe7dd9e8eecc27beef12 DependenciesID=e8eb56371620730666ee794d462771f9 StaticDependenciesID=aaa953e32905751a29a09b522b9db174 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 16
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000226 seconds.
+  path: Assets/Scripts/Suspension/PropertyToggleSetter.cs
+  importAddress: Guid(69710db5886c2a847a5cef2416f758ca) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scripts/Suspension/PropertyToggleSetter.cs using Guid(69710db5886c2a847a5cef2416f758ca) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'fe3b23147de2a526bcaebe093fb81d69') in 0.0163022 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=4f92ad7c569708bc366e44cbdcd444b2 DependenciesID=ba7d11640dab1f53c198de1a925eef06 StaticDependenciesID=003caf8053e163fe03ad2b1993c19398 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000589 seconds.
+  path: Assets/Scenes/Terrain Example/DefaultLayer.terrainlayer
+  importAddress: Guid(4a6b53a8508493b4aaabecc5b41b6716) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scenes/Terrain Example/DefaultLayer.terrainlayer using Guid(4a6b53a8508493b4aaabecc5b41b6716) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '764c94820fcca88c4918c64ae9873800') in 0.0233003 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=83a5f96dffaf3097d4eb917a1bffec0c DependenciesID=1996e24ed41d150e93c8a91d9ee702b2 StaticDependenciesID=db486129e6508cf4e66d29cad27c1563 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000170 seconds.
+  path: Assets/Textures/Vehicles/Muscle Car/Blinker_Front_Broken.psd
+  importAddress: Guid(45f516049af704e45af611e8542b7ca1) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/Vehicles/Muscle Car/Blinker_Front_Broken.psd using Guid(45f516049af704e45af611e8542b7ca1) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '92f17c727532fc31097a900d79e1e421') in 0.0255118 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=8e60772ebb0f668014e7999ef6eefc8d DependenciesID=19b47792cb0ca2ac12811003e8065047 StaticDependenciesID=f20c8a16b0f7f9bd6db13c6c71df760c 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+[Licensing::Client] Successfully resolved entitlement details
+ADTM: Control thread waiting for realtime thread timed out, have to lock...
+Assembly Assembly-CSharp-Editor-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-Editor.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll not valid. Loading of assembly skipped.
+Assembly TestNewCustomAssembly.dll at Library/ScriptAssemblies/TestNewCustomAssembly.dll not valid. Loading of assembly skipped.
+Assembly Unity.InputSystem.IntegrationTests.dll at Library/ScriptAssemblies/Unity.InputSystem.IntegrationTests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Editor.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.TextMeshPro.Editor.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshPro.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.TextMeshPro.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshPro.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.UI.Common.Tests.dll at Library/ScriptAssemblies/UnityEditor.UI.Common.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.UI.EditorTests.dll at Library/ScriptAssemblies/UnityEditor.UI.EditorTests.dll not valid. Loading of assembly skipped.
+Assembly UnityEngine.UI.Tests.dll at Library/ScriptAssemblies/UnityEngine.UI.Tests.dll not valid. Loading of assembly skipped.
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Assertion failed on expression: 'pred(*previous, *i)'
+Native extension for WindowsStandalone target not found
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.817 seconds
+Domain Reload Profiling: 2844ms
+	BeginReloadAssembly (1500ms)
+		DisableScriptedObjects (18ms)
+		CreateAndSetChildDomain (1143ms)
+	RebuildCommonClasses (76ms)
+	RebuildNativeTypeToScriptingClass (26ms)
+	initialDomainReloadingComplete (96ms)
+	LoadAllAssembliesAndSetupDomain (327ms)
+		LoadAssemblies (483ms)
+		AnalyzeDomain (83ms)
+			TypeCache.Refresh (35ms)
+				TypeCache.ScanAssembly (25ms)
+			BuildScriptInfoCaches (38ms)
+			ResolveRequiredComponents (7ms)
+	FinalizeReload (819ms)
+		SetupLoadedEditorAssemblies (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			BeforeProcessingInitializeOnLoad (209ms)
+			ProcessInitializeOnLoadAttributes (230ms)
+			ProcessInitializeOnLoadMethodAttributes (84ms)
+			AfterProcessingInitializeOnLoad (14ms)
+		AwakeInstancesAfterBackupRestoration (14ms)
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1361 unused Assets / (361.7 KB). Loaded Objects now: 1973.
+Memory consumption went from 75.9 MB to 75.5 MB.
+Total: 6.713400 ms (FindLiveObjects: 0.284100 ms CreateObjectMapping: 0.091100 ms MarkObjects: 5.747500 ms  DeleteObjects: 0.588800 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+EnvironmentDependencyValues requested are different than current active one (requested -> active):
+  graphicsApiMask: 4 -> 262148
