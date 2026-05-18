@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -45,15 +44,15 @@ namespace RVP
         public void Initialize() {
             // lookObj is an object used to help position and rotate the camera
             if (!lookObj) {
-                GameObject lookTemp = new GameObject("Camera Looker");
+                GameObject lookTemp = new("Camera Looker");
                 lookObj = lookTemp.transform;
             }
 
             // Set variables based on target vehicle's properties
             if (target) {
                 vp = target.GetComponent<VehicleParent>();
-                distance += vp.cameraDistanceChange;
-                height += vp.cameraHeightChange;
+                distance += vp.CameraDistanceChange;
+                height += vp.CameraHeightChange;
                 forwardLook = target.forward;
                 upLook = target.up;
                 targetBody = target.GetComponent<Rigidbody>();
@@ -66,15 +65,15 @@ namespace RVP
 
         void FixedUpdate() {
             if (target && targetBody && target.gameObject.activeSelf) {
-                if (vp.groundedWheels > 0) {
-                    targetForward = stayFlat ? new Vector3(vp.norm.up.x, 0, vp.norm.up.z) : vp.norm.up;
+                if (vp.GroundedWheels > 0) {
+                    targetForward = stayFlat ? new Vector3(vp.Norm.up.x, 0, vp.Norm.up.z) : vp.Norm.up;
                 }
                 // Alternate case to have the airborne forward direction match the vehicle's velocity
                 /*else {
-                    targetForward = targetBody.velocity.normalized;
+                    targetForward = targetBody.linearVelocity.normalized;
                 }*/
 
-                targetUp = stayFlat ? GlobalControl.worldUpDir : vp.norm.forward;
+                targetUp = stayFlat ? GlobalControl.worldUpDir : vp.Norm.forward;
                 lookDir = Vector3.Slerp(lookDir, (xInput == 0 && yInput == 0 ? Vector3.forward : new Vector3(xInput, 0, yInput).normalized), 0.1f * TimeMaster.inverseFixedTimeFactor);
                 smoothYRot = Mathf.Lerp(smoothYRot, targetBody.angularVelocity.y, 0.02f * TimeMaster.inverseFixedTimeFactor);
 

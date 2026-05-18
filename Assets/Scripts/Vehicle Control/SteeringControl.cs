@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -37,9 +36,9 @@ namespace RVP
         }
 
         void FixedUpdate() {
-            float rbSpeed = vp.localVelocity.z / steerCurveStretch;
+            float rbSpeed = vp.LocalVelocity.z / steerCurveStretch;
             float steerLimit = limitSteer ? steerCurve.Evaluate(applyInReverse ? Mathf.Abs(rbSpeed) : rbSpeed) : 1;
-            steerAmount = vp.steerInput * steerLimit;
+            steerAmount = vp.SteerInput * steerLimit;
 
             // Set steer angles in wheels
             foreach (Suspension curSus in steeredWheels) {

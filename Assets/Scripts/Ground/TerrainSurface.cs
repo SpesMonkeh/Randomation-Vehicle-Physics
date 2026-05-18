@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -76,7 +75,7 @@ namespace RVP
         public int GetDominantSurfaceTypeAtPoint(Vector3 pos) {
             if (surfaceTypes.Length == 0) { return 0; }
 
-            Vector2 coord = new Vector2(Mathf.Clamp01((pos.z - tr.position.z) / terDat.size.z), Mathf.Clamp01((pos.x - tr.position.x) / terDat.size.x));
+            Vector2 coord = new(Mathf.Clamp01((pos.z - tr.position.z) / terDat.size.z), Mathf.Clamp01((pos.x - tr.position.x) / terDat.size.x));
 
             float maxVal = 0;
             int maxIndex = 0;

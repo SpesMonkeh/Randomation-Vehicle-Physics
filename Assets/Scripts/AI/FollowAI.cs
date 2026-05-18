@@ -103,11 +103,11 @@ namespace RVP
                 // Is the distance to the target less than the follow distance?
                 close = (tr.position - target.position).sqrMagnitude <= Mathf.Pow(followDistance, 2) && !targetIsWaypoint;
                 dirToTarget = (targetPoint - tr.position).normalized;
-                lookDot = Vector3.Dot(vp.forwardDir, dirToTarget);
-                steerDot = Vector3.Dot(vp.rightDir, dirToTarget);
+                lookDot = Vector3.Dot(vp.ForwardDir, dirToTarget);
+                steerDot = Vector3.Dot(vp.RightDir, dirToTarget);
 
                 // Attempt to reverse if vehicle is stuck
-                stoppedTime = Mathf.Abs(vp.localVelocity.z) < 1 && !close && vp.groundedWheels > 0 ? stoppedTime + Time.fixedDeltaTime : 0;
+                stoppedTime = Mathf.Abs(vp.LocalVelocity.z) < 1 && !close && vp.GroundedWheels > 0 ? stoppedTime + Time.fixedDeltaTime : 0;
 
                 if (stoppedTime > stopTimeReverse && reverseTime == 0) {
                     reverseTime = reverseAttemptTime;
@@ -122,14 +122,14 @@ namespace RVP
                 reverseTime = Mathf.Max(0, reverseTime - Time.fixedDeltaTime);
 
                 if (targetVelocity > 0) {
-                    speedLimit = Mathf.Clamp01(targetVelocity - vp.localVelocity.z);
+                    speedLimit = Mathf.Clamp01(targetVelocity - vp.LocalVelocity.z);
                 }
                 else {
                     speedLimit = 1;
                 }
 
                 // Set accel input
-                if (!close && (lookDot > 0 || vp.localVelocity.z < 5) && vp.groundedWheels > 0 && reverseTime == 0) {
+                if (!close && (lookDot > 0 || vp.LocalVelocity.z < 5) && vp.GroundedWheels > 0 && reverseTime == 0) {
                     vp.SetAccel(speed * speedLimit);
                 }
                 else {
@@ -137,8 +137,8 @@ namespace RVP
                 }
 
                 // Set brake input
-                if (reverseTime == 0 && brakeTime == 0 && !(close && vp.localVelocity.z > 0.1f)) {
-                    if (lookDot < 0.5f && lookDot > 0 && vp.localVelocity.z > 10) {
+                if (reverseTime == 0 && brakeTime == 0 && !(close && vp.LocalVelocity.z > 0.1f)) {
+                    if (lookDot < 0.5f && lookDot > 0 && vp.LocalVelocity.z > 10) {
                         vp.SetBrake(0.5f - lookDot);
                     }
                     else {
@@ -168,7 +168,7 @@ namespace RVP
                 }
 
                 // Set ebrake input
-                if ((close && vp.localVelocity.z <= 0.1f) || (lookDot <= 0 && vp.velMag > 20)) {
+                if ((close && vp.LocalVelocity.z <= 0.1f) || (lookDot <= 0 && vp.VelMag > 20)) {
                     vp.SetEbrake(1);
                 }
                 else {

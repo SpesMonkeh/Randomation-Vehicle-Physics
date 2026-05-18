@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -71,15 +70,15 @@ namespace RVP
             }
 
             // Activate brake lights
-            if (vp.accelAxisIsBrake) {
-                brakelightsOn = vp.accelInput != 0 && Mathf.Sign(vp.accelInput) != Mathf.Sign(vp.localVelocity.z) && Mathf.Abs(vp.localVelocity.z) > 1;
+            if (vp.AccelAxisIsBrake) {
+                brakelightsOn = vp.AccelInput != 0 && Mathf.Sign(vp.AccelInput) != Mathf.Sign(vp.LocalVelocity.z) && Mathf.Abs(vp.LocalVelocity.z) > 1;
             }
             else {
-                if (!vp.brakeIsReverse) {
-                    brakelightsOn = (vp.burnout > 0 && vp.brakeInput > 0) || vp.brakeInput > 0;
+                if (!vp.BrakeIsReverse) {
+                    brakelightsOn = (vp.Burnout > 0 && vp.BrakeInput > 0) || vp.BrakeInput > 0;
                 }
                 else {
-                    brakelightsOn = (vp.burnout > 0 && vp.brakeInput > 0) || ((vp.brakeInput > 0 && vp.localVelocity.z > 1) || (vp.accelInput > 0 && vp.localVelocity.z < -1));
+                    brakelightsOn = (vp.Burnout > 0 && vp.BrakeInput > 0) || ((vp.BrakeInput > 0 && vp.LocalVelocity.z > 1) || (vp.AccelInput > 0 && vp.LocalVelocity.z < -1));
                 }
             }
 

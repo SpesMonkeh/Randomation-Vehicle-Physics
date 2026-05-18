@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\ChrHo\\\\Unity\\\\Randomation\" -Directory)",
+      "Bash(Select-Object Name)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\ChrHo\\\\Unity\\\\Randomation\" -File | Where-Object { $_.Name -match '\\(README|CLAUDE|\\\\.md|notes|doc\\)' })",
+      "WebFetch(domain:justinvoke.com)"
+    ]
+  }
+}

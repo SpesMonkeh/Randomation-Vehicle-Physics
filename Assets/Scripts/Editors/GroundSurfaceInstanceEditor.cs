@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 namespace RVP
@@ -11,7 +10,7 @@ namespace RVP
     public class GroundSurfaceInstanceEditor : Editor
     {
         public override void OnInspectorGUI() {
-            GroundSurfaceMaster surfaceMaster = FindObjectOfType<GroundSurfaceMaster>();
+            GroundSurfaceMaster surfaceMaster = FindAnyObjectByType<GroundSurfaceMaster>();
             GroundSurfaceInstance targetScript = (GroundSurfaceInstance)target;
             GroundSurfaceInstance[] allTargets = new GroundSurfaceInstance[targets.Length];
 

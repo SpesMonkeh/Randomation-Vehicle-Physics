@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -19,15 +18,15 @@ namespace RVP
             base.FixedUpdate();
 
             // Get proper input
-            float actualAccel = vp.brakeIsReverse ? vp.accelInput - vp.brakeInput : vp.accelInput;
+            float actualAccel = vp.BrakeIsReverse ? vp.AccelInput - vp.BrakeInput : vp.AccelInput;
             actualInput = inputCurve.Evaluate(Mathf.Abs(actualAccel)) * Mathf.Sign(actualAccel);
 
             // Set hover wheel speeds and forces
             foreach (HoverWheel curWheel in wheels) {
                 if (ignition) {
-                    float boostEval = boostPowerCurve.Evaluate(Mathf.Abs(vp.localVelocity.z));
+                    float boostEval = boostPowerCurve.Evaluate(Mathf.Abs(vp.LocalVelocity.z));
                     curWheel.targetSpeed = actualInput * forceCurve.keys[forceCurve.keys.Length - 1].time * (boosting ? 1 + boostEval : 1);
-                    curWheel.targetForce = Mathf.Abs(actualInput) * forceCurve.Evaluate(Mathf.Abs(vp.localVelocity.z) - (boosting ? boostEval : 0)) * power * (boosting ? 1 + boostEval : 1) * health;
+                    curWheel.targetForce = Mathf.Abs(actualInput) * forceCurve.Evaluate(Mathf.Abs(vp.LocalVelocity.z) - (boosting ? boostEval : 0)) * power * (boosting ? 1 + boostEval : 1) * health;
                 }
                 else {
                     curWheel.targetSpeed = 0;
@@ -41,7 +40,7 @@ namespace RVP
         public override void Update() {
             // Set engine pitch
             if (snd && ignition) {
-                targetPitch = Mathf.Max(Mathf.Abs(actualInput), Mathf.Abs(vp.steerInput) * 0.5f) * (1 - forceCurve.Evaluate(Mathf.Abs(vp.localVelocity.z)));
+                targetPitch = Mathf.Max(Mathf.Abs(actualInput), Mathf.Abs(vp.SteerInput) * 0.5f) * (1 - forceCurve.Evaluate(Mathf.Abs(vp.LocalVelocity.z)));
             }
 
             base.Update();

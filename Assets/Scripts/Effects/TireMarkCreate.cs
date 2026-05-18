@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -52,7 +51,7 @@ namespace RVP
         public ParticleSystem[] debrisParticles;
         public ParticleSystem sparks;
         float[] initialEmissionRates;
-        ParticleSystem.MinMaxCurve zeroEmission = new ParticleSystem.MinMaxCurve(0);
+        ParticleSystem.MinMaxCurve zeroEmission = new(0);
 
         void Start() {
             tr = transform;
@@ -70,20 +69,20 @@ namespace RVP
 
         void Update() {
             // Check for continuous marking
-            if (w.grounded) {
-                alwaysScrape = GroundSurfaceMaster.surfaceTypesStatic[w.contactPoint.surfaceType].alwaysScrape ? slipThreshold + Mathf.Min(0.5f, Mathf.Abs(w.rawRPM * 0.001f)) : 0;
+            if (w.Grounded) {
+                alwaysScrape = GroundSurfaceMaster.surfaceTypesStatic[w.ContactPoint.surfaceType].alwaysScrape ? slipThreshold + Mathf.Min(0.5f, Mathf.Abs(w.RawRPM * 0.001f)) : 0;
             }
             else {
                 alwaysScrape = 0;
             }
 
             // Create mark
-            if (w.grounded && (Mathf.Abs(F.MaxAbs(w.sidewaysSlip, w.forwardSlip)) > slipThreshold || alwaysScrape > 0) && w.connected) {
+            if (w.Grounded && (Mathf.Abs(F.MaxAbs(w.SidewaysSlip, w.ForwardSlip)) > slipThreshold || alwaysScrape > 0) && w.Connected) {
                 prevSurface = curSurface;
-                curSurface = w.grounded ? w.contactPoint.surfaceType : -1;
+                curSurface = w.Grounded ? w.ContactPoint.surfaceType : -1;
 
                 poppedPrev = popped;
-                popped = w.popped;
+                popped = w.Popped;
 
                 if (!creatingMark) {
                     prevSurface = curSurface;
@@ -95,9 +94,9 @@ namespace RVP
 
                 // Calculate segment points
                 if (curMark) {
-                    Vector3 pointDir = Quaternion.AngleAxis(90, w.contactPoint.normal) * tr.right * (w.popped ? w.rimWidth : w.tireWidth);
-                    leftPoint = curMarkTr.InverseTransformPoint(w.contactPoint.point + pointDir * w.suspensionParent.flippedSideFactor * Mathf.Sign(w.rawRPM) + w.contactPoint.normal * GlobalControl.tireMarkHeightStatic);
-                    rightPoint = curMarkTr.InverseTransformPoint(w.contactPoint.point - pointDir * w.suspensionParent.flippedSideFactor * Mathf.Sign(w.rawRPM) + w.contactPoint.normal * GlobalControl.tireMarkHeightStatic);
+                    Vector3 pointDir = Quaternion.AngleAxis(90, w.ContactPoint.normal) * tr.right * (w.Popped ? w.RimWidth : w.TireWidth);
+                    leftPoint = curMarkTr.InverseTransformPoint(w.ContactPoint.point + pointDir * (w.SuspensionParent.flippedSideFactor * Mathf.Sign(w.RawRPM)) + w.ContactPoint.normal * GlobalControl.tireMarkHeightStatic);
+                    rightPoint = curMarkTr.InverseTransformPoint(w.ContactPoint.point - pointDir * (w.SuspensionParent.flippedSideFactor * Mathf.Sign(w.RawRPM)) + w.ContactPoint.normal * GlobalControl.tireMarkHeightStatic);
                 }
             }
             else if (creatingMark) {
@@ -115,20 +114,20 @@ namespace RVP
             // Set particle emission rates
             ParticleSystem.EmissionModule em;
             for (int i = 0; i < debrisParticles.Length; i++) {
-                if (w.connected) {
-                    if (i == w.contactPoint.surfaceType) {
-                        if (GroundSurfaceMaster.surfaceTypesStatic[w.contactPoint.surfaceType].leaveSparks && w.popped) {
+                if (w.Connected) {
+                    if (i == w.ContactPoint.surfaceType) {
+                        if (GroundSurfaceMaster.surfaceTypesStatic[w.ContactPoint.surfaceType].leaveSparks && w.Popped) {
                             em = debrisParticles[i].emission;
                             em.rateOverTime = zeroEmission;
 
                             if (sparks) {
                                 em = sparks.emission;
-                                em.rateOverTime = new ParticleSystem.MinMaxCurve(initialEmissionRates[debrisParticles.Length] * Mathf.Clamp01(Mathf.Abs(F.MaxAbs(w.sidewaysSlip, w.forwardSlip, alwaysScrape)) - slipThreshold));
+                                em.rateOverTime = new ParticleSystem.MinMaxCurve(initialEmissionRates[debrisParticles.Length] * Mathf.Clamp01(Mathf.Abs(F.MaxAbs(w.SidewaysSlip, w.ForwardSlip, alwaysScrape)) - slipThreshold));
                             }
                         }
                         else {
                             em = debrisParticles[i].emission;
-                            em.rateOverTime = new ParticleSystem.MinMaxCurve(initialEmissionRates[i] * Mathf.Clamp01(Mathf.Abs(F.MaxAbs(w.sidewaysSlip, w.forwardSlip, alwaysScrape)) - slipThreshold));
+                            em.rateOverTime = new ParticleSystem.MinMaxCurve(initialEmissionRates[i] * Mathf.Clamp01(Mathf.Abs(F.MaxAbs(w.SidewaysSlip, w.ForwardSlip, alwaysScrape)) - slipThreshold));
 
                             if (sparks) {
                                 em = sparks.emission;
@@ -158,16 +157,16 @@ namespace RVP
             creatingMark = true;
             curMark = new GameObject("Tire Mark");
             curMarkTr = curMark.transform;
-            curMarkTr.parent = w.contactPoint.col.transform;
+            curMarkTr.parent = w.ContactPoint.col.transform;
             curMark.AddComponent<TireMark>();
             MeshRenderer tempRend = curMark.AddComponent<MeshRenderer>();
 
             // Set material based on whether the tire is popped
-            if (w.popped) {
-                tempRend.sharedMaterial = rimMarkMaterials[Mathf.Min(w.contactPoint.surfaceType, rimMarkMaterials.Length - 1)];
+            if (w.Popped) {
+                tempRend.sharedMaterial = rimMarkMaterials[Mathf.Min(w.ContactPoint.surfaceType, rimMarkMaterials.Length - 1)];
             }
             else {
-                tempRend.sharedMaterial = tireMarkMaterials[Mathf.Min(w.contactPoint.surfaceType, tireMarkMaterials.Length - 1)];
+                tempRend.sharedMaterial = tireMarkMaterials[Mathf.Min(w.ContactPoint.surfaceType, tireMarkMaterials.Length - 1)];
             }
 
             tempRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
@@ -206,8 +205,8 @@ namespace RVP
             if (gapDelay == 0) {
                 float alpha = (curEdge < GlobalControl.tireMarkLengthStatic - 2 && curEdge > 5 ? 1 : 0) *
                     Random.Range(
-                        Mathf.Clamp01(Mathf.Abs(F.MaxAbs(w.sidewaysSlip, w.forwardSlip, alwaysScrape)) - slipThreshold) * 0.9f,
-                        Mathf.Clamp01(Mathf.Abs(F.MaxAbs(w.sidewaysSlip, w.forwardSlip, alwaysScrape)) - slipThreshold));
+                        Mathf.Clamp01(Mathf.Abs(F.MaxAbs(w.SidewaysSlip, w.ForwardSlip, alwaysScrape)) - slipThreshold) * 0.9f,
+                        Mathf.Clamp01(Mathf.Abs(F.MaxAbs(w.SidewaysSlip, w.ForwardSlip, alwaysScrape)) - slipThreshold));
                 gapDelay = GlobalControl.tireMarkGapStatic;
                 curEdge += 2;
 
@@ -263,7 +262,7 @@ namespace RVP
             creatingMark = false;
             leftPointPrev = verts[Mathf.RoundToInt(verts.Length * 0.5f)];
             rightPointPrev = verts[Mathf.RoundToInt(verts.Length * 0.5f + 1)];
-            continueMark = w.grounded;
+            continueMark = w.Grounded;
 
             curMark.GetComponent<TireMark>().fadeTime = GlobalControl.tireFadeTimeStatic;
             curMark.GetComponent<TireMark>().mesh = mesh;

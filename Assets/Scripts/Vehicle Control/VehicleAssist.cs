@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -83,8 +82,8 @@ namespace RVP
         }
 
         void FixedUpdate() {
-            if (vp.groundedWheels > 0) {
-                groundedFactor = basedOnWheelsGrounded ? vp.groundedWheels / (vp.hover ? vp.hoverWheels.Length : vp.wheels.Length) : 1;
+            if (vp.GroundedWheels > 0) {
+                groundedFactor = basedOnWheelsGrounded ? vp.GroundedWheels / (vp.Hover ? vp.HoverWheels.Length : vp.Wheels.Length) : 1;
 
                 angDragTime = 20;
                 rb.angularDamping = initialAngularDrag;
@@ -100,7 +99,7 @@ namespace RVP
             else {
                 if (angularDragOnJump) {
                     angDragTime = Mathf.Max(0, angDragTime - Time.timeScale * TimeMaster.inverseFixedTimeFactor);
-                    rb.angularDamping = angDragTime > 0 && vp.upDot > 0.5 ? 10 : initialAngularDrag;
+                    rb.angularDamping = angDragTime > 0 && vp.UpDot > 0.5 ? 10 : initialAngularDrag;
                 }
             }
 
@@ -112,8 +111,8 @@ namespace RVP
                 RollOver();
             }
 
-            if (Mathf.Abs(vp.localVelocity.y) > fallSpeedLimit && (vp.localVelocity.y < 0 || applyFallLimitUpwards)) {
-                rb.AddRelativeForce(Vector3.down * vp.localVelocity.y, ForceMode.Acceleration);
+            if (Mathf.Abs(vp.LocalVelocity.y) > fallSpeedLimit && (vp.LocalVelocity.y < 0 || applyFallLimitUpwards)) {
+                rb.AddRelativeForce(Vector3.down * vp.LocalVelocity.y, ForceMode.Acceleration);
             }
         }
 
@@ -125,44 +124,44 @@ namespace RVP
             // Auto steer drift
             if (autoSteerDrift) {
                 int steerSign = 0;
-                if (vp.steerInput != 0) {
-                    steerSign = (int)Mathf.Sign(vp.steerInput);
+                if (vp.SteerInput != 0) {
+                    steerSign = (int)Mathf.Sign(vp.SteerInput);
                 }
 
-                targetDriftAngle = (steerSign != Mathf.Sign(vp.localVelocity.x) ? vp.steerInput : steerSign) * -maxDriftAngle;
-                Vector3 velDir = new Vector3(vp.localVelocity.x, 0, vp.localVelocity.z).normalized;
+                targetDriftAngle = (steerSign != Mathf.Sign(vp.LocalVelocity.x) ? vp.SteerInput : steerSign) * -maxDriftAngle;
+                Vector3 velDir = new Vector3(vp.LocalVelocity.x, 0, vp.LocalVelocity.z).normalized;
                 Vector3 targetDir = new Vector3(Mathf.Sin(targetDriftAngle * Mathf.Deg2Rad), 0, Mathf.Cos(targetDriftAngle * Mathf.Deg2Rad)).normalized;
                 Vector3 driftTorqueTemp = velDir - targetDir;
-                targetTurnSpeed = driftTorqueTemp.magnitude * Mathf.Sign(driftTorqueTemp.z) * steerSign * driftSpinSpeed - vp.localAngularVel.y * Mathf.Clamp01(Vector3.Dot(velDir, targetDir)) * 2;
+                targetTurnSpeed = driftTorqueTemp.magnitude * Mathf.Sign(driftTorqueTemp.z) * steerSign * driftSpinSpeed - vp.LocalAngularVel.y * Mathf.Clamp01(Vector3.Dot(velDir, targetDir)) * 2;
             }
             else {
-                targetTurnSpeed = vp.steerInput * driftSpinSpeed * (vp.localVelocity.z < 0 ? (vp.accelAxisIsBrake ? Mathf.Sign(vp.accelInput) : Mathf.Sign(F.MaxAbs(vp.accelInput, -vp.brakeInput))) : 1);
+                targetTurnSpeed = vp.SteerInput * driftSpinSpeed * (vp.LocalVelocity.z < 0 ? (vp.AccelAxisIsBrake ? Mathf.Sign(vp.AccelInput) : Mathf.Sign(F.MaxAbs(vp.AccelInput, -vp.BrakeInput))) : 1);
             }
 
             rb.AddRelativeTorque(
-                new Vector3(0, (targetTurnSpeed - vp.localAngularVel.y) * driftSpinAssist * driftSpinCurve.Evaluate(Mathf.Abs(Mathf.Pow(vp.localVelocity.x, driftSpinExponent))) * groundedFactor, 0),
+                new Vector3(0, (targetTurnSpeed - vp.LocalAngularVel.y) * driftSpinAssist * driftSpinCurve.Evaluate(Mathf.Abs(Mathf.Pow(vp.LocalVelocity.x, driftSpinExponent))) * groundedFactor, 0),
                 ForceMode.Acceleration);
 
             float rightVelDot = Vector3.Dot(tr.right, rb.linearVelocity.normalized);
 
-            if (straightenAssist && vp.steerInput == 0 && Mathf.Abs(rightVelDot) < 0.1f && vp.sqrVelMag > 5) {
+            if (straightenAssist && vp.SteerInput == 0 && Mathf.Abs(rightVelDot) < 0.1f && vp.SqrVelMag > 5) {
                 rb.AddRelativeTorque(
-                    new Vector3(0, rightVelDot * 100 * Mathf.Sign(vp.localVelocity.z) * driftSpinAssist, 0),
+                    new Vector3(0, rightVelDot * 100 * Mathf.Sign(vp.LocalVelocity.z) * driftSpinAssist, 0),
                     ForceMode.Acceleration);
             }
         }
 
         // Apply downforce
         void ApplyDownforce() {
-            if (vp.groundedWheels > 0 || applyDownforceInAir) {
+            if (vp.GroundedWheels > 0 || applyDownforceInAir) {
                 rb.AddRelativeForce(
-                    new Vector3(0, downforceCurve.Evaluate(Mathf.Abs(vp.localVelocity.z)) * -downforce * (applyDownforceInAir ? 1 : groundedFactor) * (invertDownforceInReverse ? Mathf.Sign(vp.localVelocity.z) : 1), 0),
+                    new Vector3(0, downforceCurve.Evaluate(Mathf.Abs(vp.LocalVelocity.z)) * -downforce * (applyDownforceInAir ? 1 : groundedFactor) * (invertDownforceInReverse ? Mathf.Sign(vp.LocalVelocity.z) : 1), 0),
                     ForceMode.Acceleration);
 
                 // Reverse downforce
-                if (invertDownforceInReverse && vp.localVelocity.z < 0) {
+                if (invertDownforceInReverse && vp.LocalVelocity.z < 0) {
                     rb.AddRelativeTorque(
-                        new Vector3(downforceCurve.Evaluate(Mathf.Abs(vp.localVelocity.z)) * downforce * (applyDownforceInAir ? 1 : groundedFactor), 0, 0),
+                        new Vector3(downforceCurve.Evaluate(Mathf.Abs(vp.LocalVelocity.z)) * downforce * (applyDownforceInAir ? 1 : groundedFactor), 0, 0),
                         ForceMode.Acceleration);
                 }
             }
@@ -173,10 +172,10 @@ namespace RVP
             RaycastHit rollHit;
 
             // Check if rolled over
-            if (vp.groundedWheels == 0 && vp.velMag < rollSpeedThreshold && vp.upDot < 0.8 && rollCheckDistance > 0) {
-                if (Physics.Raycast(tr.position, vp.upDir, out rollHit, rollCheckDistance, GlobalControl.groundMaskStatic)
-                    || Physics.Raycast(tr.position, vp.rightDir, out rollHit, rollCheckDistance, GlobalControl.groundMaskStatic)
-                    || Physics.Raycast(tr.position, -vp.rightDir, out rollHit, rollCheckDistance, GlobalControl.groundMaskStatic)) {
+            if (vp.GroundedWheels == 0 && vp.VelMag < rollSpeedThreshold && vp.UpDot < 0.8 && rollCheckDistance > 0) {
+                if (Physics.Raycast(tr.position, vp.UpDir, out rollHit, rollCheckDistance, GlobalControl.groundMaskStatic)
+                    || Physics.Raycast(tr.position, vp.RightDir, out rollHit, rollCheckDistance, GlobalControl.groundMaskStatic)
+                    || Physics.Raycast(tr.position, -vp.RightDir, out rollHit, rollCheckDistance, GlobalControl.groundMaskStatic)) {
                     rolledOver = true;
                 }
                 else {
@@ -189,14 +188,14 @@ namespace RVP
 
             // Apply roll over force
             if (rolledOver) {
-                if (steerRollOver && vp.steerInput != 0) {
+                if (steerRollOver && vp.SteerInput != 0) {
                     rb.AddRelativeTorque(
-                        new Vector3(0, 0, -vp.steerInput * rollOverForce),
+                        new Vector3(0, 0, -vp.SteerInput * rollOverForce),
                         ForceMode.Acceleration);
                 }
                 else if (autoRollOver) {
                     rb.AddRelativeTorque(
-                        new Vector3(0, 0, -Mathf.Sign(vp.rightDot) * rollOverForce),
+                        new Vector3(0, 0, -Mathf.Sign(vp.RightDot) * rollOverForce),
                         ForceMode.Acceleration);
                 }
             }
@@ -204,10 +203,10 @@ namespace RVP
 
         // Assist for accelerating while drifting
         void ApplyDriftPush() {
-            float pushFactor = (vp.accelAxisIsBrake ? vp.accelInput : vp.accelInput - vp.brakeInput) * Mathf.Abs(vp.localVelocity.x) * driftPush * groundedFactor * (1 - Mathf.Abs(Vector3.Dot(vp.forwardDir, rb.linearVelocity.normalized)));
+            float pushFactor = (vp.AccelAxisIsBrake ? vp.AccelInput : vp.AccelInput - vp.BrakeInput) * Mathf.Abs(vp.LocalVelocity.x) * driftPush * groundedFactor * (1 - Mathf.Abs(Vector3.Dot(vp.ForwardDir, rb.linearVelocity.normalized)));
 
             rb.AddForce(
-                vp.norm.TransformDirection(new Vector3(Mathf.Abs(pushFactor) * Mathf.Sign(vp.localVelocity.x), Mathf.Abs(pushFactor) * Mathf.Sign(vp.localVelocity.z), 0)),
+                vp.Norm.TransformDirection(new Vector3(Mathf.Abs(pushFactor) * Mathf.Sign(vp.LocalVelocity.x), Mathf.Abs(pushFactor) * Mathf.Sign(vp.LocalVelocity.z), 0)),
                 ForceMode.Acceleration);
         }
     }

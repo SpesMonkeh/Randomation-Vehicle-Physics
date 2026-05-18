@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace RVP
@@ -17,8 +16,8 @@ namespace RVP
 
         [System.NonSerialized]
         public float score;
-        List<Stunt> stunts = new List<Stunt>();
-        List<Stunt> doneStunts = new List<Stunt>();
+        List<Stunt> stunts = new();
+        List<Stunt> doneStunts = new();
         bool drifting;
         float driftDist;
         float driftScore;
@@ -47,7 +46,7 @@ namespace RVP
 
         void FixedUpdate() {
             // Detect drifts
-            if (detectDrift && !vp.crashing) {
+            if (detectDrift && !vp.Crashing) {
                 DetectDrift();
             }
             else {
@@ -58,7 +57,7 @@ namespace RVP
             }
 
             // Detect jumps
-            if (detectJump && !vp.crashing) {
+            if (detectJump && !vp.Crashing) {
                 DetectJump();
             }
             else {
@@ -68,7 +67,7 @@ namespace RVP
             }
 
             // Detect flips
-            if (detectFlips && !vp.crashing) {
+            if (detectFlips && !vp.Crashing) {
                 DetectFlips();
             }
             else {
@@ -77,21 +76,21 @@ namespace RVP
             }
 
             // Combine strings into final stunt string
-            stuntString = vp.crashing ? "Crashed" : driftString + jumpString + (string.IsNullOrEmpty(flipString) || string.IsNullOrEmpty(jumpString) ? "" : " + ") + flipString;
+            stuntString = vp.Crashing ? "Crashed" : driftString + jumpString + (string.IsNullOrEmpty(flipString) || string.IsNullOrEmpty(jumpString) ? "" : " + ") + flipString;
         }
 
         // Logic for detecting and tracking drift
         void DetectDrift() {
-            endDriftTime = vp.groundedWheels > 0 ? (Mathf.Abs(vp.localVelocity.x) > 5 ? StuntManager.driftConnectDelayStatic : Mathf.Max(0, endDriftTime - Time.timeScale * TimeMaster.inverseFixedTimeFactor)) : 0;
+            endDriftTime = vp.GroundedWheels > 0 ? (Mathf.Abs(vp.LocalVelocity.x) > 5 ? StuntManager.driftConnectDelayStatic : Mathf.Max(0, endDriftTime - Time.timeScale * TimeMaster.inverseFixedTimeFactor)) : 0;
             drifting = endDriftTime > 0;
 
             if (drifting) {
-                driftScore += (StuntManager.driftScoreRateStatic * Mathf.Abs(vp.localVelocity.x)) * Time.timeScale * TimeMaster.inverseFixedTimeFactor;
-                driftDist += vp.velMag * Time.fixedDeltaTime;
+                driftScore += (StuntManager.driftScoreRateStatic * Mathf.Abs(vp.LocalVelocity.x)) * Time.timeScale * TimeMaster.inverseFixedTimeFactor;
+                driftDist += vp.VelMag * Time.fixedDeltaTime;
                 driftString = "Drift: " + driftDist.ToString("n0") + " m";
 
                 if (engine) {
-                    engine.boost += (StuntManager.driftBoostAddStatic * Mathf.Abs(vp.localVelocity.x)) * Time.timeScale * 0.0002f * TimeMaster.inverseFixedTimeFactor;
+                    engine.boost += (StuntManager.driftBoostAddStatic * Mathf.Abs(vp.LocalVelocity.x)) * Time.timeScale * 0.0002f * TimeMaster.inverseFixedTimeFactor;
                 }
             }
             else {
@@ -104,7 +103,7 @@ namespace RVP
 
         // Logic for detecting and tracking jumps
         void DetectJump() {
-            if (vp.groundedWheels == 0) {
+            if (vp.GroundedWheels == 0) {
                 jumpDist = Vector3.Distance(jumpStart, tr.position);
                 jumpTime += Time.fixedDeltaTime;
                 jumpString = "Jump: " + jumpDist.ToString("n0") + " m";
@@ -129,10 +128,10 @@ namespace RVP
 
         // Logic for detecting and tracking flips
         void DetectFlips() {
-            if (vp.groundedWheels == 0) {
+            if (vp.GroundedWheels == 0) {
                 // Check to see if vehicle is performing a stunt and add it to the stunts list
                 foreach (Stunt curStunt in StuntManager.stuntsStatic) {
-                    if (Vector3.Dot(vp.localAngularVel.normalized, curStunt.rotationAxis) >= curStunt.precision) {
+                    if (Vector3.Dot(vp.LocalAngularVel.normalized, curStunt.rotationAxis) >= curStunt.precision) {
                         bool stuntExists = false;
 
                         foreach (Stunt checkStunt in stunts) {
@@ -150,7 +149,7 @@ namespace RVP
 
                 // Check the progress of stunts and compile the flip string listing all stunts
                 foreach (Stunt curStunt2 in stunts) {
-                    if (Vector3.Dot(vp.localAngularVel.normalized, curStunt2.rotationAxis) >= curStunt2.precision) {
+                    if (Vector3.Dot(vp.LocalAngularVel.normalized, curStunt2.rotationAxis) >= curStunt2.precision) {
                         curStunt2.progress += rb.angularVelocity.magnitude * Time.fixedDeltaTime;
                     }
 

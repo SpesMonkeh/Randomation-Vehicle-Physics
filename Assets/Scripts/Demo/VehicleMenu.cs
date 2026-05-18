@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 namespace RVP
@@ -42,10 +41,10 @@ namespace RVP
             Transmission trans = newVehicle.GetComponentInChildren<Transmission>();
             if (trans) {
                 trans.automatic = autoShiftToggle.isOn;
-                newVehicle.GetComponent<VehicleParent>().brakeIsReverse = autoShiftToggle.isOn;
+                newVehicle.GetComponent<VehicleParent>().BrakeIsReverse = autoShiftToggle.isOn;
 
                 if (trans is ContinuousTransmission && !autoShiftToggle.isOn) {
-                    newVehicle.GetComponent<VehicleParent>().brakeIsReverse = true;
+                    newVehicle.GetComponent<VehicleParent>().BrakeIsReverse = true;
                 }
             }
 

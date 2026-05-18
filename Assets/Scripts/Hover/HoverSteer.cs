@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -35,9 +34,9 @@ namespace RVP
 
         void FixedUpdate() {
             // Set steering of hover wheels
-            float rbSpeed = vp.localVelocity.z / steerCurveStretch;
+            float rbSpeed = vp.LocalVelocity.z / steerCurveStretch;
             float steerLimit = steerCurve.Evaluate(Mathf.Abs(rbSpeed));
-            steerAmount = vp.steerInput * steerLimit;
+            steerAmount = vp.SteerInput * steerLimit;
 
             foreach (HoverWheel curWheel in steeredWheels) {
                 curWheel.steerRate = steerAmount * steerRate;

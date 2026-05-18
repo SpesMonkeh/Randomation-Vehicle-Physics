@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 namespace RVP
@@ -16,7 +15,7 @@ namespace RVP
         static float widthMargin = 0;
 
         public override void OnInspectorGUI() {
-            GUIStyle boldFoldout = new GUIStyle(EditorStyles.foldout);
+            GUIStyle boldFoldout = new(EditorStyles.foldout);
             boldFoldout.fontStyle = FontStyle.Bold;
             Wheel targetScript = (Wheel)target;
             Wheel[] allTargets = new Wheel[targets.Length];

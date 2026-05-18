@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -32,17 +31,17 @@ namespace RVP
             }
 
             if (health > 0) {
-                if (automatic && vp.groundedWheels > 0) {
+                if (automatic && vp.GroundedWheels > 0) {
                     // Automatically set the target ratio
-                    targetRatio = (1 - vp.burnout) * Mathf.Clamp01(Mathf.Abs(targetDrive.feedbackRPM) / Mathf.Max(0.01f, maxRPM * Mathf.Abs(currentRatio)));
+                    targetRatio = (1 - vp.Burnout) * Mathf.Clamp01(Mathf.Abs(targetDrive.feedbackRPM) / Mathf.Max(0.01f, maxRPM * Mathf.Abs(currentRatio)));
                 }
                 else if (!automatic) {
                     // Manually set the target ratio
-                    targetRatio = Mathf.Clamp01(targetRatio + (vp.upshiftHold - vp.downshiftHold) * manualShiftRate * Time.deltaTime);
+                    targetRatio = Mathf.Clamp01(targetRatio + (vp.UpshiftHold - vp.DownshiftHold) * manualShiftRate * Time.deltaTime);
                 }
             }
 
-            reversing = canReverse && vp.burnout == 0 && vp.localVelocity.z < 1 && (vp.accelInput < 0 || (vp.brakeIsReverse && vp.brakeInput > 0));
+            reversing = canReverse && vp.Burnout == 0 && vp.LocalVelocity.z < 1 && (vp.AccelInput < 0 || (vp.BrakeIsReverse && vp.BrakeInput > 0));
             currentRatio = Mathf.Lerp(minRatio, maxRatio, targetRatio) * (reversing ? -1 : 1);
 
             newDrive.curve = targetDrive.curve;

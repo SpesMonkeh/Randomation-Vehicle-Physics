@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 namespace RVP
@@ -14,7 +13,7 @@ namespace RVP
         static bool showButtons = true;
 
         public override void OnInspectorGUI() {
-            GUIStyle boldFoldout = new GUIStyle(EditorStyles.foldout);
+            GUIStyle boldFoldout = new(EditorStyles.foldout);
             boldFoldout.fontStyle = FontStyle.Bold;
             HoverWheel targetScript = (HoverWheel)target;
             HoverWheel[] allTargets = new HoverWheel[targets.Length];

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -85,14 +84,14 @@ namespace RVP
                         hinge.enableCollision = false;
                         hinge.useLimits = chosenJoint.useLimits;
 
-                        JointLimits limits = new JointLimits();
+                        JointLimits limits = new();
                         limits.min = chosenJoint.minLimit;
                         limits.max = chosenJoint.maxLimit;
                         limits.bounciness = chosenJoint.bounciness;
                         hinge.limits = limits;
                         hinge.useSpring = chosenJoint.useSpring;
 
-                        JointSpring spring = new JointSpring();
+                        JointSpring spring = new();
                         spring.targetPosition = chosenJoint.springTargetPosition;
                         spring.spring = chosenJoint.springForce;
                         spring.damper = chosenJoint.springDamper;

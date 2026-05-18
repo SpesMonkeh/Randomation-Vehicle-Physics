@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -85,8 +84,8 @@ namespace RVP
             boost = Mathf.Clamp(boosting ? boost - boostBurnRate * Time.timeScale * 0.05f * TimeMaster.inverseFixedTimeFactor : boost, 0, maxBoost);
             boostPrev = boosting;
 
-            if (canBoost && ignition && health > 0 && !vp.crashing && boost > 0 && (vp.hover ? vp.accelInput != 0 || Mathf.Abs(vp.localVelocity.z) > 1 : vp.accelInput > 0 || vp.localVelocity.z > 1)) {
-                if (((boostReleased && !boosting) || boosting) && vp.boostButton) {
+            if (canBoost && ignition && health > 0 && !vp.Crashing && boost > 0 && (vp.Hover ? vp.AccelInput != 0 || Mathf.Abs(vp.LocalVelocity.z) > 1 : vp.AccelInput > 0 || vp.LocalVelocity.z > 1)) {
+                if (((boostReleased && !boosting) || boosting) && vp.BoostButton) {
                     boosting = true;
                     boostReleased = false;
                 }
@@ -98,7 +97,7 @@ namespace RVP
                 boosting = false;
             }
 
-            if (!vp.boostButton) {
+            if (!vp.BoostButton) {
                 boostReleased = true;
             }
 

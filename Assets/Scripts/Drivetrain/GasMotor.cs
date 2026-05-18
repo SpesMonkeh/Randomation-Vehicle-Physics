@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -53,13 +52,13 @@ namespace RVP
             base.FixedUpdate();
 
             // Calculate proper input
-            actualAccel = Mathf.Lerp(vp.brakeIsReverse && vp.reversing && vp.accelInput <= 0 ? vp.brakeInput : vp.accelInput, Mathf.Max(vp.accelInput, vp.burnout), vp.burnout);
+            actualAccel = Mathf.Lerp(vp.BrakeIsReverse && vp.Reversing && vp.AccelInput <= 0 ? vp.BrakeInput : vp.AccelInput, Mathf.Max(vp.AccelInput, vp.Burnout), vp.Burnout);
             float accelGet = canReverse ? actualAccel : Mathf.Clamp01(actualAccel);
             actualInput = inputCurve.Evaluate(Mathf.Abs(accelGet)) * Mathf.Sign(accelGet);
             targetDrive.curve = torqueCurve;
 
             if (ignition) {
-                float boostEval = boostPowerCurve.Evaluate(Mathf.Abs(vp.localVelocity.z));
+                float boostEval = boostPowerCurve.Evaluate(Mathf.Abs(vp.LocalVelocity.z));
                 // Set RPM
                 targetDrive.rpm = Mathf.Lerp(targetDrive.rpm, actualInput * maxRPM * 1000 * (boosting ? 1 + boostEval : 1), (1 - inertia) * Time.timeScale);
                 // Set torque
@@ -108,8 +107,8 @@ namespace RVP
         public override void Update() {
             // Set audio pitch
             if (snd && ignition) {
-                airPitch = vp.groundedWheels > 0 || actualAccel != 0 ? 1 : Mathf.Lerp(airPitch, 0, 0.5f * Time.deltaTime);
-                pitchFactor = (actualAccel != 0 || vp.groundedWheels == 0 || !pitchDecreaseWithoutThrottle ? 1 : 0.5f) * (shifting ?
+                airPitch = vp.GroundedWheels > 0 || actualAccel != 0 ? 1 : Mathf.Lerp(airPitch, 0, 0.5f * Time.deltaTime);
+                pitchFactor = (actualAccel != 0 || vp.GroundedWheels == 0 || !pitchDecreaseWithoutThrottle ? 1 : 0.5f) * (shifting ?
                     (pitchIncreaseBetweenShift ?
                         Mathf.Sin((transmission.shiftTime / transmission.shiftDelay) * Mathf.PI) :
                         Mathf.Min(transmission.shiftDelay, Mathf.Pow(transmission.shiftTime, 2)) / transmission.shiftDelay) :

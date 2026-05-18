@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 namespace RVP
@@ -15,7 +14,7 @@ namespace RVP
         float topSpeed = 0;
 
         public override void OnInspectorGUI() {
-            GUIStyle boldFoldout = new GUIStyle(EditorStyles.foldout);
+            GUIStyle boldFoldout = new(EditorStyles.foldout);
             boldFoldout.fontStyle = FontStyle.Bold;
             HoverMotor targetScript = (HoverMotor)target;
             HoverMotor[] allTargets = new HoverMotor[targets.Length];

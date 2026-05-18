@@ -1,11 +1,11 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo" at "2026-05-17T22:40:09.2398657Z"
 Built from '6000.4/staging' branch; Version is '6000.4.6f1 (0b051c2e5d54) revision 722204'; Using compiler version '194234433'; Build Type 'Release'
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo" at "2026-05-15T22:18:39.1393326Z"
 OS: 'Windows 11  (10.0.26200) Core' Language: 'da' Physical Memory: 16107 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
 System  architecture: x64
 Process architecture: x64
-Date: 2026-05-15T22:18:39Z
+Date: 2026-05-17T22:40:09Z
 
 COMMAND LINE ARGUMENTS:
 C:\Program Files\Unity\Hub\Editor\6000.4.6f1\Editor\Unity.exe
@@ -19,7 +19,9 @@ C:/Users/ChrHo/Unity/Randomation
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-54418
+54396
+-licensingIpc
+LicenseClient-ChrHo
 -force-d3d12
 -job-worker-count
 5
@@ -66,12 +68,12 @@ C:/Users/ChrHo/Unity/Randomation
     "memorysetup-job-temp-allocator-block-size=2097152"
     "memorysetup-job-temp-allocator-block-size-background=1048576"
     "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
-Player connection [8028]  Target information:
+Player connection [21272]  Target information:
 
-Player connection [8028]  * "[IP] 10.105.26.143 [Port] 0 [Flags] 2 [Guid] 1821969509 [EditorId] 1821969509 [Version] 1048832 [Id] WindowsEditor(7,CLenovo) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [21272]  * "[IP] 192.168.2.3 [Port] 0 [Flags] 2 [Guid] 138273770 [EditorId] 138273770 [Version] 1048832 [Id] WindowsEditor(7,CLenovo) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [8028] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [8028] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [21272] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [21272] Host joined alternative multi-casting on [225.0.0.222:34997]...
 JobSystem: Creating JobQueue using job-worker-count value 5
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
@@ -100,29 +102,29 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56544
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56172
 CodeReloadManager initialized
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002535 seconds.
+Registered in 0.001220 seconds.
 [Licensing::Client] Error: HandshakeResponse reported an error:
 	ResponseCode: 505
 	ResponseStatus: Unsupported protocol version '1.18.1'.
 [Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-ChrHo"
 [Licensing::IpcConnector] LicenseClient-ChrHo channel disconnected successfully.
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo-6000.4.6" at "2026-05-15T22:18:40.740767Z"
-[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 28836, path: "C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo-6000.4.6" at "2026-05-17T22:40:10.3840555Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 26084, path: "C:/Program Files/Unity/Hub/Editor/6000.4.6f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
 [Licensing::Module] LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.18.1+9fbee8e
-  Session Id:              72f62e1df9b54bc5836ae35e22a49de6
-  Correlation Id:          8e409312b9e594bfed887655412fa8c2
-  External correlation Id: 7538573703703794110
+  Session Id:              b1a69aba6e3d4cd6b584fc3d1a1d3603
+  Correlation Id:          261afb731eddd2a9d58773e7ba5e1f73
+  External correlation Id: 3195113971115260123
   Machine Id:              wugyHCEIeJbQTNWWa7btAHWNNKM=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-ChrHo-6000.4.6" (connect: 0.00s, validation: 0.01s, handshake: 0.01s)
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo-6000.4.6-notifications" at "2026-05-15T22:18:40.7580289Z"
-[Licensing::Module] Licensing Background thread has ended after 1.62s
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-ChrHo-6000.4.6" (connect: 0.00s, validation: 0.00s, handshake: 0.01s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-ChrHo-6000.4.6-notifications" at "2026-05-17T22:40:10.392176Z"
+[Licensing::Module] Licensing Background thread has ended after 1.15s
 Native extension for WindowsStandalone target not found
 Package Manager log level set to [2]
 [Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
@@ -130,23 +132,23 @@ Package Manager log level set to [2]
 [Package Manager] Cannot connect to Unity Package Manager local server
 ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.624 seconds
-Domain Reload Profiling: 1339ms
-	BeginReloadAssembly (189ms)
-	RebuildCommonClasses (66ms)
-	RebuildNativeTypeToScriptingClass (23ms)
-	initialDomainReloadingComplete (101ms)
-	LoadAllAssembliesAndSetupDomain (333ms)
-		LoadAssemblies (185ms)
-		AnalyzeDomain (319ms)
-			TypeCache.Refresh (315ms)
-				TypeCache.ScanAssembly (296ms)
-	FinalizeReload (627ms)
+- Finished resetting the current domain, in  0.367 seconds
+Domain Reload Profiling: 800ms
+	BeginReloadAssembly (126ms)
+	RebuildCommonClasses (37ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (61ms)
+	LoadAllAssembliesAndSetupDomain (196ms)
+		LoadAssemblies (123ms)
+		AnalyzeDomain (188ms)
+			TypeCache.Refresh (187ms)
+				TypeCache.ScanAssembly (175ms)
+	FinalizeReload (368ms)
 		SetupLoadedEditorAssemblies (0ms)
-			InitializePlatformSupportModulesInManaged (95ms)
-			BeforeProcessingInitializeOnLoad (150ms)
-			ProcessInitializeOnLoadAttributes (174ms)
-			ProcessInitializeOnLoadMethodAttributes (102ms)
+			InitializePlatformSupportModulesInManaged (43ms)
+			BeforeProcessingInitializeOnLoad (81ms)
+			ProcessInitializeOnLoadAttributes (111ms)
+			ProcessInitializeOnLoadMethodAttributes (76ms)
 ========================================================================
 Worker process is ready to serve import requests
 Import Worker Mode flag is 0x00
@@ -175,40 +177,82 @@ Native extension for WindowsStandalone target not found
 [Package Manager] Cannot connect to Unity Package Manager local server
 ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.657 seconds
-Domain Reload Profiling: 1341ms
-	BeginReloadAssembly (205ms)
-		DisableScriptedObjects (6ms)
-		CreateAndSetChildDomain (33ms)
-	RebuildCommonClasses (53ms)
-	RebuildNativeTypeToScriptingClass (17ms)
-	initialDomainReloadingComplete (80ms)
-	LoadAllAssembliesAndSetupDomain (327ms)
-		LoadAssemblies (341ms)
-		AnalyzeDomain (92ms)
-			TypeCache.Refresh (64ms)
-				TypeCache.ScanAssembly (49ms)
-			BuildScriptInfoCaches (19ms)
-			ResolveRequiredComponents (5ms)
-	FinalizeReload (659ms)
+- Finished resetting the current domain, in  0.396 seconds
+Domain Reload Profiling: 816ms
+	BeginReloadAssembly (164ms)
+		DisableScriptedObjects (5ms)
+		CreateAndSetChildDomain (25ms)
+	RebuildCommonClasses (34ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (48ms)
+	LoadAllAssembliesAndSetupDomain (162ms)
+		LoadAssemblies (204ms)
+		AnalyzeDomain (45ms)
+			TypeCache.Refresh (30ms)
+				TypeCache.ScanAssembly (23ms)
+			BuildScriptInfoCaches (10ms)
+			ResolveRequiredComponents (3ms)
+	FinalizeReload (397ms)
 		SetupLoadedEditorAssemblies (0ms)
-			InitializePlatformSupportModulesInManaged (4ms)
-			BeforeProcessingInitializeOnLoad (167ms)
-			ProcessInitializeOnLoadAttributes (201ms)
-			ProcessInitializeOnLoadMethodAttributes (67ms)
-			AfterProcessingInitializeOnLoad (8ms)
-		AwakeInstancesAfterBackupRestoration (8ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
+			BeforeProcessingInitializeOnLoad (94ms)
+			ProcessInitializeOnLoadAttributes (134ms)
+			ProcessInitializeOnLoadMethodAttributes (44ms)
+			AfterProcessingInitializeOnLoad (4ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 1405 unused Assets / (0.7 MB). Loaded Objects now: 2013.
-Memory consumption went from 76.7 MB to 76.0 MB.
-Total: 5.819200 ms (FindLiveObjects: 0.174900 ms CreateObjectMapping: 0.078200 ms MarkObjects: 4.763800 ms  DeleteObjects: 0.798100 ms)
+Unloading 1405 unused Assets / (445.0 KB). Loaded Objects now: 2014.
+Memory consumption went from 78.8 MB to 78.3 MB.
+Total: 3.708700 ms (FindLiveObjects: 0.151500 ms CreateObjectMapping: 0.074400 ms MarkObjects: 3.131400 ms  DeleteObjects: 0.349700 ms)
 
 ========================================================================
-Received Import Request.
-  Time since last request: 105668.442028 seconds.
-  path: Assets/Input
-  importAddress: Guid(dfd9521e225e4ea48b24169b10780b6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Input using Guid(dfd9521e225e4ea48b24169b10780b6b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: '9ee57737bcc251eabaf5c0cb1ef099f3') in 0.0086075 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=e0179f599dcd3eb16efcfaaa8747f0da DependenciesID=89eac0f9ad4b58fdfc56dfb8e9d6abaf StaticDependenciesID=5f0203608c77d070cd2000d10421c192 
-Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+Received Prepare
+Begin MonoManager ReloadAssembly
+[Licensing::Client] Successfully resolved entitlement details
+Assembly Assembly-CSharp-Editor-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-Editor.dll at Library/ScriptAssemblies/Assembly-CSharp-Editor.dll not valid. Loading of assembly skipped.
+Assembly Assembly-CSharp-firstpass.dll at Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll not valid. Loading of assembly skipped.
+Assembly TestNewCustomAssembly.dll at Library/ScriptAssemblies/TestNewCustomAssembly.dll not valid. Loading of assembly skipped.
+Assembly Unity.InputSystem.IntegrationTests.dll at Library/ScriptAssemblies/Unity.InputSystem.IntegrationTests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Editor.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.Multiplayer.Center.Tests.dll at Library/ScriptAssemblies/Unity.Multiplayer.Center.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.TextMeshPro.Editor.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshPro.Editor.Tests.dll not valid. Loading of assembly skipped.
+Assembly Unity.TextMeshPro.Tests.dll at Library/ScriptAssemblies/Unity.TextMeshPro.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.UI.Common.Tests.dll at Library/ScriptAssemblies/UnityEditor.UI.Common.Tests.dll not valid. Loading of assembly skipped.
+Assembly UnityEditor.UI.EditorTests.dll at Library/ScriptAssemblies/UnityEditor.UI.EditorTests.dll not valid. Loading of assembly skipped.
+Assembly UnityEngine.UI.Tests.dll at Library/ScriptAssemblies/UnityEngine.UI.Tests.dll not valid. Loading of assembly skipped.
+Native extension for WindowsStandalone target not found
+[Package Manager] Failed to launch server process. Reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] Unable to send message (not connected to server process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.407 seconds
+Domain Reload Profiling: 833ms
+	BeginReloadAssembly (179ms)
+		DisableScriptedObjects (7ms)
+		CreateAndSetChildDomain (26ms)
+	RebuildCommonClasses (34ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (42ms)
+	LoadAllAssembliesAndSetupDomain (156ms)
+		LoadAssemblies (216ms)
+		AnalyzeDomain (33ms)
+			TypeCache.Refresh (4ms)
+			BuildScriptInfoCaches (25ms)
+			ResolveRequiredComponents (3ms)
+	FinalizeReload (408ms)
+		SetupLoadedEditorAssemblies (0ms)
+			BeforeProcessingInitializeOnLoad (99ms)
+			ProcessInitializeOnLoadAttributes (130ms)
+			ProcessInitializeOnLoadMethodAttributes (42ms)
+			AfterProcessingInitializeOnLoad (5ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1403 unused Assets / (150.9 KB). Loaded Objects now: 2014.
+Memory consumption went from 78.5 MB to 78.3 MB.
+Total: 3.680500 ms (FindLiveObjects: 0.139400 ms CreateObjectMapping: 0.064700 ms MarkObjects: 3.196300 ms  DeleteObjects: 0.278800 ms)
 
+Prepare: number of updated asset objects reloaded= 0
+EnvironmentDependencyValues requested are different than current active one (requested -> active):
+  graphicsApiMask: 4 -> 262148

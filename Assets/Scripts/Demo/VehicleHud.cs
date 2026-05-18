@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 namespace RVP
@@ -28,7 +27,7 @@ namespace RVP
         float stuntEndTime = -1;
         PropertyToggleSetter propertySetter;
 
-        private void Start() {
+        void Start() {
             Initialize(targetVehicle);
         }
 
@@ -60,7 +59,7 @@ namespace RVP
 
         void Update() {
             if (vp) {
-                speedText.text = (vp.velMag * 2.23694f).ToString("0") + " MPH";
+                speedText.text = (vp.VelMag * 2.23694f).ToString("0") + " MPH";
 
                 if (trans) {
                     if (gearbox) {

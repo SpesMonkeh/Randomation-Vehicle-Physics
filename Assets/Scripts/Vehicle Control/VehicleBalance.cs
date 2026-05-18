@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -50,9 +49,9 @@ namespace RVP
 
         void FixedUpdate() {
             // Apply endo limit
-            actualPitchInput = vp.wheels.Length == 1 ? 0 : Mathf.Clamp(vp.pitchInput, -1, vp.velMag > endoSpeedThreshold ? 0 : 1);
+            actualPitchInput = vp.Wheels.Length == 1 ? 0 : Mathf.Clamp(vp.PitchInput, -1, vp.VelMag > endoSpeedThreshold ? 0 : 1);
 
-            if (vp.groundedWheels > 0) {
+            if (vp.GroundedWheels > 0) {
                 if (leanFactor != Vector3.zero) {
                     ApplyLean();
                 }
@@ -61,47 +60,47 @@ namespace RVP
 
         // Apply corrective balance forces
         void ApplyLean() {
-            if (vp.groundedWheels > 0) {
+            if (vp.GroundedWheels > 0) {
                 Vector3 inverseWorldUp;
-                inverseWorldUp = vp.norm.InverseTransformDirection(Vector3.Dot(vp.wheelNormalAverage, GlobalControl.worldUpDir) <= 0 ? vp.wheelNormalAverage : Vector3.Lerp(GlobalControl.worldUpDir, vp.wheelNormalAverage, Mathf.Abs(Vector3.Dot(vp.norm.up, GlobalControl.worldUpDir)) * 2));
-                Debug.DrawRay(tr.position, vp.norm.TransformDirection(inverseWorldUp), Color.white);
+                inverseWorldUp = vp.Norm.InverseTransformDirection(Vector3.Dot(vp.WheelNormalAverage, GlobalControl.worldUpDir) <= 0 ? vp.WheelNormalAverage : Vector3.Lerp(GlobalControl.worldUpDir, vp.WheelNormalAverage, Mathf.Abs(Vector3.Dot(vp.Norm.up, GlobalControl.worldUpDir)) * 2));
+                Debug.DrawRay(tr.position, vp.Norm.TransformDirection(inverseWorldUp), Color.white);
 
                 // Calculate target lean direction
                 targetLean = new Vector3(
                     Mathf.Lerp(
                         inverseWorldUp.x,
-                        Mathf.Clamp(-vp.rollInput * leanFactor.z * leanRollCurve.Evaluate(Mathf.Abs(vp.localVelocity.z)) + Mathf.Clamp(vp.localVelocity.x * slideLeanFactor, -leanFactor.z * slideLeanFactor, leanFactor.z * slideLeanFactor), -leanFactor.z, leanFactor.z),
-                        Mathf.Max(Mathf.Abs(F.MaxAbs(vp.steerInput, vp.rollInput)))),
+                        Mathf.Clamp(-vp.RollInput * leanFactor.z * leanRollCurve.Evaluate(Mathf.Abs(vp.LocalVelocity.z)) + Mathf.Clamp(vp.LocalVelocity.x * slideLeanFactor, -leanFactor.z * slideLeanFactor, leanFactor.z * slideLeanFactor), -leanFactor.z, leanFactor.z),
+                        Mathf.Max(Mathf.Abs(F.MaxAbs(vp.SteerInput, vp.RollInput)))),
                     Mathf.Pow(Mathf.Abs(actualPitchInput), pitchExponent) * Mathf.Sign(actualPitchInput) * leanFactor.x,
-                    inverseWorldUp.z * (1 - Mathf.Abs(F.MaxAbs(actualPitchInput * leanFactor.x, vp.rollInput * leanFactor.z))));
+                    inverseWorldUp.z * (1 - Mathf.Abs(F.MaxAbs(actualPitchInput * leanFactor.x, vp.RollInput * leanFactor.z))));
             }
             else {
-                targetLean = vp.upDir;
+                targetLean = vp.UpDir;
             }
 
             // Transform targetLean to world space
-            targetLeanActual = Vector3.Lerp(targetLeanActual, vp.norm.TransformDirection(targetLean), (1 - leanSmoothness) * Time.timeScale * TimeMaster.inverseFixedTimeFactor).normalized;
+            targetLeanActual = Vector3.Lerp(targetLeanActual, vp.Norm.TransformDirection(targetLean), (1 - leanSmoothness) * Time.timeScale * TimeMaster.inverseFixedTimeFactor).normalized;
             Debug.DrawRay(tr.position, targetLeanActual, Color.black);
 
             // Apply pitch
             rb.AddTorque(
-                vp.norm.right * -(Vector3.Dot(vp.forwardDir, targetLeanActual) * 20 - vp.localAngularVel.x) * 100 * (vp.wheels.Length == 1 ? 1 : leanPitchCurve.Evaluate(Mathf.Abs(actualPitchInput))),
+                vp.Norm.right * -(Vector3.Dot(vp.ForwardDir, targetLeanActual) * 20 - vp.LocalAngularVel.x) * 100 * (vp.Wheels.Length == 1 ? 1 : leanPitchCurve.Evaluate(Mathf.Abs(actualPitchInput))),
                 ForceMode.Acceleration);
 
             // Apply yaw
             rb.AddTorque(
-                vp.norm.forward * (vp.groundedWheels == 1 ? vp.steerInput * leanFactor.y - vp.norm.InverseTransformDirection(rb.angularVelocity).z : 0) * 100 * leanYawCurve.Evaluate(Mathf.Abs(vp.steerInput)),
+                vp.Norm.forward * (vp.GroundedWheels == 1 ? vp.SteerInput * leanFactor.y - vp.Norm.InverseTransformDirection(rb.angularVelocity).z : 0) * 100 * leanYawCurve.Evaluate(Mathf.Abs(vp.SteerInput)),
                 ForceMode.Acceleration);
 
             // Apply roll
             rb.AddTorque(
-                vp.norm.up * (-Vector3.Dot(vp.rightDir, targetLeanActual) * 20 - vp.localAngularVel.z) * 100,
+                vp.Norm.up * (-Vector3.Dot(vp.RightDir, targetLeanActual) * 20 - vp.LocalAngularVel.z) * 100,
                 ForceMode.Acceleration);
 
             // Turn vehicle during wheelies
-            if (vp.groundedWheels == 1 && leanFactor.y > 0) {
-                rb.AddTorque(vp.norm.TransformDirection(
-                    new Vector3(0, 0, vp.steerInput * leanFactor.y - vp.norm.InverseTransformDirection(rb.angularVelocity).z)
+            if (vp.GroundedWheels == 1 && leanFactor.y > 0) {
+                rb.AddTorque(vp.Norm.TransformDirection(
+                    new Vector3(0, 0, vp.SteerInput * leanFactor.y - vp.Norm.InverseTransformDirection(rb.angularVelocity).z)
                     ), ForceMode.Acceleration);
             }
         }

@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 namespace RVP
@@ -14,7 +13,7 @@ namespace RVP
         static bool showButtons = true;
 
         public override void OnInspectorGUI() {
-            GUIStyle boldFoldout = new GUIStyle(EditorStyles.foldout);
+            GUIStyle boldFoldout = new(EditorStyles.foldout);
             boldFoldout.fontStyle = FontStyle.Bold;
             Suspension targetScript = (Suspension)target;
             Suspension[] allTargets = new Suspension[targets.Length];
@@ -47,7 +46,7 @@ namespace RVP
                             Suspension closestOne = null;
                             float closeDist = Mathf.Infinity;
 
-                            foreach (Wheel curWheel in vp.wheels) {
+                            foreach (Wheel curWheel in vp.Wheels) {
                                 float curDist = Vector2.Distance(new Vector2(curTarget.transform.localPosition.y, curTarget.transform.localPosition.z), new Vector2(curWheel.transform.parent.localPosition.y, curWheel.transform.parent.localPosition.z));
                                 if (Mathf.Sign(curTarget.transform.localPosition.x) != Mathf.Sign(curWheel.transform.parent.localPosition.x) && curDist < closeDist) {
                                     closeDist = curDist;

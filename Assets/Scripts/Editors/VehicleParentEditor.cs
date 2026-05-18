@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 namespace RVP
@@ -15,8 +14,10 @@ namespace RVP
         bool wheelMissing = false;
 
         public override void OnInspectorGUI() {
-            GUIStyle boldFoldout = new GUIStyle(EditorStyles.foldout);
-            boldFoldout.fontStyle = FontStyle.Bold;
+            GUIStyle boldFoldout = new(EditorStyles.foldout)
+            {
+                fontStyle = FontStyle.Bold
+            };
             VehicleParent targetScript = (VehicleParent)target;
             VehicleParent[] allTargets = new VehicleParent[targets.Length];
             isPrefab = F.IsPrefab(targetScript);
@@ -27,11 +28,11 @@ namespace RVP
             }
 
             wheelMissing = false;
-            if (targetScript.wheelGroups != null && targetScript.wheelGroups.Length > 0) {
-                if (targetScript.hover) {
-                    foreach (HoverWheel curWheel in targetScript.hoverWheels) {
+            if (targetScript.WheelGroups != null && targetScript.WheelGroups.Length > 0) {
+                if (targetScript.Hover) {
+                    foreach (HoverWheel curWheel in targetScript.HoverWheels) {
                         bool wheelfound = false;
-                        foreach (WheelCheckGroup curGroup in targetScript.wheelGroups) {
+                        foreach (WheelCheckGroup curGroup in targetScript.WheelGroups) {
                             foreach (HoverWheel curWheelInstance in curGroup.hoverWheels) {
                                 if (curWheel == curWheelInstance) {
                                     wheelfound = true;
@@ -39,16 +40,17 @@ namespace RVP
                             }
                         }
 
-                        if (!wheelfound) {
+                        if (wheelfound is false)
+                        {
                             wheelMissing = true;
                             break;
                         }
                     }
                 }
                 else {
-                    foreach (Wheel curWheel in targetScript.wheels) {
+                    foreach (Wheel curWheel in targetScript.Wheels) {
                         bool wheelfound = false;
-                        foreach (WheelCheckGroup curGroup in targetScript.wheelGroups) {
+                        foreach (WheelCheckGroup curGroup in targetScript.WheelGroups) {
                             foreach (Wheel curWheelInstance in curGroup.wheels) {
                                 if (curWheel == curWheelInstance) {
                                     wheelfound = true;
@@ -76,17 +78,17 @@ namespace RVP
                 if (showButtons) {
                     if (GUILayout.Button("Get Engine")) {
                         foreach (VehicleParent curTarget in allTargets) {
-                            curTarget.engine = curTarget.transform.GetComponentInChildren<Motor>();
+                            curTarget.Engine = curTarget.transform.GetComponentInChildren<Motor>();
                         }
                     }
 
                     if (GUILayout.Button("Get Wheels")) {
                         foreach (VehicleParent curTarget in allTargets) {
-                            if (curTarget.hover) {
-                                curTarget.hoverWheels = curTarget.transform.GetComponentsInChildren<HoverWheel>();
+                            if (curTarget.Hover) {
+                                curTarget.HoverWheels = curTarget.transform.GetComponentsInChildren<HoverWheel>();
                             }
                             else {
-                                curTarget.wheels = curTarget.transform.GetComponentsInChildren<Wheel>();
+                                curTarget.Wheels = curTarget.transform.GetComponentsInChildren<Wheel>();
                             }
                         }
                     }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace RVP
 {
@@ -47,11 +46,11 @@ namespace RVP
         void Update() {
             // Check for manual shift button presses
             if (!automatic) {
-                if (vp.upshiftPressed && currentGear < gears.Length - 1) {
+                if (vp.UpshiftPressed && currentGear < gears.Length - 1) {
                     Shift(1);
                 }
 
-                if (vp.downshiftPressed && currentGear > 0) {
+                if (vp.DownshiftPressed && currentGear > 0) {
                     Shift(-1);
                 }
             }
@@ -95,7 +94,7 @@ namespace RVP
                 newDrive.torque = 0;
             }
             else {
-                newDrive.rpm = (automatic && skidSteerDrive ? Mathf.Abs(targetDrive.rpm) * Mathf.Sign(vp.accelInput - (vp.brakeIsReverse ? vp.brakeInput * (1 - vp.burnout) : 0)) : targetDrive.rpm) / curGearRatio;
+                newDrive.rpm = (automatic && skidSteerDrive ? Mathf.Abs(targetDrive.rpm) * Mathf.Sign(vp.AccelInput - (vp.BrakeIsReverse ? vp.BrakeInput * (1 - vp.Burnout) : 0)) : targetDrive.rpm) / curGearRatio;
                 newDrive.torque = Mathf.Abs(curGearRatio) * targetDrive.torque;
             }
 
@@ -103,19 +102,19 @@ namespace RVP
             upshiftDifference = gears[currentGear].maxRPM - upperGear.minRPM;
             downshiftDifference = lowerGear.maxRPM - gears[currentGear].minRPM;
 
-            if (automatic && shiftTime == 0 && vp.groundedWheels > 0) {
-                if (!skidSteerDrive && vp.burnout == 0) {
-                    if (Mathf.Abs(vp.localVelocity.z) > 1 || vp.accelInput > 0 || (vp.brakeInput > 0 && vp.brakeIsReverse)) {
+            if (automatic && shiftTime == 0 && vp.GroundedWheels > 0) {
+                if (!skidSteerDrive && vp.Burnout == 0) {
+                    if (Mathf.Abs(vp.LocalVelocity.z) > 1 || vp.AccelInput > 0 || (vp.BrakeInput > 0 && vp.BrakeIsReverse)) {
                         if (currentGear < gears.Length - 1
-                            && (upperGear.minRPM + upshiftDifference * (curGearRatio < 0 ? Mathf.Min(1, shiftThreshold) : shiftThreshold) - actualFeedbackRPM <= 0 || (curGearRatio <= 0 && upperGear.ratio > 0 && (!vp.reversing || (vp.accelInput > 0 && vp.localVelocity.z > curGearRatio * 10))))
-                            && !(vp.brakeInput > 0 && vp.brakeIsReverse && upperGear.ratio >= 0)
-                            && !(vp.localVelocity.z < 0 && vp.accelInput == 0)) {
+                            && (upperGear.minRPM + upshiftDifference * (curGearRatio < 0 ? Mathf.Min(1, shiftThreshold) : shiftThreshold) - actualFeedbackRPM <= 0 || (curGearRatio <= 0 && upperGear.ratio > 0 && (!vp.Reversing || (vp.AccelInput > 0 && vp.LocalVelocity.z > curGearRatio * 10))))
+                            && !(vp.BrakeInput > 0 && vp.BrakeIsReverse && upperGear.ratio >= 0)
+                            && !(vp.LocalVelocity.z < 0 && vp.AccelInput == 0)) {
                             Shift(1);
                         }
                         else if (currentGear > 0
-                            && (actualFeedbackRPM - (lowerGear.maxRPM - downshiftDifference * shiftThreshold) <= 0 || (curGearRatio >= 0 && lowerGear.ratio < 0 && (vp.reversing || ((vp.accelInput < 0 || (vp.brakeInput > 0 && vp.brakeIsReverse)) && vp.localVelocity.z < curGearRatio * 10))))
-                            && !(vp.accelInput > 0 && lowerGear.ratio <= 0)
-                            && (lowerGear.ratio > 0 || vp.localVelocity.z < 1)) {
+                            && (actualFeedbackRPM - (lowerGear.maxRPM - downshiftDifference * shiftThreshold) <= 0 || (curGearRatio >= 0 && lowerGear.ratio < 0 && (vp.Reversing || ((vp.AccelInput < 0 || (vp.BrakeInput > 0 && vp.BrakeIsReverse)) && vp.LocalVelocity.z < curGearRatio * 10))))
+                            && !(vp.AccelInput > 0 && lowerGear.ratio <= 0)
+                            && (lowerGear.ratio > 0 || vp.LocalVelocity.z < 1)) {
                             Shift(-1);
                         }
                     }
