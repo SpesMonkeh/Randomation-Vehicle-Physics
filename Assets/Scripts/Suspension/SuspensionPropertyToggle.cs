@@ -4,7 +4,9 @@ using System;
 namespace RVP
 {
 	/// Class for changing the properties of the suspension
-	[RequireComponent(typeof(Suspension))] [DisallowMultipleComponent] [AddComponentMenu("RVP2WoL/Suspension/Suspension Property", 2)]
+	[RequireComponent(typeof(Suspension)),
+	 DisallowMultipleComponent,
+	 AddComponentMenu("RVP2WoL/Suspension/Suspension Property", 2)]
 	public class SuspensionPropertyToggle : MonoBehaviour
 	{
 		[SerializeField] Suspension suspension;
@@ -25,7 +27,7 @@ namespace RVP
 				return;
 
 			properties[index].IsEnabled = !properties[index].IsEnabled;
-			suspension.UpdateProperties();
+			suspension.UpdateToggleableProperties();
 		}
 
 		/// Set a property in the properties array at index to the value
@@ -34,7 +36,7 @@ namespace RVP
 			if (properties.Length - 1 < index)
 				return;
 			properties[index].IsEnabled = value;
-			suspension.UpdateProperties();
+			suspension.UpdateToggleableProperties();
 		}
 	}
 

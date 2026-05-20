@@ -2,9 +2,9 @@
 
 namespace RVP
 {
-    [AddComponentMenu("RVP/Suspension/Suspension Property Setter", 3)]
 
-    // Class for cycling through suspension properties
+    /// Class for cycling through suspension properties
+    [AddComponentMenu("RVP/Suspension/Suspension Property Setter", 3)]
     public class PropertyToggleSetter : MonoBehaviour
     {
         [Tooltip("Steering Controller")]
@@ -19,17 +19,19 @@ namespace RVP
         [Tooltip("Input manager button which increments the preset")]
         public string changeButton;
 
-        void Update() {
-            if (!string.IsNullOrEmpty(changeButton)) {
-                if (Input.GetButtonDown(changeButton)) {
-                    ChangePreset(currentPreset + 1);
-                }
-            }
+        void OnEnable()
+        {
+            PlayerControlsHandler.NextPresetAction += OnNextPreset;
         }
 
-        // Change the current preset
-        public void ChangePreset(int preset) {
-            currentPreset = preset % (presets.Length);
+        void OnDisable()
+        {
+            PlayerControlsHandler.NextPresetAction -= OnNextPreset;
+        }
+
+        public void OnNextPreset()
+        {
+            currentPreset = (currentPreset + 1) % (presets.Length);
 
             if (steerer) {
                 steerer.limitSteer = presets[currentPreset].limitSteer;

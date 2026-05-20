@@ -24,11 +24,12 @@ namespace RVP
 		}
 
 		internal static Action RestartAction = () => { };
+		internal static Action NextPresetAction = () => { };
+		internal static Action<bool> BoostAction = _ => { };
 		internal static Action<float> SteerAction = _ => { };
 		internal static Action<float> AccelerateAction = _ => { };
 		internal static Action<float> BrakeAction = _ => { };
 		internal static Action<float> EBrakeAction = _ => { };
-		internal static Action<bool> BoostAction = _ => { };
 		internal static Action<float> UpShiftAction			= _ => { };
 		internal static Action<float> DownShiftAction		= _ => { };
 		internal static Action<float> PitchAction			= _ => { };
@@ -40,6 +41,12 @@ namespace RVP
 		{
 			Vector2 input = ctx.ReadValue<Vector2>();
 			LookAction?.Invoke(input);
+		}
+
+		void OnNextPreset(InputAction.CallbackContext ctx)
+		{
+			if (ctx.phase is InputActionPhase.Performed)
+				NextPresetAction?.Invoke();
 		}
 
 		void OnRestart(InputAction.CallbackContext ctx)

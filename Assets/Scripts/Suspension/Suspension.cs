@@ -5,16 +5,10 @@ using static UnityEngine.Mathf;
 
 namespace RVP
 {
-	[RequireComponent(typeof(DriveForce))]
-	[ExecuteInEditMode]
-	[DisallowMultipleComponent]
-	[AddComponentMenu("RVP/Suspension/Suspension", 0)]
-
-	// Class for the suspensions
+	[RequireComponent(typeof(DriveForce))] [ExecuteInEditMode] [DisallowMultipleComponent] [AddComponentMenu("RVP2WoL/Suspension/Suspension", 0)]
 	public class Suspension : MonoBehaviour
 	{
-		[NonSerialized]
-		public Transform tr;
+		[NonSerialized] public Transform tr;
 		Rigidbody rb;
 		VehicleParent vp;
 
@@ -139,7 +133,7 @@ namespace RVP
 		[SerializeField] Vector3 damagePivot;
 
 		[Tooltip("Compression amount to remain at when wheel is detached")]
-		[SerializeField, Range(0, 1)] float detachedCompression = 0.5f;
+		[SerializeField] [Range(0, 1)] float detachedCompression = 0.5f;
 
 		[SerializeField] float jamForce = Infinity;
 		[SerializeField] bool jammed; // Originally [NonSerialized]
@@ -173,7 +167,7 @@ namespace RVP
 
 			if (Application.isPlaying)
 			{
-				GetCamber();
+				CalculateCamberAngle();
 
 				// Generate the hard collider
 				if (generateHardCollider)
@@ -198,7 +192,7 @@ namespace RVP
 			steerRangeMax = Max(steerRangeMin, steerRangeMax);
 
 			properties = GetComponent<SuspensionPropertyToggle>();
-			if (properties) UpdateProperties();
+			if (properties) UpdateToggleableProperties();
 		}
 
 		void FixedUpdate()
@@ -207,20 +201,9 @@ namespace RVP
 			forwardDir = tr.forward;
 			targetCompression = 1;
 
-			GetCamber();
-
-			GetSpringVectors();
-
-			if (wheel.Connected)
-			{
-				compression = Min(targetCompression, suspensionDistance > 0 ? Clamp01(wheel.ContactPoint.distance / suspensionDistance) : 0);
-				penetration = Min(0, wheel.ContactPoint.distance);
-			}
-			else
-			{
-				compression = detachedCompression;
-				penetration = 0;
-			}
+			CalculateCamberAngle();
+			CalculateSpringVectors();
+			CalculateCompressionAndPenetration();
 
 			if (targetCompression > 0) ApplySuspensionForce();
 
@@ -264,12 +247,26 @@ namespace RVP
 			}
 		}
 
+		void CalculateCompressionAndPenetration()
+		{
+			if (wheel.Connected)
+			{
+				compression = Min(targetCompression, suspensionDistance > 0 ? Clamp01(wheel.ContactPoint.distance / suspensionDistance) : 0);
+				penetration = Min(0, wheel.ContactPoint.distance);
+			}
+			else
+			{
+				compression = detachedCompression;
+				penetration = 0;
+			}
+		}
+
 		void Update()
 		{
-			GetCamber();
+			CalculateCamberAngle();
 
 			if (Application.isPlaying is false)
-				GetSpringVectors();
+				CalculateSpringVectors();
 			SetVehicleSteerAngle();
 		}
 
@@ -311,8 +308,8 @@ namespace RVP
 					// If wheel is resting on a rigidbody, apply opposing force to it
 					ApplyOpposingForceToRestingBody(groundBody, appliedSuspensionForce);
 				}
-				ApplyHardContactForce(travelVelocity);
 
+				ApplyHardContactForce(travelVelocity);
 			}
 		}
 
@@ -332,11 +329,11 @@ namespace RVP
 				Vector3 position = applyForceAtGroundContact
 					? wheel.ContactPoint.point
 					: wheel.WheelTransform.position;
-				rb.AddForceAtPosition(force, position, vp.SuspensionForceMode);}
+				rb.AddForceAtPosition(force, position, vp.SuspensionForceMode);
+			}
 		}
 
-		// Calculate the direction of the spring
-		void GetSpringVectors()
+		void CalculateSpringVectors()
 		{
 			if (!Application.isPlaying)
 			{
@@ -353,51 +350,54 @@ namespace RVP
 			springDirection = tr.TransformDirection(casterDir, Max(Abs(casterDir), Abs(sideDir)) - 1, sideDir).normalized;
 		}
 
-		/// Calculate the camber angle
-		void GetCamber()
+		void CalculateCamberAngle()
 		{
 			if (solidAxleCamber && oppositeWheel && wheel.Connected)
 			{
 				if (oppositeWheel.Wheel.RimTransform && wheel.RimTransform)
 				{
-					Vector3 axleDir = tr.InverseTransformDirection((oppositeWheel.Wheel.RimTransform.position - wheel.RimTransform.position).normalized);
+					Vector3 axleDir =
+						tr.InverseTransformDirection((oppositeWheel.Wheel.RimTransform.position - wheel.RimTransform.position).normalized);
 					camberAngle = Atan2(axleDir.z, axleDir.y) * Rad2Deg + 90 + camberOffset;
 				}
 			}
 			else
 			{
-				camberAngle = camberCurve.Evaluate(Application.isPlaying && wheel.Connected
-					? wheel.TravelDist
-					: targetCompression) + camberOffset;
+				float curvePosition =
+					Application.isPlaying && wheel.Connected // To Claude: Can you give rename curvePosition to something more descriptive?
+						? wheel.TravelDist
+						: targetCompression;
+
+				camberAngle = camberCurve.Evaluate(curvePosition) + camberOffset;
 			}
 		}
 
-		// Update the toggleable properties
-		public void UpdateProperties()
+		public void UpdateToggleableProperties()
 		{
-			if (properties)
-				foreach (SuspensionToggledProperty curProperty in properties.Properties)
-					switch ((int)curProperty.Property)
-					{
-						case 0:
-							steerEnabled = curProperty.IsEnabled;
-							break;
-						case 1:
-							steerInverted = curProperty.IsEnabled;
-							break;
-						case 2:
-							driveEnabled = curProperty.IsEnabled;
-							break;
-						case 3:
-							driveInverted = curProperty.IsEnabled;
-							break;
-						case 4:
-							eBrakeEnabled = curProperty.IsEnabled;
-							break;
-						case 5:
-							skidSteerBrake = curProperty.IsEnabled;
-							break;
-					}
+			if (!properties)
+				return;
+			foreach (SuspensionToggledProperty curProperty in properties.Properties)
+				switch ((int)curProperty.Property)
+				{
+					case 0:
+						steerEnabled = curProperty.IsEnabled;
+						break;
+					case 1:
+						steerInverted = curProperty.IsEnabled;
+						break;
+					case 2:
+						driveEnabled = curProperty.IsEnabled;
+						break;
+					case 3:
+						driveInverted = curProperty.IsEnabled;
+						break;
+					case 4:
+						eBrakeEnabled = curProperty.IsEnabled;
+						break;
+					case 5:
+						skidSteerBrake = curProperty.IsEnabled;
+						break;
+				}
 		}
 
 		// Visualize steer range
