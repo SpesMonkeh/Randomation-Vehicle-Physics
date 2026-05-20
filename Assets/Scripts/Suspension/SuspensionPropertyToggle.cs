@@ -1,57 +1,61 @@
 ﻿using UnityEngine;
+using System;
 
 namespace RVP
 {
-    [RequireComponent(typeof(Suspension))]
-    [DisallowMultipleComponent]
-    [AddComponentMenu("RVP/Suspension/Suspension Property", 2)]
+	/// Class for changing the properties of the suspension
+	[RequireComponent(typeof(Suspension))] [DisallowMultipleComponent] [AddComponentMenu("RVP2WoL/Suspension/Suspension Property", 2)]
+	public class SuspensionPropertyToggle : MonoBehaviour
+	{
+		[SerializeField] Suspension suspension;
+		[SerializeField] SuspensionToggledProperty[] properties = Array.Empty<SuspensionToggledProperty>();
 
-    // Class for changing the properties of the suspension
-    public class SuspensionPropertyToggle : MonoBehaviour
-    {
-        public SuspensionToggledProperty[] properties;
-        Suspension sus;
+		internal Suspension Suspension => suspension;
+		internal SuspensionToggledProperty[] Properties => properties;
 
-        void Start() {
-            sus = GetComponent<Suspension>();
-        }
+		void Awake()
+		{
+			suspension = GetComponent<Suspension>();
+		}
 
-        // Toggle a property in the properties array at index
-        public void ToggleProperty(int index) {
-            if (properties.Length - 1 >= index) {
-                properties[index].toggled = !properties[index].toggled;
+		/// Toggle a property in the properties array at index
+		public void ToggleProperty(int index)
+		{
+			if (properties.Length - 1 < index)
+				return;
 
-                if (sus) {
-                    sus.UpdateProperties();
-                }
-            }
-        }
+			properties[index].IsEnabled = !properties[index].IsEnabled;
+			suspension.UpdateProperties();
+		}
 
-        // Set a property in the properties array at index to the value
-        public void SetProperty(int index, bool value) {
-            if (properties.Length - 1 >= index) {
-                properties[index].toggled = value;
+		/// Set a property in the properties array at index to the value
+		public void SetProperty(int index, bool value)
+		{
+			if (properties.Length - 1 < index)
+				return;
+			properties[index].IsEnabled = value;
+			suspension.UpdateProperties();
+		}
+	}
 
-                if (sus) {
-                    sus.UpdateProperties();
-                }
-            }
-        }
-    }
+	/// Class for a single property
+	[Serializable]
+	internal class SuspensionToggledProperty
+	{
+		internal enum Properties
+		{
+			SteerEnable,
+			SteerInvert,
+			DriveEnable,
+			DriveInvert,
+			EBrakeEnable,
+			SkidSteerBrake // skidSteerBrake = brake is specially adjusted for skid steering
+		}
 
-    // Class for a single property
-    [System.Serializable]
-    public class SuspensionToggledProperty
-    {
-        public enum Properties { steerEnable, steerInvert, driveEnable, driveInvert, ebrakeEnable, skidSteerBrake } // The type of property
-        // steerEnable = enable steering
-        // steerInvert = invert steering
-        // driveEnable = enable driving
-        // driveInvert = invert drive
-        // ebrakeEnable = can ebrake
-        // skidSteerBrake = brake is specially adjusted for skid steering
+		[SerializeField] bool isEnabled;
+		[SerializeField] Properties property;
 
-        public Properties property; // The property
-        public bool toggled; // Is it enabled?
-    }
+		internal bool IsEnabled { get => isEnabled; set => isEnabled = value; }
+		internal Properties Property { get => property; set => property = value; }
+	}
 }

@@ -22,11 +22,17 @@ namespace RVP
 
         void Start() {
             vp = GetComponent<VehicleParent>();
-            setter = FindObjectOfType<MobileInput>();
+            setter = FindAnyObjectByType<MobileInput>();
         }
 
-        void FixedUpdate() {
-            if (setter) {
+        void OnEnable()
+        {
+
+        }
+
+        void FixedUpdate()
+        {
+            /*if (setter) {
                 accelerationDelta = Input.acceleration - accelerationPrev;
                 accelerationPrev = Input.acceleration;
                 vp.SetAccel(setter.accel);
@@ -44,6 +50,7 @@ namespace RVP
                     vp.SetSteer(setter.steer);
                 }
             }
+            */
         }
     }
 }

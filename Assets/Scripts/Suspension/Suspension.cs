@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Mathf;
 
 namespace RVP
 {
@@ -125,32 +126,40 @@ namespace RVP
 		[NonSerialized]
 		public DriveForce targetDrive; // The drive being passed into the wheel
 
-		[NonSerialized]
-		public SuspensionPropertyToggle properties; // Property toggler
-		[NonSerialized]
-		public bool steerEnabled = true;
-		[NonSerialized]
-		public bool steerInverted;
-		[NonSerialized]
-		public bool driveEnabled = true;
-		[NonSerialized]
-		public bool driveInverted;
-		[NonSerialized]
-		public bool ebrakeEnabled = true;
-		[NonSerialized]
-		public bool skidSteerBrake;
+		[SerializeField] SuspensionPropertyToggle properties; // Originally [NonSerialized]
+		[SerializeField] bool steerEnabled = true; // Originally [NonSerialized]
+		[SerializeField] bool steerInverted; // Originally [NonSerialized]
+		[SerializeField] bool driveEnabled = true; // Originally [NonSerialized]
+		[SerializeField] bool driveInverted; // Originally [NonSerialized]
+		[SerializeField] bool eBrakeEnabled = true; // Originally [NonSerialized]
+		[SerializeField] bool skidSteerBrake; // Originally [NonSerialized]
 
 		[Header("Damage")]
 		[Tooltip("Point around which the suspension pivots when damaged")]
-		public Vector3 damagePivot;
+		[SerializeField] Vector3 damagePivot;
 
 		[Tooltip("Compression amount to remain at when wheel is detached")]
-		[Range(0, 1)]
-		public float detachedCompression = 0.5f;
+		[SerializeField, Range(0, 1)] float detachedCompression = 0.5f;
 
-		public float jamForce = Mathf.Infinity;
-		[NonSerialized]
-		public bool jammed;
+		[SerializeField] float jamForce = Infinity;
+		[SerializeField] bool jammed; // Originally [NonSerialized]
+
+		internal Vector2 DamagePivot => damagePivot;
+		internal float DetachedCompression => detachedCompression;
+		internal float JamForce => jamForce;
+		internal bool Jammed { get => jammed; set => jammed = value; }
+		internal bool SteerEnabled => steerEnabled;
+		internal bool SteerInverted => steerInverted;
+		internal bool DriveEnabled => driveEnabled;
+		internal bool DriveInverted => driveInverted;
+		internal bool EBrakeEnabled => eBrakeEnabled;
+		internal bool SkidSteerBrake => skidSteerBrake;
+		internal float SteerFactor => steerFactor;
+		internal float SteerAngle => steerAngle;
+		internal float SteerDegrees => steerDegrees;
+		internal float AckermannFactor => ackermannFactor;
+		internal float CamberAngle => camberAngle;
+		internal Wheel Wheel => wheel;
 
 		void Start()
 		{
@@ -180,13 +189,13 @@ namespace RVP
 					setHardColliderRadiusFactor = hardColliderRadiusFactor;
 					hardColliderRadiusFactorPrev = setHardColliderRadiusFactor;
 					compressCol.radius = wheel.RimWidth * hardColliderRadiusFactor;
-					compressCol.height = (wheel.Popped ? wheel.RimRadius : Mathf.Lerp(wheel.RimRadius, wheel.TireRadius, wheel.TirePressure)) * 2;
+					compressCol.height = (wheel.Popped ? wheel.RimRadius : Lerp(wheel.RimRadius, wheel.TireRadius, wheel.TirePressure)) * 2;
 				}
 
 				compressCol.sharedMaterial = GlobalControl.frictionlessMatStatic;
 			}
 
-			steerRangeMax = Mathf.Max(steerRangeMin, steerRangeMax);
+			steerRangeMax = Max(steerRangeMin, steerRangeMax);
 
 			properties = GetComponent<SuspensionPropertyToggle>();
 			if (properties) UpdateProperties();
@@ -204,8 +213,8 @@ namespace RVP
 
 			if (wheel.Connected)
 			{
-				compression = Mathf.Min(targetCompression, suspensionDistance > 0 ? Mathf.Clamp01(wheel.ContactPoint.distance / suspensionDistance) : 0);
-				penetration = Mathf.Min(0, wheel.ContactPoint.distance);
+				compression = Min(targetCompression, suspensionDistance > 0 ? Clamp01(wheel.ContactPoint.distance / suspensionDistance) : 0);
+				penetration = Min(0, wheel.ContactPoint.distance);
 			}
 			else
 			{
@@ -259,10 +268,17 @@ namespace RVP
 		{
 			GetCamber();
 
-			if (!Application.isPlaying) GetSpringVectors();
+			if (Application.isPlaying is false)
+				GetSpringVectors();
+			SetVehicleSteerAngle();
+		}
 
-			// Set steer angle for the wheel
-			steerDegrees = Mathf.Abs(steerAngle) * (steerAngle > 0 ? steerRangeMax : steerRangeMin);
+		void SetVehicleSteerAngle()
+		{
+			float range = steerAngle > 0
+				? steerRangeMax
+				: steerRangeMin;
+			steerDegrees = Abs(steerAngle) * range;
 		}
 
 		// Apply suspension forces to support vehicles
@@ -276,39 +292,47 @@ namespace RVP
 				if (groundBody) groundVel = groundBody.linearVelocity;
 
 				// Get the local vertical velocity
-				float travelVel = vp.Norm.InverseTransformDirection(rb.GetPointVelocity(tr.position) - groundVel).z;
+				float travelVelocity = vp.Norm.InverseTransformDirection(rb.GetPointVelocity(tr.position) - groundVel).z;
 
 				// Apply the suspension force
 				if (suspensionDistance > 0 && targetCompression > 0)
 				{
 					Vector3 appliedSuspensionForce =
 						(leaningForce
-							? Vector3.Lerp(upDir, vp.Norm.forward, Mathf.Abs(Mathf.Pow(Vector3.Dot(vp.Norm.forward, vp.UpDir), 5)))
-							: vp.Norm.forward) * (springForce * (Mathf.Pow(springForceCurve.Evaluate(1 - compression), Mathf.Max(1, springExponent)) -
-							                                     (1 - targetCompression) - springDampening * Mathf.Clamp(travelVel, -1, 1)));
+							? Vector3.Lerp(upDir, vp.Norm.forward, Abs(Pow(Vector3.Dot(vp.Norm.forward, vp.UpDir), 5)))
+							: vp.Norm.forward) * (springForce * (Pow(springForceCurve.Evaluate(1 - compression), Max(1, springExponent)) -
+							                                     (1 - targetCompression) - springDampening * Clamp(travelVelocity, -1, 1)));
 
 					rb.AddForceAtPosition(
 						appliedSuspensionForce,
-						applyForceAtGroundContact ? wheel.ContactPoint.point : wheel.TR.position,
+						applyForceAtGroundContact ? wheel.ContactPoint.point : wheel.WheelTransform.position,
 						vp.SuspensionForceMode);
 
 					// If wheel is resting on a rigidbody, apply opposing force to it
-					if (groundBody)
-						groundBody.AddForceAtPosition(
-							-appliedSuspensionForce,
-							wheel.ContactPoint.point,
-							vp.SuspensionForceMode);
+					ApplyOpposingForceToRestingBody(groundBody, appliedSuspensionForce);
 				}
+				ApplyHardContactForce(travelVelocity);
 
-				// Apply hard contact force
-				if (compression == 0 && !generateHardCollider && applyHardContactForce)
-					rb.AddForceAtPosition(
-						-vp.Norm.TransformDirection(0, 0,
-							Mathf.Clamp(travelVel, -hardContactSensitivity * TimeMaster.fixedTimeFactor, 0) + penetration) *
-						(hardContactForce * Mathf.Clamp01(TimeMaster.fixedTimeFactor)),
-						applyForceAtGroundContact ? wheel.ContactPoint.point : wheel.TR.position,
-						vp.SuspensionForceMode);
 			}
+		}
+
+		void ApplyOpposingForceToRestingBody(Rigidbody groundBody, Vector3 suspensionForce)
+		{
+			if (groundBody)
+				groundBody.AddForceAtPosition(-suspensionForce, wheel.ContactPoint.point, vp.SuspensionForceMode);
+		}
+
+		void ApplyHardContactForce(float velocity)
+		{
+			if (Approximately(compression, 0) && generateHardCollider is false && applyHardContactForce)
+			{
+				float maxForce = -hardContactSensitivity * TimeMaster.fixedTimeFactor;
+				float zForce = Clamp(velocity, maxForce, 0) + penetration;
+				Vector3 force = -vp.Norm.TransformDirection(0, 0, zForce) * (hardContactForce * Clamp01(TimeMaster.fixedTimeFactor));
+				Vector3 position = applyForceAtGroundContact
+					? wheel.ContactPoint.point
+					: wheel.WheelTransform.position;
+				rb.AddForceAtPosition(force, position, vp.SuspensionForceMode);}
 		}
 
 		// Calculate the direction of the spring
@@ -323,26 +347,28 @@ namespace RVP
 
 			maxCompressPoint = tr.position;
 
-			float casterDir = -Mathf.Sin(casterAngle * Mathf.Deg2Rad) * flippedSideFactor;
-			float sideDir = -Mathf.Sin(sideAngle * Mathf.Deg2Rad);
+			float casterDir = -Sin(casterAngle * Deg2Rad) * flippedSideFactor;
+			float sideDir = -Sin(sideAngle * Deg2Rad);
 
-			springDirection = tr.TransformDirection(casterDir, Mathf.Max(Mathf.Abs(casterDir), Mathf.Abs(sideDir)) - 1, sideDir).normalized;
+			springDirection = tr.TransformDirection(casterDir, Max(Abs(casterDir), Abs(sideDir)) - 1, sideDir).normalized;
 		}
 
-		// Calculate the camber angle
+		/// Calculate the camber angle
 		void GetCamber()
 		{
 			if (solidAxleCamber && oppositeWheel && wheel.Connected)
 			{
-				if (oppositeWheel.wheel.Rim && wheel.Rim)
+				if (oppositeWheel.Wheel.RimTransform && wheel.RimTransform)
 				{
-					Vector3 axleDir = tr.InverseTransformDirection((oppositeWheel.wheel.Rim.position - wheel.Rim.position).normalized);
-					camberAngle = Mathf.Atan2(axleDir.z, axleDir.y) * Mathf.Rad2Deg + 90 + camberOffset;
+					Vector3 axleDir = tr.InverseTransformDirection((oppositeWheel.Wheel.RimTransform.position - wheel.RimTransform.position).normalized);
+					camberAngle = Atan2(axleDir.z, axleDir.y) * Rad2Deg + 90 + camberOffset;
 				}
 			}
 			else
 			{
-				camberAngle = camberCurve.Evaluate(Application.isPlaying && wheel.Connected ? wheel.TravelDist : targetCompression) + camberOffset;
+				camberAngle = camberCurve.Evaluate(Application.isPlaying && wheel.Connected
+					? wheel.TravelDist
+					: targetCompression) + camberOffset;
 			}
 		}
 
@@ -350,26 +376,26 @@ namespace RVP
 		public void UpdateProperties()
 		{
 			if (properties)
-				foreach (SuspensionToggledProperty curProperty in properties.properties)
-					switch ((int)curProperty.property)
+				foreach (SuspensionToggledProperty curProperty in properties.Properties)
+					switch ((int)curProperty.Property)
 					{
 						case 0:
-							steerEnabled = curProperty.toggled;
+							steerEnabled = curProperty.IsEnabled;
 							break;
 						case 1:
-							steerInverted = curProperty.toggled;
+							steerInverted = curProperty.IsEnabled;
 							break;
 						case 2:
-							driveEnabled = curProperty.toggled;
+							driveEnabled = curProperty.IsEnabled;
 							break;
 						case 3:
-							driveInverted = curProperty.toggled;
+							driveInverted = curProperty.IsEnabled;
 							break;
 						case 4:
-							ebrakeEnabled = curProperty.toggled;
+							eBrakeEnabled = curProperty.IsEnabled;
 							break;
 						case 5:
-							skidSteerBrake = curProperty.toggled;
+							skidSteerBrake = curProperty.IsEnabled;
 							break;
 					}
 		}
@@ -380,41 +406,41 @@ namespace RVP
 			if (!tr) tr = transform;
 
 			if (wheel)
-				if (wheel.Rim)
+				if (wheel.RimTransform)
 				{
-					Vector3 wheelPoint = wheel.Rim.position;
+					Vector3 wheelPoint = wheel.RimTransform.position;
 
-					float camberSin = -Mathf.Sin(camberAngle * Mathf.Deg2Rad);
-					float steerSin = Mathf.Sin(Mathf.Lerp(steerRangeMin, steerRangeMax, (steerAngle + 1) * 0.5f) * Mathf.Deg2Rad);
-					float minSteerSin = Mathf.Sin(steerRangeMin * Mathf.Deg2Rad);
-					float maxSteerSin = Mathf.Sin(steerRangeMax * Mathf.Deg2Rad);
+					float camberSin = -Sin(camberAngle * Deg2Rad);
+					float steerSin = Sin(Lerp(steerRangeMin, steerRangeMax, (steerAngle + 1) * 0.5f) * Deg2Rad);
+					float minSteerSin = Sin(steerRangeMin * Deg2Rad);
+					float maxSteerSin = Sin(steerRangeMax * Deg2Rad);
 
 					Gizmos.color = Color.magenta;
 
 					Gizmos.DrawWireSphere(wheelPoint, 0.05f);
 
 					Gizmos.DrawLine(wheelPoint, wheelPoint + tr.TransformDirection(minSteerSin,
-						camberSin * (1 - Mathf.Abs(minSteerSin)),
-						Mathf.Cos(steerRangeMin * Mathf.Deg2Rad) * (1 - Mathf.Abs(camberSin))
+						camberSin * (1 - Abs(minSteerSin)),
+						Cos(steerRangeMin * Deg2Rad) * (1 - Abs(camberSin))
 					).normalized);
 
 					Gizmos.DrawLine(wheelPoint, wheelPoint + tr.TransformDirection(maxSteerSin,
-						camberSin * (1 - Mathf.Abs(maxSteerSin)),
-						Mathf.Cos(steerRangeMax * Mathf.Deg2Rad) * (1 - Mathf.Abs(camberSin))
+						camberSin * (1 - Abs(maxSteerSin)),
+						Cos(steerRangeMax * Deg2Rad) * (1 - Abs(camberSin))
 					).normalized);
 
 					Gizmos.DrawLine(wheelPoint + tr.TransformDirection(minSteerSin,
-							camberSin * (1 - Mathf.Abs(minSteerSin)),
-							Mathf.Cos(steerRangeMin * Mathf.Deg2Rad) * (1 - Mathf.Abs(camberSin))
+							camberSin * (1 - Abs(minSteerSin)),
+							Cos(steerRangeMin * Deg2Rad) * (1 - Abs(camberSin))
 						).normalized * 0.9f,
 						wheelPoint + tr.TransformDirection(maxSteerSin,
-							camberSin * (1 - Mathf.Abs(maxSteerSin)),
-							Mathf.Cos(steerRangeMax * Mathf.Deg2Rad) * (1 - Mathf.Abs(camberSin))
+							camberSin * (1 - Abs(maxSteerSin)),
+							Cos(steerRangeMax * Deg2Rad) * (1 - Abs(camberSin))
 						).normalized * 0.9f);
 
 					Gizmos.DrawLine(wheelPoint, wheelPoint + tr.TransformDirection(steerSin,
-						camberSin * (1 - Mathf.Abs(steerSin)),
-						Mathf.Cos(steerRangeMin * Mathf.Deg2Rad) * (1 - Mathf.Abs(camberSin))
+						camberSin * (1 - Abs(steerSin)),
+						Cos(steerRangeMin * Deg2Rad) * (1 - Abs(camberSin))
 					).normalized);
 				}
 

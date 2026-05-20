@@ -42,7 +42,7 @@ namespace RVP
 
             // Set steer angles in wheels
             foreach (Suspension curSus in steeredWheels) {
-                curSus.steerAngle = Mathf.Lerp(curSus.steerAngle, steerAmount * curSus.steerFactor * (curSus.steerEnabled ? 1 : 0) * (curSus.steerInverted ? -1 : 1), steerRate * TimeMaster.inverseFixedTimeFactor * Time.timeScale);
+                curSus.steerAngle = Mathf.Lerp(curSus.steerAngle, steerAmount * curSus.steerFactor * (curSus.SteerEnabled ? 1 : 0) * (curSus.SteerInverted ? -1 : 1), steerRate * TimeMaster.inverseFixedTimeFactor * Time.timeScale);
             }
         }
 

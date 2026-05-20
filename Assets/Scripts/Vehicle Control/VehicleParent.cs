@@ -211,8 +211,35 @@ namespace RVP
 			else if (localVelocity.z >= 0 || Burnout > 0) Reversing = false;
 		}
 
-		// Set accel input
-		public void SetAccel(float f)
+		void OnEnable()
+		{
+			PlayerControlsHandler.AccelerateAction += SetAccel;
+			PlayerControlsHandler.BrakeAction += SetBrake;
+			PlayerControlsHandler.SteerAction += SetSteer;
+			PlayerControlsHandler.BoostAction += SetBoost;
+			PlayerControlsHandler.UpShiftAction += SetUpshift;
+			PlayerControlsHandler.DownShiftAction += SetDownshift;
+			PlayerControlsHandler.EBrakeAction += SetEbrake;
+			PlayerControlsHandler.PitchAction += SetPitch;
+			PlayerControlsHandler.YawAction += SetYaw;
+			PlayerControlsHandler.RollAction += SetRoll;
+		}
+
+		void OnDisable()
+		{
+			PlayerControlsHandler.AccelerateAction -= SetAccel;
+			PlayerControlsHandler.BrakeAction -= SetBrake;
+			PlayerControlsHandler.SteerAction -= SetSteer;
+			PlayerControlsHandler.BoostAction -= SetBoost;
+			PlayerControlsHandler.UpShiftAction -= SetUpshift;
+			PlayerControlsHandler.DownShiftAction -= SetDownshift;
+			PlayerControlsHandler.EBrakeAction -= SetEbrake;
+			PlayerControlsHandler.PitchAction -= SetPitch;
+			PlayerControlsHandler.YawAction -= SetYaw;
+			PlayerControlsHandler.RollAction -= SetRoll;
+		}
+
+		void SetAccel(float f)
 		{
 			f = Mathf.Clamp(f, -1, 1);
 			AccelInput = f;
@@ -239,8 +266,7 @@ namespace RVP
 				EbrakeInput = Mathf.Clamp01(f);
 		}
 
-		// Set boost input
-		public void SetBoost(bool b)
+		void SetBoost(bool b)
 		{
 			BoostButton = b;
 		}

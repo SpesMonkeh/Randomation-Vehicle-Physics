@@ -85,9 +85,9 @@ namespace RVP
                 if (!solidAxle && ((suspension && !solidAxleConnector) || solidAxleConnector)) {
                     // Transformations for hubs
                     if (isHub && wheel && !solidAxleConnector) {
-                        if (wheel.Rim) {
-                            tr.position = wheel.Rim.position;
-                            tr.rotation = Quaternion.LookRotation(wheel.Rim.forward, suspension.upDir);
+                        if (wheel.RimTransform) {
+                            tr.position = wheel.RimTransform.position;
+                            tr.rotation = Quaternion.LookRotation(wheel.RimTransform.forward, suspension.upDir);
                             tr.localEulerAngles = new Vector3(tr.localEulerAngles.x, tr.localEulerAngles.y, -suspension.casterAngle * suspension.flippedSideFactor);
                         }
                     }
@@ -112,10 +112,10 @@ namespace RVP
                 }
                 else if (solidAxle && wheel1 && wheel2) {
                     // Transformations for solid axles
-                    if (wheel1.Rim && wheel2.Rim && wheel1.SuspensionParent && wheel2.SuspensionParent) {
+                    if (wheel1.RimTransform && wheel2.RimTransform && wheel1.SuspensionParent && wheel2.SuspensionParent) {
                         parentUpDir = tr.parent.up;
-                        wheelConnect1 = wheel1.Rim.TransformPoint(0, 0, -wheel1.SuspensionParent.pivotOffset);
-                        wheelConnect2 = wheel2.Rim.TransformPoint(0, 0, -wheel2.SuspensionParent.pivotOffset);
+                        wheelConnect1 = wheel1.RimTransform.TransformPoint(0, 0, -wheel1.SuspensionParent.pivotOffset);
+                        wheelConnect2 = wheel2.RimTransform.TransformPoint(0, 0, -wheel2.SuspensionParent.pivotOffset);
                         tr.rotation = Quaternion.LookRotation((((wheelConnect1 + wheelConnect2) * 0.5f) - tr.position).normalized, parentUpDir);
                         tr.localEulerAngles = new Vector3(
                             tr.localEulerAngles.x,
@@ -140,9 +140,9 @@ namespace RVP
                 Gizmos.DrawWireSphere(localConnectPoint, 0.01f);
             }
             else if (solidAxle && wheel1 && wheel2) {
-                if (wheel1.Rim && wheel2.Rim && wheel1.SuspensionParent && wheel2.SuspensionParent) {
-                    wheelConnect1 = wheel1.Rim.TransformPoint(0, 0, -wheel1.SuspensionParent.pivotOffset);
-                    wheelConnect2 = wheel2.Rim.TransformPoint(0, 0, -wheel2.SuspensionParent.pivotOffset);
+                if (wheel1.RimTransform && wheel2.RimTransform && wheel1.SuspensionParent && wheel2.SuspensionParent) {
+                    wheelConnect1 = wheel1.RimTransform.TransformPoint(0, 0, -wheel1.SuspensionParent.pivotOffset);
+                    wheelConnect2 = wheel2.RimTransform.TransformPoint(0, 0, -wheel2.SuspensionParent.pivotOffset);
                     Gizmos.DrawLine(wheelConnect1, wheelConnect2);
                     Gizmos.DrawWireSphere(wheelConnect1, 0.01f);
                     Gizmos.DrawWireSphere(wheelConnect2, 0.01f);

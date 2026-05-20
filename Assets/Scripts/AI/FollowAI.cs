@@ -127,7 +127,7 @@ namespace RVP
                 else {
                     speedLimit = 1;
                 }
-
+/*
                 // Set accel input
                 if (!close && (lookDot > 0 || vp.LocalVelocity.z < 5) && vp.GroundedWheels > 0 && reverseTime == 0) {
                     vp.SetAccel(speed * speedLimit);
@@ -135,7 +135,7 @@ namespace RVP
                 else {
                     vp.SetAccel(0);
                 }
-
+*/
                 // Set brake input
                 if (reverseTime == 0 && brakeTime == 0 && !(close && vp.LocalVelocity.z > 0.1f)) {
                     if (lookDot < 0.5f && lookDot > 0 && vp.LocalVelocity.z > 10) {

@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace RVP
 {
-    [DisallowMultipleComponent]
-    [AddComponentMenu("RVP/Scene Controllers/Global Control", 0)]
-
-    // Global controller class
-    public class GlobalControl : MonoBehaviour
+    /// Global controller class
+    [DisallowMultipleComponent, AddComponentMenu("RVP/Scene Controllers/Global Control", 0)]
+    public sealed class GlobalControl : MonoBehaviour
     {
         [Tooltip("Reload the scene with the 'Restart' button in the input manager")]
         public bool quickRestart = true;
@@ -49,9 +48,29 @@ namespace RVP
         public float tireFadeTime;
         public static float tireFadeTimeStatic;
 
+
+        void OnEnable()
+        {
+            PlayerControlsHandler.RestartAction += OnRestart;
+        }
+
+        void OnDisable()
+        {
+            PlayerControlsHandler.RestartAction -= OnRestart;
+        }
+
+        void OnRestart()
+        {
+            if (quickRestart is false)
+                return;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1;
+            Time.fixedDeltaTime = initialFixedTime;
+        }
+
         void Start() {
             initialFixedTime = Time.fixedDeltaTime;
-            // Set static variables
+
             wheelCastMaskStatic = wheelCastMask;
             groundMaskStatic = groundMask;
             damageMaskStatic = damageMask;
@@ -61,17 +80,6 @@ namespace RVP
             tireMarkGapStatic = tireMarkGap;
             tireMarkHeightStatic = tireMarkHeight;
             tireFadeTimeStatic = tireFadeTime;
-        }
-
-        void Update() {
-            // Quickly restart scene with a button press
-            if (quickRestart) {
-                if (Input.GetButtonDown("Restart")) {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                    Time.timeScale = 1;
-                    Time.fixedDeltaTime = initialFixedTime;
-                }
-            }
         }
 
         void FixedUpdate() {

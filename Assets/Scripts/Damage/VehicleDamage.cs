@@ -389,15 +389,15 @@ namespace RVP
 						// Damage suspensions and wheels
 						damagedSus = curDisplacePart.GetComponent<Suspension>();
 						if (damagedSus)
+						{
 							if ((!damagedSus.wheel.Grounded && ignoreGroundedWheels) || !ignoreGroundedWheels)
 							{
-								curDisplacePart.RotateAround(damagedSus.tr.TransformPoint(damagedSus.damagePivot),
+								curDisplacePart.RotateAround(damagedSus.tr.TransformPoint(damagedSus.DamagePivot),
 									Vector3.ProjectOnPlane(damagePoint - curDisplacePart.position, -translation.normalized),
 									clampedColMag * surfaceDot * distClamp * 20 * massFactor);
 
-								damagedSus.wheel.Damage += clampedColMag * surfaceDot * distClamp * 10 * massFactor;
-
-								if (clampedColMag * surfaceDot * distClamp * 10 * massFactor > damagedSus.jamForce) damagedSus.jammed = true;
+								if (clampedColMag * surfaceDot * distClamp * 10 * massFactor > damagedSus.JamForce)
+									damagedSus.Jammed = true;
 
 								if (clampedColMag * surfaceDot * distClamp * 10 * massFactor > damagedSus.wheel.DetachForce)
 									damagedSus.wheel.Detach();
@@ -408,6 +408,7 @@ namespace RVP
 											curPart.connectPoint += curPart.connectObj.InverseTransformDirection(clampedTranslation * surfaceDot *
 												Mathf.Min(clampedColMag * 0.01f, distClamp) * massFactor);
 							}
+						}
 
 						// Damage hover wheels
 						HoverWheel damagedHoverWheel = curDisplacePart.GetComponent<HoverWheel>();
@@ -512,7 +513,7 @@ namespace RVP
 				if (fixedSus)
 				{
 					curDisplacePart.localRotation = fixedSus.initialRotation;
-					fixedSus.jammed = false;
+					fixedSus.Jammed = false;
 
 					foreach (SuspensionPart curPart in fixedSus.movingParts)
 						if (curPart.connectObj && !curPart.isHub && !curPart.solidAxle)
@@ -526,7 +527,6 @@ namespace RVP
 			{
 				curWheel.Reattach();
 				curWheel.FixTire();
-				curWheel.Damage = 0;
 			}
 
 			// Fix hover wheels

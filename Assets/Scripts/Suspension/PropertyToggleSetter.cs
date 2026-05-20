@@ -40,7 +40,7 @@ namespace RVP
             }
 
             for (int i = 0; i < suspensionProperties.Length; i++) {
-                for (int j = 0; j < suspensionProperties[i].properties.Length; j++) {
+                for (int j = 0; j < suspensionProperties[i].Properties.Length; j++) {
                     suspensionProperties[i].SetProperty(j, presets[currentPreset].wheels[i].preset[j]);
                 }
             }

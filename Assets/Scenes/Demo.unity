@@ -1358,6 +1358,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.0036347066
       objectReference: {fileID: 0}
+    - target: {fileID: 11410548, guid: c2b8fc8bcbd9e414ca6d0e8d4e20add6, type: 3}
+      propertyPath: vehicleCamera
+      value: 
+      objectReference: {fileID: 2011189579}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1555,7 +1559,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 63134385}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1575,7 +1579,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 63134386}
+  wheelBody: {fileID: 119576860}
+  vehicleParent: {fileID: 119576863}
+  suspensionParent: {fileID: 1361802160}
+  rimTransform: {fileID: 211040902}
+  tireTransform: {fileID: 63279334}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -1610,6 +1623,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -1685,6 +1699,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -1713,15 +1729,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.32567632
-  rimRadius: 0.32567632
-  tireWidth: 0.128485
-  rimWidth: 0.128485
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 93180044}
   tireHitClips:
@@ -1731,12 +1777,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.32567632
 --- !u!114 &63134388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2100,6 +2160,8 @@ MonoBehaviour:
   - {fileID: 101516, guid: 8709d84233fe94e4e896ff9a06c9d335, type: 3}
   chaseVehicle: {fileID: 127608, guid: 3283a092188e0884890ce0766632257e, type: 3}
   chaseVehicleDamage: {fileID: 101268, guid: 94d046b711c35d34ba4c8b710ef98882, type: 3}
+  chaseCarSpawnTime: 0
+  newVehicle: {fileID: 0}
   autoShiftToggle: {fileID: 1228937126}
   assistToggle: {fileID: 148836324}
   stuntToggle: {fileID: 1097115170}
@@ -3625,9 +3687,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &130023248
 GameObject:
   m_ObjectHideFlags: 0
@@ -4067,7 +4137,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 147891969}
+  wheelBody: {fileID: 1154898075}
+  vehicleParent: {fileID: 1154898078}
+  suspensionParent: {fileID: 1076393298}
+  rimTransform: {fileID: 749436543}
+  tireTransform: {fileID: 56100903}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -4102,6 +4181,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -4177,6 +4257,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -4205,15 +4287,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1865254091}
   tireHitClips:
@@ -4223,12 +4335,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &147891971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10082,7 +10208,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 207473797}
+  wheelBody: {fileID: 1154898075}
+  vehicleParent: {fileID: 1154898078}
+  suspensionParent: {fileID: 1993081875}
+  rimTransform: {fileID: 894315581}
+  tireTransform: {fileID: 891003763}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -10117,6 +10252,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -10192,6 +10328,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -10220,15 +10358,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1865254091}
   tireHitClips:
@@ -10238,12 +10406,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!4 &207473797
 Transform:
   m_ObjectHideFlags: 0
@@ -11402,9 +11584,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &271918559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21987,7 +22177,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 343106185}
+  wheelBody: {fileID: 938772653}
+  vehicleParent: {fileID: 938772656}
+  suspensionParent: {fileID: 835083586}
+  rimTransform: {fileID: 2101771515}
+  tireTransform: {fileID: 936663919}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -22022,6 +22221,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -22097,6 +22297,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -22125,15 +22327,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.23426428
-  rimRadius: 0.23426428
-  tireWidth: 0.0892835
-  rimWidth: 0.0892835
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1934654895}
   tireHitClips:
@@ -22143,12 +22375,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.23426428
 --- !u!114 &343106187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22614,9 +22860,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &376869007
 GameObject:
   m_ObjectHideFlags: 0
@@ -23151,7 +23405,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388243881}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -23171,7 +23425,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 388243882}
+  wheelBody: {fileID: 119576860}
+  vehicleParent: {fileID: 119576863}
+  suspensionParent: {fileID: 2144341273}
+  rimTransform: {fileID: 1181590104}
+  tireTransform: {fileID: 213251529}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -23206,6 +23469,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -23281,6 +23545,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -23309,15 +23575,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.32567632
-  rimRadius: 0.32567632
-  tireWidth: 0.128485
-  rimWidth: 0.128485
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 93180044}
   tireHitClips:
@@ -23327,12 +23623,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.32567632
 --- !u!114 &388243884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23793,7 +24103,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 409571031}
+  wheelBody: {fileID: 9221419}
+  vehicleParent: {fileID: 9221422}
+  suspensionParent: {fileID: 2048760556}
+  rimTransform: {fileID: 557230434}
+  tireTransform: {fileID: 142454821}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -23828,6 +24147,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -23903,6 +24223,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -23931,15 +24253,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 269243415}
   tireHitClips:
@@ -23949,12 +24301,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!1 &410699874
 GameObject:
   m_ObjectHideFlags: 0
@@ -24077,9 +24443,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &410699877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24843,9 +25217,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &475713939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24992,9 +25374,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!21 &476033197
 Material:
   serializedVersion: 8
@@ -25138,7 +25528,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 492751143}
+  wheelBody: {fileID: 1154898075}
+  vehicleParent: {fileID: 1154898078}
+  suspensionParent: {fileID: 1221449656}
+  rimTransform: {fileID: 1968457893}
+  tireTransform: {fileID: 1830597094}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -25173,6 +25572,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -25248,6 +25648,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -25276,15 +25678,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1865254091}
   tireHitClips:
@@ -25294,12 +25726,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &492751145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25460,9 +25906,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &495258252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32040,7 +32494,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 575813055}
+  wheelBody: {fileID: 1306682608}
+  vehicleParent: {fileID: 1306682611}
+  suspensionParent: {fileID: 410699876}
+  rimTransform: {fileID: 150157326}
+  tireTransform: {fileID: 1154004356}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -32075,6 +32538,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -32150,6 +32614,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -32178,15 +32644,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1128067246}
   tireHitClips:
@@ -32196,12 +32692,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!4 &575813055
 Transform:
   m_ObjectHideFlags: 0
@@ -33495,9 +34005,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &600849562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33698,9 +34216,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &622102975
 GameObject:
   m_ObjectHideFlags: 0
@@ -33877,7 +34403,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 622436121}
+  wheelBody: {fileID: 1619113209}
+  vehicleParent: {fileID: 1619113212}
+  suspensionParent: {fileID: 869946335}
+  rimTransform: {fileID: 942749574}
+  tireTransform: {fileID: 1656566299}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -33912,6 +34447,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -33987,6 +34523,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -34015,15 +34553,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1493091768}
   tireHitClips:
@@ -34033,12 +34601,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!1 &633012025
 GameObject:
   m_ObjectHideFlags: 0
@@ -34428,7 +35010,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647363256}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -34448,7 +35030,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 647363257}
+  wheelBody: {fileID: 1785446080}
+  vehicleParent: {fileID: 1785446083}
+  suspensionParent: {fileID: 1775594910}
+  rimTransform: {fileID: 1120112314}
+  tireTransform: {fileID: 1781186268}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -34483,6 +35074,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -34558,6 +35150,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -34586,15 +35180,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.41917533
-  rimRadius: 0.41917533
-  tireWidth: 0.2560935
-  rimWidth: 0.2560935
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.4
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1170677330}
   tireHitClips:
@@ -34604,12 +35228,27 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
-  detachedTireMaterial: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 1785446080}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
+  detachedTireMaterial: {fileID: 13400000, guid: b60d5265e0b213641b6c72e72c25f25f,
+    type: 2}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.41917533
 --- !u!114 &647363259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40408,9 +41047,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &694654207
 GameObject:
   m_ObjectHideFlags: 0
@@ -40621,7 +41268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705112015}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40641,7 +41288,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 705112016}
+  wheelBody: {fileID: 119576860}
+  vehicleParent: {fileID: 119576863}
+  suspensionParent: {fileID: 2077151663}
+  rimTransform: {fileID: 1047644617}
+  tireTransform: {fileID: 694654208}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -40676,6 +41332,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -40751,6 +41408,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -40779,15 +41438,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.32567632
-  rimRadius: 0.32567632
-  tireWidth: 0.128485
-  rimWidth: 0.128485
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 93180044}
   tireHitClips:
@@ -40797,12 +41486,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.32567632
 --- !u!114 &705112018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40975,9 +41678,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &726344578
 GameObject:
   m_ObjectHideFlags: 0
@@ -41242,9 +41953,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!21 &738344017
 Material:
   serializedVersion: 8
@@ -47509,7 +48228,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 790719284}
+  wheelBody: {fileID: 1154898075}
+  vehicleParent: {fileID: 1154898078}
+  suspensionParent: {fileID: 1694393668}
+  rimTransform: {fileID: 1796681030}
+  tireTransform: {fileID: 1054552924}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -47544,6 +48272,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -47619,6 +48348,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -47647,15 +48378,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1865254091}
   tireHitClips:
@@ -47665,12 +48426,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &790719286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47831,9 +48606,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &793314252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53265,9 +54048,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &835083587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53629,9 +54420,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &869946336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53745,7 +54544,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 876192809}
+  wheelBody: {fileID: 1306682608}
+  vehicleParent: {fileID: 1306682611}
+  suspensionParent: {fileID: 1802252036}
+  rimTransform: {fileID: 163802753}
+  tireTransform: {fileID: 841491630}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -53780,6 +54588,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -53855,6 +54664,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -53883,15 +54694,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1128067246}
   tireHitClips:
@@ -53901,12 +54742,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &876192811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54303,7 +55158,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 894872266}
+  wheelBody: {fileID: 507361490}
+  vehicleParent: {fileID: 507361493}
+  suspensionParent: {fileID: 730494731}
+  rimTransform: {fileID: 130023249}
+  tireTransform: {fileID: 1282205999}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -54338,6 +55202,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -54413,6 +55278,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -54441,15 +55308,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1759491408}
   tireHitClips:
@@ -54459,12 +55356,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &894872268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56155,7 +57066,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 940515524}
+  wheelBody: {fileID: 938772653}
+  vehicleParent: {fileID: 938772656}
+  suspensionParent: {fileID: 475713938}
+  rimTransform: {fileID: 1977352968}
+  tireTransform: {fileID: 165126405}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -56190,6 +57110,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -56265,6 +57186,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -56293,15 +57216,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.23426428
-  rimRadius: 0.23426428
-  tireWidth: 0.0892835
-  rimWidth: 0.0892835
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1934654895}
   tireHitClips:
@@ -56311,12 +57264,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.23426428
 --- !u!114 &940515526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62036,7 +63003,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 981012233}
+  wheelBody: {fileID: 507361490}
+  vehicleParent: {fileID: 507361493}
+  suspensionParent: {fileID: 2062659075}
+  rimTransform: {fileID: 526079}
+  tireTransform: {fileID: 3478579}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -62071,6 +63047,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -62146,6 +63123,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -62174,15 +63153,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1759491408}
   tireHitClips:
@@ -62192,12 +63201,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &981012235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62359,8 +63382,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1002468052}
   - component: {fileID: 1002468051}
-  - component: {fileID: 1002468050}
   - component: {fileID: 1002468049}
+  - component: {fileID: 1002468053}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -62381,26 +63404,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_ForceModuleActive: 0
---- !u!114 &1002468050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1002468048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
 --- !u!114 &1002468051
 MonoBehaviour:
@@ -62432,6 +63435,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1002468053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002468048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 4229a7120f3cf664295ddaba772ef9a9,
+    type: 3}
+  m_PointAction: {fileID: 0}
+  m_MoveAction: {fileID: 0}
+  m_SubmitAction: {fileID: 0}
+  m_CancelAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 0}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!1 &1002724645
 GameObject:
   m_ObjectHideFlags: 0
@@ -67555,7 +68590,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1018711423}
+  wheelBody: {fileID: 1619113209}
+  vehicleParent: {fileID: 1619113212}
+  suspensionParent: {fileID: 1335458595}
+  rimTransform: {fileID: 760437935}
+  tireTransform: {fileID: 1306377655}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -67590,6 +68634,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -67665,6 +68710,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -67693,15 +68740,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1493091768}
   tireHitClips:
@@ -67711,12 +68788,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1018711425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68842,9 +69933,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &1076393299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69665,7 +70764,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1135265713}
+  wheelBody: {fileID: 1306682608}
+  vehicleParent: {fileID: 1306682611}
+  suspensionParent: {fileID: 618023074}
+  rimTransform: {fileID: 1573497371}
+  tireTransform: {fileID: 972495325}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -69700,6 +70808,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -69775,6 +70884,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -69803,15 +70914,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1128067246}
   tireHitClips:
@@ -69821,12 +70962,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1135265715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70117,7 +71272,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152234339}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -70137,7 +71292,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1152234340}
+  wheelBody: {fileID: 119576860}
+  vehicleParent: {fileID: 119576863}
+  suspensionParent: {fileID: 1377162062}
+  rimTransform: {fileID: 2026709878}
+  tireTransform: {fileID: 508281726}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -70172,6 +71336,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -70247,6 +71412,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -70275,15 +71442,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.32567632
-  rimRadius: 0.32567632
-  tireWidth: 0.128485
-  rimWidth: 0.128485
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 93180044}
   tireHitClips:
@@ -70293,12 +71490,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.32567632
 --- !u!114 &1152234342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70819,7 +72030,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1157050345}
+  wheelBody: {fileID: 1306682608}
+  vehicleParent: {fileID: 1306682611}
+  suspensionParent: {fileID: 475734506}
+  rimTransform: {fileID: 974089112}
+  tireTransform: {fileID: 82199884}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -70854,6 +72074,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -70929,6 +72150,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -70957,15 +72180,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1128067246}
   tireHitClips:
@@ -70975,12 +72228,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1157050347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76827,9 +78094,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1224259712
 GameObject:
   m_ObjectHideFlags: 0
@@ -77766,7 +79041,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1245196596}
+  wheelBody: {fileID: 1469533137}
+  vehicleParent: {fileID: 1469533140}
+  suspensionParent: {fileID: 793314251}
+  rimTransform: {fileID: 1177896824}
+  tireTransform: {fileID: 376887454}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -77801,6 +79085,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -77876,6 +79161,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -77904,15 +79191,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1468315688}
   tireHitClips:
@@ -77922,12 +79239,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1245196598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79392,9 +80723,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1316622228
 GameObject:
   m_ObjectHideFlags: 0
@@ -80248,9 +81587,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1338027418
 GameObject:
   m_ObjectHideFlags: 0
@@ -80710,9 +82057,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &1361802161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80847,9 +82202,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &1377162063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86190,7 +87553,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1411203088}
+  wheelBody: {fileID: 507361490}
+  vehicleParent: {fileID: 507361493}
+  suspensionParent: {fileID: 718014747}
+  rimTransform: {fileID: 622102976}
+  tireTransform: {fileID: 1861899736}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -86225,6 +87597,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -86300,6 +87673,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -86328,15 +87703,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1759491408}
   tireHitClips:
@@ -86346,12 +87751,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1411203090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86987,7 +88406,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1441820664}
+  wheelBody: {fileID: 1469533137}
+  vehicleParent: {fileID: 1469533140}
+  suspensionParent: {fileID: 1701200566}
+  rimTransform: {fileID: 784940905}
+  tireTransform: {fileID: 34960776}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -87022,6 +88450,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -87097,6 +88526,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -87125,15 +88556,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1468315688}
   tireHitClips:
@@ -87143,12 +88604,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1441820666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87234,7 +88709,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1452759016}
+  wheelBody: {fileID: 1469533137}
+  vehicleParent: {fileID: 1469533140}
+  suspensionParent: {fileID: 1723764013}
+  rimTransform: {fileID: 916968090}
+  tireTransform: {fileID: 936605926}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -87269,6 +88753,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -87344,6 +88829,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -87372,15 +88859,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 2100000, guid: 0f38a7cf26cc6f647967e173fd770d86, type: 2}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1468315688}
   tireHitClips:
@@ -87390,12 +88907,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1452759018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88356,9 +89887,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1493091766
 GameObject:
   m_ObjectHideFlags: 0
@@ -94398,7 +95937,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1601708465}
+  wheelBody: {fileID: 1469533137}
+  vehicleParent: {fileID: 1469533140}
+  suspensionParent: {fileID: 1714682678}
+  rimTransform: {fileID: 292257979}
+  tireTransform: {fileID: 915996365}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -94433,6 +95981,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -94508,6 +96057,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -94536,15 +96087,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1468315688}
   tireHitClips:
@@ -94554,12 +96135,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1601708467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95292,7 +96887,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1676471502}
+  wheelBody: {fileID: 1619113209}
+  vehicleParent: {fileID: 1619113212}
+  suspensionParent: {fileID: 2127426113}
+  rimTransform: {fileID: 1415781201}
+  tireTransform: {fileID: 1153870071}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -95327,6 +96931,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -95402,6 +97007,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -95430,15 +97037,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1493091768}
   tireHitClips:
@@ -95448,12 +97085,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1676471504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96010,9 +97661,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &1694393669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96159,9 +97818,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1705241273
 GameObject:
   m_ObjectHideFlags: 0
@@ -96376,9 +98043,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1721375973
 GameObject:
   m_ObjectHideFlags: 0
@@ -106181,9 +107856,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &1723764014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106528,7 +108211,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763440022}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -106548,7 +108231,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1763440023}
+  wheelBody: {fileID: 1785446080}
+  vehicleParent: {fileID: 1785446083}
+  suspensionParent: {fileID: 1314523493}
+  rimTransform: {fileID: 1414963352}
+  tireTransform: {fileID: 684280763}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -106583,6 +108275,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -106658,6 +108351,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -106686,15 +108381,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.41917533
-  rimRadius: 0.41917533
-  tireWidth: 0.2560935
-  rimWidth: 0.2560935
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.4
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1170677330}
   tireHitClips:
@@ -106704,12 +108429,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.41917533
 --- !u!114 &1763440025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106882,9 +108621,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1781186267
 GameObject:
   m_ObjectHideFlags: 0
@@ -112201,9 +113948,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1796681029
 GameObject:
   m_ObjectHideFlags: 0
@@ -112429,9 +114184,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &1816528043
 GameObject:
   m_ObjectHideFlags: 0
@@ -112891,7 +114654,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1845571571}
+  wheelBody: {fileID: 9221419}
+  vehicleParent: {fileID: 9221422}
+  suspensionParent: {fileID: 125490995}
+  rimTransform: {fileID: 1242322321}
+  tireTransform: {fileID: 394780924}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -112926,6 +114698,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -113001,6 +114774,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -113029,15 +114804,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 269243415}
   tireHitClips:
@@ -113047,12 +114852,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &1845571573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113230,7 +115049,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 1847453555}
+  wheelBody: {fileID: 938772653}
+  vehicleParent: {fileID: 938772656}
+  suspensionParent: {fileID: 600849561}
+  rimTransform: {fileID: 1946406896}
+  tireTransform: {fileID: 6492925}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -113265,6 +115093,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -113340,6 +115169,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -113368,15 +115199,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.23426428
-  rimRadius: 0.23426428
-  tireWidth: 0.0892835
-  rimWidth: 0.0892835
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1934654895}
   tireHitClips:
@@ -113386,12 +115247,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.23426428
 --- !u!1 &1850259652
 GameObject:
   m_ObjectHideFlags: 0
@@ -115834,9 +117709,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &1993081876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115962,7 +117845,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 2001062260}
+  wheelBody: {fileID: 1785446080}
+  vehicleParent: {fileID: 1785446083}
+  suspensionParent: {fileID: 1482425482}
+  rimTransform: {fileID: 2097942728}
+  tireTransform: {fileID: 1904149687}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -115997,6 +117889,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -116072,6 +117965,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -116100,15 +117995,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.41917533
-  rimRadius: 0.41917533
-  tireWidth: 0.156559
-  rimWidth: 0.156559
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.4
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1170677330}
   tireHitClips:
@@ -116118,12 +118043,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.41917533
 --- !u!114 &2001062262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116174,6 +118113,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e217891e04d34f04e8f2efd7958d8bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!20 &2011189579 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2061420, guid: c2b8fc8bcbd9e414ca6d0e8d4e20add6,
+    type: 3}
+  m_PrefabInstance: {fileID: 51209419}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2016397166
 GameObject:
   m_ObjectHideFlags: 0
@@ -116221,7 +118166,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 2016397167}
+  wheelBody: {fileID: 9221419}
+  vehicleParent: {fileID: 9221422}
+  suspensionParent: {fileID: 688083299}
+  rimTransform: {fileID: 647752549}
+  tireTransform: {fileID: 1573821074}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -116256,6 +118210,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -116331,6 +118286,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -116359,15 +118316,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 269243415}
   tireHitClips:
@@ -116377,12 +118364,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &2016397169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117054,7 +119055,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 2047148961}
+  wheelBody: {fileID: 1785446080}
+  vehicleParent: {fileID: 1785446083}
+  suspensionParent: {fileID: 495258251}
+  rimTransform: {fileID: 1360512058}
+  tireTransform: {fileID: 1331724183}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -117089,6 +119099,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -117164,6 +119175,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -117192,15 +119205,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.41917533
-  rimRadius: 0.41917533
-  tireWidth: 0.156559
-  rimWidth: 0.156559
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.4
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1170677330}
   tireHitClips:
@@ -117210,12 +119253,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.41917533
 --- !u!114 &2047148963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117388,9 +119445,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &2051949333
 GameObject:
   m_ObjectHideFlags: 0
@@ -117603,9 +119668,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &2062659076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117740,9 +119813,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &2077151664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118420,7 +120501,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 2112994976}
+  wheelBody: {fileID: 1619113209}
+  vehicleParent: {fileID: 1619113212}
+  suspensionParent: {fileID: 373168622}
+  rimTransform: {fileID: 1827333875}
+  tireTransform: {fileID: 963047436}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -118455,6 +120545,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -118530,6 +120621,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -118558,15 +120651,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1493091768}
   tireHitClips:
@@ -118576,12 +120699,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &2112994978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118784,7 +120921,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 2124292068}
+  wheelBody: {fileID: 9221419}
+  vehicleParent: {fileID: 9221422}
+  suspensionParent: {fileID: 271918558}
+  rimTransform: {fileID: 1297639036}
+  tireTransform: {fileID: 1432125200}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -118819,6 +120965,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -118894,6 +121041,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -118922,15 +121071,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 269243415}
   tireHitClips:
@@ -118940,12 +121119,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!1 &2125154177
 GameObject:
   m_ObjectHideFlags: 0
@@ -119170,9 +121363,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!1 &2131462242
 GameObject:
   m_ObjectHideFlags: 0
@@ -119220,7 +121421,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbf6806518860b4ba6e32c8e44407ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localVel: {x: 0, y: 0, z: 0}
+  wheelTransform: {fileID: 2131462243}
+  wheelBody: {fileID: 507361490}
+  vehicleParent: {fileID: 507361493}
+  suspensionParent: {fileID: 1790090251}
+  rimTransform: {fileID: 1617985099}
+  tireTransform: {fileID: 795454288}
   generateHardCollider: 1
+  sphereCol: {fileID: 0}
+  sphereColTr: {fileID: 0}
   feedbackRpmBias: 0
   rpmBiasCurve:
     serializedVersion: 2
@@ -119255,6 +121465,7 @@ MonoBehaviour:
   sidewaysRimFriction: 1
   forwardCurveStretch: 10
   sidewaysCurveStretch: 1
+  frictionForce: {x: 0, y: 0, z: 0}
   forwardFrictionCurve:
     serializedVersion: 2
     m_Curve:
@@ -119330,6 +121541,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  forwardSlip: 0
+  sidewaysSlip: 0
   slipDependence: 2
   forwardSlipDependence: 2
   sidewaysSlipDependence: 2
@@ -119358,15 +121571,45 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   compressionFrictionFactor: 0.5
-  tireRadius: 0.29606935
-  rimRadius: 0.29606935
-  tireWidth: 0.1105795
-  rimWidth: 0.1105795
-  tirePressure: 1
+  rimRadius: 0
+  rimWidth: 0
+  tireWidth: 0
+  setTireWidth: 0
+  tireWidthPrev: 0
+  setTireRadius: 0
+  tireRadiusPrev: 0
+  setRimWidth: 0
+  rimWidthPrev: 0
+  setRimRadius: 0
+  rimRadiusPrev: 0
+  actualRadius: 0
+  setTirePressure: 0
+  tirePressurePrev: 0
+  initialTirePressure: 1
   popped: 0
+  setPopped: 0
+  poppedPrev: 0
   canPop: 1
   deformAmount: 0.2
+  rimMat: {fileID: 0}
+  tireMat: {fileID: 0}
+  airLeakTime: -1
   rimGlow: 0
+  glowAmount: 0
+  glowColor: {r: 0, g: 0, b: 0, a: 0}
+  <UpdatedSize>k__BackingField: 0
+  <UpdatedPopped>k__BackingField: 0
+  currentRPM: 0
+  targetDrive: {fileID: 0}
+  rawRPM: 0
+  airTime: 0
+  upDir: {x: 0, y: 0, z: 0}
+  circumference: 0
+  actualEbrake: 0
+  actualTargetRPM: 0
+  actualTorque: 0
+  contactVelocity: {x: 0, y: 0, z: 0}
+  forceApplicationPoint: {x: 0, y: 0, z: 0}
   applyForceAtGroundContact: 0
   impactSnd: {fileID: 1759491408}
   tireHitClips:
@@ -119376,12 +121619,26 @@ MonoBehaviour:
   rimHitClip: {fileID: 8300000, guid: 53c623f67111861458bac14e071fa873, type: 3}
   tireAirClip: {fileID: 8300000, guid: b56536ff38727b14faa0699725a00a46, type: 3}
   tirePopClip: {fileID: 8300000, guid: 70b0ecb20ca31ad43ae2ac6619053b28, type: 3}
-  detachForce: Infinity
+  damage: 0
   mass: 0.05
+  canDetach: 0
+  connected: 1
   tireMeshLoose: {fileID: 0}
   rimMeshLoose: {fileID: 0}
+  detachedWheel: {fileID: 0}
+  detachedTire: {fileID: 0}
+  detachedCol: {fileID: 0}
+  detachedBody: {fileID: 0}
+  detachFilter: {fileID: 0}
+  detachTireFilter: {fileID: 0}
   detachedTireMaterial: {fileID: 0}
   detachedRimMaterial: {fileID: 0}
+  travelDist: 1
+  grounded: 0
+  getContact: 1
+  tirePressure: 1
+  detachForce: Infinity
+  tireRadius: 0.29606935
 --- !u!114 &2131462245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119542,9 +121799,17 @@ MonoBehaviour:
   hardContactSensitivity: 2
   applyForceAtGroundContact: 1
   leaningForce: 0
+  properties: {fileID: 0}
+  steerEnabled: 1
+  steerInverted: 0
+  driveEnabled: 1
+  driveInverted: 0
+  eBrakeEnabled: 1
+  skidSteerBrake: 0
   damagePivot: {x: 0, y: 0, z: 0}
   detachedCompression: 0.5
   jamForce: Infinity
+  jammed: 0
 --- !u!114 &2144341274
 MonoBehaviour:
   m_ObjectHideFlags: 0

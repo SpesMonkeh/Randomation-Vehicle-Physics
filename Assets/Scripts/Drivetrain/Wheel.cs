@@ -1,40 +1,40 @@
+using System;
 using UnityEngine;
+using static UnityEngine.Mathf;
+using Random = UnityEngine.Random;
 
 namespace RVP
 {
-	[RequireComponent(typeof(DriveForce))]
-	[ExecuteInEditMode]
-	[DisallowMultipleComponent]
-	[AddComponentMenu("RVP/Drivetrain/Wheel", 1)]
-
-	// Class for the wheel
-	public class Wheel : MonoBehaviour
+	[RequireComponent(typeof(DriveForce)), ExecuteInEditMode, DisallowMultipleComponent, AddComponentMenu("RVP2WoL/Drivetrain/Wheel", 1)]
+	public sealed class Wheel : MonoBehaviour
 	{
-		[SerializeField] Transform tr;
-		[SerializeField] Rigidbody rb;
-		[SerializeField] VehicleParent vp;
-		[field: SerializeField] public Suspension SuspensionParent { get; private set; }
-		[field: SerializeField] public Transform Rim { get; private set; }
-		[SerializeField] Transform tire;
 		[SerializeField] Vector3 localVel;
+		[SerializeField] Transform wheelTransform;
+		[SerializeField] Rigidbody wheelBody;
+		[SerializeField] VehicleParent vehicleParent;
+		[SerializeField] Suspension suspensionParent;
+		[SerializeField] Transform rimTransform;
+		[SerializeField] Transform tireTransform;
 
-		[Tooltip("Generate a sphere collider to represent the wheel for side collisions")] [SerializeField] bool generateHardCollider = true;
+		[Tooltip("Generate a sphere collider to represent the wheel for side collisions")]
+		[SerializeField] bool generateHardCollider = true;
 		[SerializeField] SphereCollider sphereCol; // Hard collider
 		[SerializeField] Transform sphereColTr; // Hard collider transform
 
 		[Header("Rotation")]
 		[Tooltip("Bias for feedback RPM lerp between target RPM and raw RPM")]
-		[SerializeField, Range(0, 1)] float feedbackRpmBias;
+		[SerializeField] [Range(0, 1)] float feedbackRpmBias;
 
-		[Tooltip("Curve for setting final RPM of wheel based on driving torque/brake force, x-axis = torque/brake force, y-axis = lerp between raw RPM and target RPM")]
+		[Tooltip(
+			"Curve for setting final RPM of wheel based on driving torque/brake force, x-axis = torque/brake force, y-axis = lerp between raw RPM and target RPM")]
 		[SerializeField] AnimationCurve rpmBiasCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
 		[Tooltip("As the RPM of the wheel approaches this value, the RPM bias curve is interpolated with the default linear curve")]
-		[SerializeField] float rpmBiasCurveLimit = Mathf.Infinity;
-		[SerializeField, Range(0, 10)] float axleFriction;
+		[SerializeField] float rpmBiasCurveLimit = Infinity;
+		[SerializeField] [Range(0, 10)] float axleFriction;
 
 		[Header("Friction")]
-		[SerializeField, Range(0, 1)] float frictionSmoothness = 0.5f;
+		[SerializeField] [Range(0, 1)] float frictionSmoothness = 0.5f;
 		[SerializeField] float forwardFriction = 1;
 		[SerializeField] float sidewaysFriction = 1;
 		[SerializeField] float forwardRimFriction = 0.5f;
@@ -43,35 +43,39 @@ namespace RVP
 		[SerializeField] float sidewaysCurveStretch = 1;
 		[SerializeField] Vector3 frictionForce = Vector3.zero;
 
-		[Tooltip("X-axis = slip, y-axis = friction")] [SerializeField] AnimationCurve forwardFrictionCurve = AnimationCurve.Linear(0, 0, 1, 1);
+		[Tooltip("X-axis = slip, y-axis = friction")]
+		[SerializeField] AnimationCurve forwardFrictionCurve = AnimationCurve.Linear(0, 0, 1, 1);
+		[Tooltip("X-axis = slip, y-axis = friction")]
+		[SerializeField] AnimationCurve sidewaysFrictionCurve = AnimationCurve.Linear(0, 0, 1, 1);
+		[SerializeField] float forwardSlip;
+		[SerializeField] float sidewaysSlip;
 
-		[Tooltip("X-axis = slip, y-axis = friction")] [SerializeField] AnimationCurve sidewaysFrictionCurve = AnimationCurve.Linear(0, 0, 1, 1);
-		[field: SerializeField] public float ForwardSlip { get; private set; }
-		[field: SerializeField] public float SidewaysSlip { get; private set; }
+
+		internal float ForwardSlip => forwardSlip;
+		internal float SidewaysSlip => sidewaysSlip;
 
 		public enum SlipDependenceMode
 		{
-			dependent,
-			forward,
-			sideways,
-			independent
+			Dependent,
+			Forward,
+			Sideways,
+			Independent
 		}
 
-		[SerializeField] SlipDependenceMode slipDependence = SlipDependenceMode.sideways;
-		[SerializeField, Range(0, 2)] float forwardSlipDependence = 2;
-		[SerializeField, Range(0, 2)] float sidewaysSlipDependence = 2;
+		[SerializeField] SlipDependenceMode slipDependence = SlipDependenceMode.Sideways;
+		[SerializeField] [Range(0, 2)] float forwardSlipDependence = 2;
+		[SerializeField] [Range(0, 2)] float sidewaysSlipDependence = 2;
 
-		[Tooltip("Adjusts how much friction the wheel has based on the normal of the ground surface. X-axis = normal dot product, y-axis = friction multiplier")]
+		[Tooltip(
+			"Adjusts how much friction the wheel has based on the normal of the ground surface. X-axis = normal dot product, y-axis = friction multiplier")]
 		[SerializeField] AnimationCurve normalFrictionCurve = AnimationCurve.Linear(0, 1, 1, 1);
 
 		[Tooltip("How much the suspension compression affects the wheel friction")]
-		[SerializeField, Range(0, 1)] float compressionFrictionFactor = 0.5f;
+		[SerializeField] [Range(0, 1)] float compressionFrictionFactor = 0.5f;
 
-		 public float TireRadius { get => tireRadius; private set => tireRadius = value; }
-		[field: SerializeField] public float RimRadius { get; private set; }
-		[field: SerializeField] public float TireWidth { get; private set; }
-		[field: SerializeField] public float RimWidth { get; private set; }
-
+		[SerializeField] float rimRadius;
+		[SerializeField] float rimWidth;
+		[SerializeField] float tireWidth;
 		[SerializeField] float setTireWidth;
 		[SerializeField] float tireWidthPrev;
 		[SerializeField] float setTireRadius;
@@ -80,13 +84,13 @@ namespace RVP
 		[SerializeField] float rimWidthPrev;
 		[SerializeField] float setRimRadius;
 		[SerializeField] float rimRadiusPrev;
-		[field: SerializeField] public float ActualRadius { get; private set; }
+		[SerializeField] float actualRadius;
 
-		 public float TirePressure { get => tirePressure; private set => tirePressure = value; }
 		[SerializeField] float setTirePressure;
 		[SerializeField] float tirePressurePrev;
 		[SerializeField] float initialTirePressure;
-		[field: SerializeField] public bool Popped { get; private set; }
+		[SerializeField] bool popped;
+
 		[SerializeField] bool setPopped;
 		[SerializeField] bool poppedPrev;
 		[SerializeField] bool canPop;
@@ -103,11 +107,8 @@ namespace RVP
 		[field: SerializeField] public bool UpdatedSize { get; private set; }
 		[field: SerializeField] public bool UpdatedPopped { get; private set; }
 		[SerializeField] float currentRPM;
-		[field: SerializeField] public DriveForce TargetDrive { get; private set; }
-		[field: SerializeField] public float RawRPM { get; private set; }
-		 public WheelContact ContactPoint => contactPoint;
-		public bool GetContact { get => getContact; internal set => getContact = value; }
-		public bool Grounded { get => grounded; private set => grounded = value; }
+		[SerializeField] DriveForce targetDrive;
+		[SerializeField] float rawRPM;
 		[SerializeField] float airTime;
 		[SerializeField] Vector3 upDir; // Up direction
 		[SerializeField] float circumference;
@@ -127,11 +128,10 @@ namespace RVP
 		[SerializeField] AudioClip tireAirClip;
 		[SerializeField] AudioClip tirePopClip;
 
-		[field: SerializeField] public float Damage { get; internal set; }
+		[SerializeField] float damage;
 		[SerializeField] float mass = 0.05f;
 		[SerializeField] bool canDetach;
 		[SerializeField] bool connected = true;
-
 
 		[SerializeField] Mesh tireMeshLoose; // Tire mesh for detached wheel collider
 		[SerializeField] Mesh rimMeshLoose; // Rim mesh for detached wheel collider
@@ -147,214 +147,239 @@ namespace RVP
 		[SerializeField] float travelDist;
 		[SerializeField] bool grounded;
 		[SerializeField] bool getContact = true;
-		[SerializeField] WheelContact contactPoint = new();
+		[SerializeField] readonly WheelContact contactPoint = new();
 
 		[Header("Tire")]
-		[SerializeField, Range(0, 1)] float tirePressure = 1;
+		[SerializeField] [Range(0, 1)] float tirePressure = 1;
 		[Header("Damage")]
-		[SerializeField] float detachForce = Mathf.Infinity;
+		[SerializeField] float detachForce = Infinity;
 		[Header("Size")]
 		[SerializeField] float tireRadius;
 
+		internal bool GetContact { get => getContact; set => getContact = value; }
+		internal bool Grounded { get => grounded; private set => grounded = value; }
+		internal bool SetPopped => setPopped;
+		internal bool PoppedPrev => poppedPrev;
+		internal bool CanPop => canPop;
+		internal bool Popped { get => popped; private set => popped = value; }
+		internal float ActualRadius { get => actualRadius; private set => actualRadius = value; }
+		internal float TirePressure { get => tirePressure; private set => tirePressure = value; }
 		public float DetachForce => detachForce;
 
-		public bool Connected { get => connected; private set => connected = value; }
+		public bool Connected => connected;
+		internal bool GenerateHardCollider => generateHardCollider;
+		internal float Damage => damage;
+		internal float FeedbackRpmBias => feedbackRpmBias;
+		internal float RPMBiasCurveLimit => rpmBiasCurveLimit;
+		internal float AxleFriction => axleFriction;
+		internal float SidewaysFriction => sidewaysFriction;
+		internal float ForwardFriction => forwardFriction;
+		internal float ForwardRimFriction => forwardRimFriction;
+		internal float FrictionSmoothness => frictionSmoothness;
+		internal float TireRadius { get => tireRadius; private set => tireRadius = value; }
+		internal float RimRadius { get => rimRadius; private set => rimRadius = value; }
+		internal float TireWidth { get => tireWidth; private set => tireWidth = value;}
+		internal float RimWidth { get => rimWidth; private set => rimWidth = value; }
 
-		public Vector3 ContactVelocity { get => contactVelocity; private set => contactVelocity = value; }
-		 internal Rigidbody RB => rb;
-		 internal VehicleParent Vp => vp;
-		 internal Transform Tire => tire;
-		 internal Vector3 LocalVel => localVel;
-		 internal bool GenerateHardCollider => generateHardCollider;
-		 internal SphereCollider SphereCol => sphereCol;
-		 internal Transform SphereColTr => sphereColTr;
-		 internal float FeedbackRpmBias => feedbackRpmBias;
-		 internal AnimationCurve RPMBiasCurve => rpmBiasCurve;
-		 internal float RPMBiasCurveLimit => rpmBiasCurveLimit;
-		 internal float AxleFriction => axleFriction;
-		 internal float FrictionSmoothness => frictionSmoothness;
-		 internal float ForwardFriction => forwardFriction;
-		 internal float SidewaysFriction => sidewaysFriction;
-		 internal float ForwardRimFriction => forwardRimFriction;
-		 internal float SidewaysRimFriction => sidewaysRimFriction;
-		 internal float ForwardCurveStretch => forwardCurveStretch;
-		 internal float SidewaysCurveStretch => sidewaysCurveStretch;
-		 internal Vector3 FrictionForce => frictionForce;
-		 internal AnimationCurve ForwardFrictionCurve => forwardFrictionCurve;
-		 internal AnimationCurve SidewaysFrictionCurve => sidewaysFrictionCurve;
-		 internal SlipDependenceMode SlipDependence => slipDependence;
-		 internal float ForwardSlipDependence => forwardSlipDependence;
-		 internal float SidewaysSlipDependence => sidewaysSlipDependence;
-		 internal AnimationCurve NormalFrictionCurve => normalFrictionCurve;
-		 internal float CompressionFrictionFactor => compressionFrictionFactor;
-		 internal float SetTireWidth => setTireWidth;
-		 internal float TireWidthPrev => tireWidthPrev;
-		 internal float SetTireRadius => setTireRadius;
-		 internal float TireRadiusPrev => tireRadiusPrev;
-		 internal float SetRimWidth => setRimWidth;
-		 internal float RimWidthPrev => rimWidthPrev;
-		 internal float SetRimRadius => setRimRadius;
-		 internal float RimRadiusPrev => rimRadiusPrev;
-		 internal float SetTirePressure => setTirePressure;
-		 internal float TirePressurePrev => tirePressurePrev;
-		 internal float InitialTirePressure => initialTirePressure;
-		 internal bool SetPopped => setPopped;
-		 internal bool PoppedPrev => poppedPrev;
-		 internal bool CanPop => canPop;
-		 internal float DeformAmount => deformAmount;
-		 internal Material RimMat => rimMat;
-		 internal Material TireMat => tireMat;
-		 internal float AirLeakTime => airLeakTime;
-		 internal float RimGlow => rimGlow;
-		 internal float GlowAmount => glowAmount;
-		 internal Color GlowColor => glowColor;
-		 internal float CurrentRPM => currentRPM;
-		 internal float AirTime => airTime;
-		 internal Vector3 UpDir => upDir;
-		 internal float Circumference => circumference;
-		 internal float ActualEbrake => actualEbrake;
-		 internal float ActualTargetRPM => actualTargetRPM;
-		 internal float ActualTorque => actualTorque;
-		 internal Vector3 ForceApplicationPoint => forceApplicationPoint;
-		 internal bool ApplyForceAtGroundContact => applyForceAtGroundContact;
-		 internal AudioSource ImpactSnd => impactSnd;
-		 internal AudioClip[] TireHitClips => tireHitClips;
-		 internal AudioClip RimHitClip => rimHitClip;
-		 internal AudioClip TireAirClip => tireAirClip;
-		 internal AudioClip TirePopClip => tirePopClip;
-		 internal float Mass => mass;
-		 internal bool CanDetach => canDetach;
-		 internal Mesh TireMeshLoose => tireMeshLoose;
-		 internal Mesh RimMeshLoose => rimMeshLoose;
-		 internal GameObject DetachedWheel => detachedWheel;
-		 internal GameObject DetachedTire => detachedTire;
-		 internal MeshCollider DetachedCol => detachedCol;
-		 internal Rigidbody DetachedBody => detachedBody;
-		 internal MeshFilter DetachFilter => detachFilter;
-		 internal MeshFilter DetachTireFilter => detachTireFilter;
-		 internal PhysicsMaterial DetachedTireMaterial => detachedTireMaterial;
-		 internal PhysicsMaterial DetachedRimMaterial => detachedRimMaterial;
-		 internal Transform TR { get => tr; private set => tr = value; }
-		 internal float TravelDist { get => travelDist; private set => travelDist = value; }
+		internal Vector3 LocalVel => localVel;
+		internal Vector3 ContactVelocity { get => contactVelocity; private set => contactVelocity = value; }
+		internal Rigidbody WheelBody => wheelBody;
+		internal VehicleParent VehicleParent => vehicleParent;
+		internal Transform TireTransform => tireTransform;
+		internal SphereCollider SphereCol => sphereCol;
+		internal Transform SphereColTr => sphereColTr;
+		internal AnimationCurve RPMBiasCurve => rpmBiasCurve;
+		internal float SidewaysRimFriction => sidewaysRimFriction;
+		internal float ForwardCurveStretch => forwardCurveStretch;
+		internal float SidewaysCurveStretch => sidewaysCurveStretch;
+		internal Vector3 FrictionForce => frictionForce;
+		internal AnimationCurve ForwardFrictionCurve => forwardFrictionCurve;
+		internal AnimationCurve SidewaysFrictionCurve => sidewaysFrictionCurve;
+		internal SlipDependenceMode SlipDependence => slipDependence;
+		internal float ForwardSlipDependence => forwardSlipDependence;
+		internal float SidewaysSlipDependence => sidewaysSlipDependence;
+		internal AnimationCurve NormalFrictionCurve => normalFrictionCurve;
+		internal float CompressionFrictionFactor => compressionFrictionFactor;
+		internal float SetTireWidth => setTireWidth;
+		internal float TireWidthPrev => tireWidthPrev;
+		internal float SetTireRadius => setTireRadius;
+		internal float TireRadiusPrev => tireRadiusPrev;
+		internal float SetRimWidth => setRimWidth;
+		internal float RimWidthPrev => rimWidthPrev;
+		internal float SetRimRadius => setRimRadius;
+		internal float RimRadiusPrev => rimRadiusPrev;
+		internal float SetTirePressure => setTirePressure;
+		internal float TirePressurePrev => tirePressurePrev;
+		internal float InitialTirePressure => initialTirePressure;
+		internal float DeformAmount => deformAmount;
+		internal Material RimMat => rimMat;
+		internal Material TireMat => tireMat;
+		internal float AirLeakTime => airLeakTime;
+		internal float RimGlow => rimGlow;
+		internal float GlowAmount => glowAmount;
+		internal Color GlowColor => glowColor;
+		internal float CurrentRPM => currentRPM;
+		internal float AirTime => airTime;
+		internal Vector3 UpDir => upDir;
+		internal float Circumference => circumference;
+		internal float ActualEbrake => actualEbrake;
+		internal float ActualTargetRPM => actualTargetRPM;
+		internal float ActualTorque => actualTorque;
+		internal Vector3 ForceApplicationPoint => forceApplicationPoint;
+		internal bool ApplyForceAtGroundContact => applyForceAtGroundContact;
+		internal AudioSource ImpactSnd => impactSnd;
+		internal AudioClip[] TireHitClips => tireHitClips;
+		internal AudioClip RimHitClip => rimHitClip;
+		internal AudioClip TireAirClip => tireAirClip;
+		internal AudioClip TirePopClip => tirePopClip;
+		internal float Mass => mass;
+		internal bool CanDetach => canDetach;
+		internal Mesh TireMeshLoose => tireMeshLoose;
+		internal Mesh RimMeshLoose => rimMeshLoose;
+		internal GameObject DetachedWheel => detachedWheel;
+		internal GameObject DetachedTire => detachedTire;
+		internal MeshCollider DetachedCol => detachedCol;
+		internal Rigidbody DetachedBody => detachedBody;
+		internal MeshFilter DetachFilter => detachFilter;
+		internal MeshFilter DetachTireFilter => detachTireFilter;
+		internal PhysicsMaterial DetachedTireMaterial => detachedTireMaterial;
+		internal PhysicsMaterial DetachedRimMaterial => detachedRimMaterial;
+		internal Transform WheelTransform => wheelTransform;
+		internal float TravelDist { get => travelDist; private set => travelDist = value; }
+		internal float RawRPM { get => rawRPM; private set => rawRPM = value;}
+		internal Transform RimTransform => rimTransform;
+		internal Suspension SuspensionParent => suspensionParent;
+		internal DriveForce TargetDrive { get => targetDrive; private set => targetDrive = value; }
+		internal WheelContact ContactPoint => contactPoint;
 
-		 void Start()
+		void SetupGlowMaterial()
 		{
-			tr = transform;
-			rb = tr.GetTopmostParentComponent<Rigidbody>();
-			vp = tr.GetTopmostParentComponent<VehicleParent>();
-			SuspensionParent = tr.parent.GetComponent<Suspension>();
-			travelDist = SuspensionParent.targetCompression;
-			canDetach = detachForce < Mathf.Infinity && Application.isPlaying;
+			if (rimGlow <= 0 || Application.isPlaying is false)
+				return;
+
+			rimMat = new Material(rimTransform.GetComponent<MeshRenderer>().sharedMaterial);
+			rimMat.EnableKeyword("_EMISSION");
+			rimTransform.GetComponent<MeshRenderer>().sharedMaterial = rimMat;
+		}
+
+		void Start()
+		{
+			wheelTransform = transform;
+			wheelBody = wheelTransform.GetTopmostParentComponent<Rigidbody>();
+			vehicleParent = wheelTransform.GetTopmostParentComponent<VehicleParent>();
+			suspensionParent = wheelTransform.parent.GetComponent<Suspension>();
+			travelDist = suspensionParent.targetCompression;
+			canDetach = detachForce < Infinity && Application.isPlaying;
 			initialTirePressure = TirePressure;
 
-			if (tr.childCount > 0)
+			if (wheelTransform.childCount > 0)
 			{
-				// Get rim
-				Rim = tr.GetChild(0);
+				rimTransform = wheelTransform.GetChild(0);
 
-				// Set up rim glow material
-				if (rimGlow > 0 && Application.isPlaying)
-				{
-					rimMat = new Material(Rim.GetComponent<MeshRenderer>().sharedMaterial);
-					rimMat.EnableKeyword("_EMISSION");
-					Rim.GetComponent<MeshRenderer>().sharedMaterial = rimMat;
-				}
-
-				// Create detached wheel
-				if (canDetach)
-				{
-					detachedWheel = new GameObject(vp.transform.name + " Detached Wheel")
-					{
-						layer = LayerMask.NameToLayer("Detachable Part")
-					};
-					detachFilter = detachedWheel.AddComponent<MeshFilter>();
-					detachFilter.sharedMesh = Rim.GetComponent<MeshFilter>().sharedMesh;
-					MeshRenderer detachRend = detachedWheel.AddComponent<MeshRenderer>();
-					detachRend.sharedMaterial = Rim.GetComponent<MeshRenderer>().sharedMaterial;
-					detachedCol = detachedWheel.AddComponent<MeshCollider>();
-					detachedCol.convex = true;
-					detachedBody = detachedWheel.AddComponent<Rigidbody>();
-					detachedBody.mass = mass;
-				}
-
-				// Get tire
-				if (Rim.childCount > 0)
-				{
-					tire = Rim.GetChild(0);
-					if (deformAmount > 0 && Application.isPlaying)
-					{
-						tireMat = new Material(tire.GetComponent<MeshRenderer>().sharedMaterial);
-						tire.GetComponent<MeshRenderer>().sharedMaterial = tireMat;
-					}
-
-					// Create detached tire
-					if (canDetach)
-					{
-						detachedTire = new GameObject("Detached Tire");
-						detachedTire.transform.parent = detachedWheel.transform;
-						detachedTire.transform.localPosition = Vector3.zero;
-						detachedTire.transform.localRotation = Quaternion.identity;
-						detachTireFilter = detachedTire.AddComponent<MeshFilter>();
-						detachTireFilter.sharedMesh = tire.GetComponent<MeshFilter>().sharedMesh;
-						MeshRenderer detachTireRend = detachedTire.AddComponent<MeshRenderer>();
-						detachTireRend.sharedMaterial = tireMat ? tireMat : tire.GetComponent<MeshRenderer>().sharedMaterial;
-					}
-				}
-
-				if (Application.isPlaying)
-				{
-					// Generate hard collider
-					if (generateHardCollider)
-					{
-						GameObject sphereColNew = new("Rim Collider")
-						{
-							layer = GlobalControl.ignoreWheelCastLayer
-						};
-						sphereColTr = sphereColNew.transform;
-						sphereCol = sphereColNew.AddComponent<SphereCollider>();
-						sphereColTr.parent = TR;
-						sphereColTr.localPosition = Vector3.zero;
-						sphereColTr.localRotation = Quaternion.identity;
-						sphereCol.radius = Mathf.Min(RimWidth * 0.5f, RimRadius * 0.5f);
-						sphereCol.sharedMaterial = GlobalControl.frictionlessMatStatic;
-					}
-
-					if (canDetach)
-					{
-						detachedWheel.SetActive(false);
-					}
-				}
+				SetupGlowMaterial();
+				CreateDetachedWheel();
+				InitializeTireComponents();
+				GenerateCollider();
 			}
 
-			TargetDrive = GetComponent<DriveForce>();
+			targetDrive = GetComponent<DriveForce>();
 			currentRPM = 0;
+		}
+
+		void GenerateCollider()
+		{
+			if (Application.isPlaying)
+			{
+				// Generate hard collider
+				if (generateHardCollider)
+				{
+					GameObject sphereColNew = new("Rim Collider")
+					{
+						layer = GlobalControl.ignoreWheelCastLayer
+					};
+					sphereColTr = sphereColNew.transform;
+					sphereCol = sphereColNew.AddComponent<SphereCollider>();
+					sphereColTr.parent = wheelTransform;
+					sphereColTr.localPosition = Vector3.zero;
+					sphereColTr.localRotation = Quaternion.identity;
+					sphereCol.radius = Min(RimWidth * 0.5f, RimRadius * 0.5f);
+					sphereCol.sharedMaterial = GlobalControl.frictionlessMatStatic;
+				}
+
+				if (canDetach)
+					detachedWheel.SetActive(false);
+			}
+		}
+
+		void InitializeTireComponents()
+		{
+			if (rimTransform.childCount > 0)
+			{
+				tireTransform = rimTransform.GetChild(0);
+				if (deformAmount > 0 && Application.isPlaying)
+				{
+					tireMat = new Material(tireTransform.GetComponent<MeshRenderer>().sharedMaterial);
+					tireTransform.GetComponent<MeshRenderer>().sharedMaterial = tireMat;
+				}
+				CreateDetachedTire();
+			}
+		}
+
+		void CreateDetachedTire()
+		{
+			if (canDetach)
+			{
+				detachedTire = new GameObject("Detached Tire");
+				Transform tireTf = detachedTire.transform;
+				tireTf.parent = tireTf;
+				tireTf.localPosition = Vector3.zero;
+				tireTf.localRotation = Quaternion.identity;
+				detachTireFilter = detachedTire.AddComponent<MeshFilter>();
+				detachTireFilter.sharedMesh = tireTransform.GetComponent<MeshFilter>().sharedMesh;
+				MeshRenderer detachTireRend = detachedTire.AddComponent<MeshRenderer>();
+				detachTireRend.sharedMaterial = tireMat ? tireMat : tireTransform.GetComponent<MeshRenderer>().sharedMaterial;
+			}
+		}
+
+		void CreateDetachedWheel()
+		{
+			if (canDetach)
+			{
+				detachedWheel = new GameObject(vehicleParent.transform.name + " Detached Wheel")
+				{
+					layer = LayerMask.NameToLayer("Detachable Part")
+				};
+				detachFilter = detachedWheel.AddComponent<MeshFilter>();
+				detachFilter.sharedMesh = rimTransform.GetComponent<MeshFilter>().sharedMesh;
+				MeshRenderer detachRend = detachedWheel.AddComponent<MeshRenderer>();
+				detachRend.sharedMaterial = rimTransform.GetComponent<MeshRenderer>().sharedMaterial;
+				detachedCol = detachedWheel.AddComponent<MeshCollider>();
+				detachedCol.convex = true;
+				detachedBody = detachedWheel.AddComponent<Rigidbody>();
+				detachedBody.mass = mass;
+			}
 		}
 
 		void FixedUpdate()
 		{
-			upDir = TR.up;
-			ActualRadius = Popped ? RimRadius : Mathf.Lerp(RimRadius, TireRadius, TirePressure);
-			circumference = Mathf.PI * ActualRadius * 2;
-			localVel = rb.GetPointVelocity(forceApplicationPoint);
+			upDir = wheelTransform.up;
+			ActualRadius = popped ? RimRadius : Lerp(RimRadius, TireRadius, TirePressure);
+			circumference = PI * ActualRadius * 2;
+			localVel = wheelBody.GetPointVelocity(forceApplicationPoint);
 
 			// Get proper inputs
-			actualEbrake = SuspensionParent.ebrakeEnabled ? SuspensionParent.ebrakeForce : 0;
-			actualTargetRPM = TargetDrive.rpm * (SuspensionParent.driveInverted ? -1 : 1);
-			actualTorque = SuspensionParent.driveEnabled ? Mathf.Lerp(TargetDrive.torque, Mathf.Abs(vp.AccelInput), vp.Burnout) : 0;
+			actualEbrake = suspensionParent.EBrakeEnabled ? suspensionParent.ebrakeForce : 0;
+			actualTargetRPM = TargetDrive.rpm * (suspensionParent.DriveInverted ? -1 : 1);
+			actualTorque = suspensionParent.DriveEnabled ? Lerp(TargetDrive.torque, Abs(vehicleParent.AccelInput), vehicleParent.Burnout) : 0;
 
 			if (GetContact)
-			{
 				GetWheelContact();
-			}
-			else if (Grounded)
-			{
-				ContactPoint.point += localVel * Time.fixedDeltaTime;
-			}
+			else if (Grounded) ContactPoint.point += localVel * Time.fixedDeltaTime;
 
 			airTime = Grounded ? 0 : airTime + Time.fixedDeltaTime;
-			forceApplicationPoint = applyForceAtGroundContact ? ContactPoint.point : TR.position;
+			forceApplicationPoint = applyForceAtGroundContact ? ContactPoint.point : wheelTransform.position;
 
-			if (Connected)
+			if (connected)
 			{
 				GetRawRPM();
 				ApplyDrive();
@@ -365,67 +390,40 @@ namespace RVP
 				currentRPM = 0;
 				TargetDrive.feedbackRPM = 0;
 			}
-
-			// Get travel distance
-			TravelDist = SuspensionParent.compression < TravelDist || Grounded
-				? SuspensionParent.compression
-				: Mathf.Lerp(TravelDist, SuspensionParent.compression, SuspensionParent.extendSpeed * Time.fixedDeltaTime);
-
+			CalculateTravelDistance();
 			PositionWheel();
 
-			if (Connected)
+			if (connected)
 			{
-				// Update hard collider size upon changed radius or width
-				if (generateHardCollider)
-				{
-					setRimWidth = RimWidth;
-					setRimRadius = RimRadius;
-					setTireWidth = TireWidth;
-					setTireRadius = TireRadius;
-					setTirePressure = TirePressure;
-
-					if (rimWidthPrev != setRimWidth || rimRadiusPrev != setRimRadius)
-					{
-						sphereCol.radius = Mathf.Min(RimWidth * 0.5f, RimRadius * 0.5f);
-						UpdatedSize = true;
-					}
-					else if (tireWidthPrev != setTireWidth || tireRadiusPrev != setTireRadius || tirePressurePrev != setTirePressure)
-					{
-						UpdatedSize = true;
-					}
-					else
-					{
-						UpdatedSize = false;
-					}
-
-					rimWidthPrev = setRimWidth;
-					rimRadiusPrev = setRimRadius;
-					tireWidthPrev = setTireWidth;
-					tireRadiusPrev = setTireRadius;
-					tirePressurePrev = setTirePressure;
-				}
+				UpdateWheelSize();
 
 				GetSlip();
 				ApplyFriction();
 
 				// Burnout spinning
-				if (vp.Burnout > 0 && TargetDrive.rpm != 0 && actualEbrake * vp.EbrakeInput == 0 && Connected && Grounded)
-				{
-					rb.AddForceAtPosition(
-						SuspensionParent.forwardDir * -SuspensionParent.flippedSideFactor *
-						(vp.SteerInput * vp.BurnoutSpin * currentRPM * Mathf.Min(0.1f, TargetDrive.torque) * 0.001f) * vp.Burnout *
-						(Popped ? 0.5f : 1) * ContactPoint.surfaceFriction, SuspensionParent.tr.position, vp.WheelForceMode);
-				}
+				if (vehicleParent.Burnout > 0 && TargetDrive.rpm != 0 && actualEbrake * vehicleParent.EbrakeInput == 0 && connected && Grounded)
+					wheelBody.AddForceAtPosition(
+						suspensionParent.forwardDir
+						* (-suspensionParent.flippedSideFactor
+						   * (vehicleParent.SteerInput
+						      * vehicleParent.BurnoutSpin
+						      * currentRPM
+						      * Min(0.1f, TargetDrive.torque)
+						      * 0.001f)
+						   * vehicleParent.Burnout
+						   * (popped
+							   ? 0.5f
+							   : 1)
+						   * ContactPoint.surfaceFriction),
+						suspensionParent.tr.position,
+						vehicleParent.WheelForceMode);
 
 				// Popping logic
-				setPopped = Popped;
+				setPopped = popped;
 
 				if (poppedPrev != setPopped)
 				{
-					if (tire)
-					{
-						tire.gameObject.SetActive(!Popped);
-					}
+					if (tireTransform) tireTransform.gameObject.SetActive(!popped);
 
 					UpdatedPopped = true;
 				}
@@ -439,16 +437,16 @@ namespace RVP
 				// Air leak logic
 				if (airLeakTime >= 0)
 				{
-					TirePressure = Mathf.Clamp01(TirePressure - Time.fixedDeltaTime * 0.5f);
+					TirePressure = Clamp01(TirePressure - Time.fixedDeltaTime * 0.5f);
 
 					if (Grounded)
 					{
-						airLeakTime += Mathf.Max(Mathf.Abs(currentRPM) * 0.001f, localVel.magnitude * 0.1f) * Time.timeScale *
+						airLeakTime += Max(Abs(currentRPM) * 0.001f, localVel.magnitude * 0.1f) * Time.timeScale *
 						               TimeMaster.inverseFixedTimeFactor;
 
 						if (airLeakTime > 1000 && TirePressure == 0)
 						{
-							Popped = true;
+							popped = true;
 							airLeakTime = -1;
 
 							if (impactSnd && tirePopClip)
@@ -462,9 +460,49 @@ namespace RVP
 			}
 		}
 
+		void UpdateWheelSize()
+		{
+			if (generateHardCollider is false)
+				return;
+
+			// Update hard collider size upon changed radius or width
+			setRimWidth = RimWidth;
+			setRimRadius = RimRadius;
+			setTireWidth = TireWidth;
+			setTireRadius = TireRadius;
+			setTirePressure = TirePressure;
+
+			if (!Mathf.Approximately(rimWidthPrev, setRimWidth) || !Approximately(rimRadiusPrev, setRimRadius))
+			{
+				sphereCol.radius = Min(RimWidth * 0.5f, RimRadius * 0.5f);
+				UpdatedSize = true;
+			}
+			else if (!Mathf.Approximately(tireWidthPrev, setTireWidth) || !Approximately(tireRadiusPrev, setTireRadius) || !Mathf.Approximately(tirePressurePrev, setTirePressure))
+			{
+				UpdatedSize = true;
+			}
+			else
+			{
+				UpdatedSize = false;
+			}
+
+			rimWidthPrev = setRimWidth;
+			rimRadiusPrev = setRimRadius;
+			tireWidthPrev = setTireWidth;
+			tireRadiusPrev = setTireRadius;
+			tirePressurePrev = setTirePressure;
+		}
+
+		void CalculateTravelDistance()
+		{
+			TravelDist = suspensionParent.compression < TravelDist || Grounded
+				? suspensionParent.compression
+				: Lerp(TravelDist, suspensionParent.compression, suspensionParent.extendSpeed * Time.fixedDeltaTime);
+		}
+
 		void Update()
 		{
-			RotateWheel();
+			RotateVisualWheel();
 
 			if (!Application.isPlaying)
 			{
@@ -473,58 +511,52 @@ namespace RVP
 			else
 			{
 				// Update tire and rim materials
-				if (deformAmount > 0 && tireMat && Connected)
-				{
+				if (deformAmount > 0 && tireMat && connected)
 					if (tireMat.HasProperty("_DeformNormal"))
 					{
 						// Deform tire (requires deform shader)
 						Vector3 deformNormal = Grounded
 							? ContactPoint.normal *
-							  Mathf.Max(-SuspensionParent.penetration * (1 - SuspensionParent.compression) * 10, 1 - TirePressure) * deformAmount
+							  (Max(-suspensionParent.penetration * (1 - suspensionParent.compression) * 10, 1 - TirePressure) * deformAmount)
 							: Vector3.zero;
 						tireMat.SetVector("_DeformNormal", new Vector4(deformNormal.x, deformNormal.y, deformNormal.z, 0));
 					}
-				}
 
 				if (rimMat)
-				{
 					if (rimMat.HasProperty("_EmissionColor"))
 					{
 						// Make the rim glow
-						float targetGlow = Connected && GroundSurfaceMaster.surfaceTypesStatic[ContactPoint.surfaceType].leaveSparks
-							? Mathf.Abs(F.MaxAbs(ForwardSlip, SidewaysSlip))
+						float targetGlow = connected && GroundSurfaceMaster.surfaceTypesStatic[ContactPoint.surfaceType].leaveSparks
+							? Abs(F.MaxAbs(forwardSlip, sidewaysSlip))
 							: 0;
-						glowAmount = Popped ? Mathf.Lerp(glowAmount, targetGlow, (targetGlow > glowAmount ? 2 : 0.2f) * Time.deltaTime) : 0;
+						glowAmount = popped ? Lerp(glowAmount, targetGlow, (targetGlow > glowAmount ? 2 : 0.2f) * Time.deltaTime) : 0;
 						glowColor = new Color(glowAmount, glowAmount * 0.5f, 0);
-						rimMat.SetColor("_EmissionColor", Popped ? Color.Lerp(Color.black, glowColor, glowAmount * rimGlow) : Color.black);
+						rimMat.SetColor("_EmissionColor", popped ? Color.Lerp(Color.black, glowColor, glowAmount * rimGlow) : Color.black);
 					}
-				}
 			}
 		}
 
 		// Use raycasting to find the current contact point for the wheel
 		void GetWheelContact()
 		{
-			float castDist = Mathf.Max(SuspensionParent.suspensionDistance * Mathf.Max(0.001f, SuspensionParent.targetCompression) + ActualRadius,
+			float castDist = Max(suspensionParent.suspensionDistance * Max(0.001f, suspensionParent.targetCompression) + ActualRadius,
 				0.001f);
-			RaycastHit[] wheelHits = Physics.RaycastAll(SuspensionParent.maxCompressPoint, SuspensionParent.springDirection, castDist,
+			RaycastHit[] wheelHits = Physics.RaycastAll(suspensionParent.maxCompressPoint, suspensionParent.springDirection, castDist,
 				GlobalControl.wheelCastMaskStatic);
 			int hitIndex = 0;
 			bool validHit = false;
-			float hitDist = Mathf.Infinity;
+			float hitDist = Infinity;
 
 			if (connected)
 			{
 				// Loop through raycast hits to find closest one
 				for (int i = 0; i < wheelHits.Length; i++)
-				{
-					if (!wheelHits[i].transform.IsChildOf(vp.Tr) && wheelHits[i].distance < hitDist)
+					if (!wheelHits[i].transform.IsChildOf(vehicleParent.Tr) && wheelHits[i].distance < hitDist)
 					{
 						hitIndex = i;
 						hitDist = wheelHits[i].distance;
 						validHit = true;
 					}
-				}
 			}
 			else
 			{
@@ -536,11 +568,11 @@ namespace RVP
 			{
 				RaycastHit hit = wheelHits[hitIndex];
 
-				if (!grounded && impactSnd && ((tireHitClips.Length > 0 && !Popped) || (rimHitClip && Popped)))
+				if (!grounded && impactSnd && ((tireHitClips.Length > 0 && !popped) || (rimHitClip && popped)))
 				{
-					impactSnd.PlayOneShot(Popped ? rimHitClip : tireHitClips[Mathf.RoundToInt(Random.Range(0, tireHitClips.Length - 1))],
-						Mathf.Clamp01(airTime * airTime));
-					impactSnd.pitch = Mathf.Clamp(airTime * 0.2f + 0.8f, 0.8f, 1);
+					impactSnd.PlayOneShot(popped ? rimHitClip : tireHitClips[RoundToInt(Random.Range(0, tireHitClips.Length - 1))],
+						Clamp01(airTime * airTime));
+					impactSnd.pitch = Clamp(airTime * 0.2f + 0.8f, 0.8f, 1);
 				}
 
 				grounded = true;
@@ -548,13 +580,13 @@ namespace RVP
 				contactPoint.point = hit.point + localVel * Time.fixedDeltaTime;
 				contactPoint.grounded = true;
 				contactPoint.normal = hit.normal;
-				contactPoint.relativeVelocity = tr.InverseTransformDirection(localVel);
+				contactPoint.relativeVelocity = wheelTransform.InverseTransformDirection(localVel);
 				contactPoint.col = hit.collider;
 
 				if (hit.collider.attachedRigidbody)
 				{
 					contactVelocity = hit.collider.attachedRigidbody.GetPointVelocity(contactPoint.point);
-					contactPoint.relativeVelocity -= tr.InverseTransformDirection(ContactVelocity);
+					contactPoint.relativeVelocity -= wheelTransform.InverseTransformDirection(ContactVelocity);
 				}
 				else
 				{
@@ -582,15 +614,12 @@ namespace RVP
 					contactPoint.surfaceType = 0;
 				}
 
-				if (contactPoint.col.CompareTag("Pop Tire") && canPop && Mathf.Approximately(airLeakTime, -1) && !Popped)
-				{
-					Deflate();
-				}
+				if (contactPoint.col.CompareTag("Pop Tire") && canPop && Approximately(airLeakTime, -1) && !popped) Deflate();
 			}
 			else
 			{
 				grounded = false;
-				contactPoint.distance = SuspensionParent.suspensionDistance;
+				contactPoint.distance = suspensionParent.suspensionDistance;
 				contactPoint.point = Vector3.zero;
 				contactPoint.grounded = false;
 				contactPoint.normal = upDir;
@@ -606,14 +635,10 @@ namespace RVP
 		void GetRawRPM()
 		{
 			if (grounded)
-			{
-				RawRPM = (ContactPoint.relativeVelocity.x / circumference) * (Mathf.PI * 100) * -SuspensionParent.flippedSideFactor;
-			}
+				RawRPM = ContactPoint.relativeVelocity.x / circumference * (PI * 100) * -suspensionParent.flippedSideFactor;
 			else
-			{
-				RawRPM = Mathf.Lerp(RawRPM, actualTargetRPM,
-					(actualTorque + SuspensionParent.brakeForce * vp.BrakeInput + actualEbrake * vp.EbrakeInput) * Time.timeScale);
-			}
+				RawRPM = Lerp(RawRPM, actualTargetRPM,
+					(actualTorque + suspensionParent.brakeForce * vehicleParent.BrakeInput + actualEbrake * vehicleParent.EbrakeInput) * Time.timeScale);
 		}
 
 		// Calculate the current slip amount
@@ -621,13 +646,13 @@ namespace RVP
 		{
 			if (grounded)
 			{
-				SidewaysSlip = contactPoint.relativeVelocity.z * 0.1f / sidewaysCurveStretch;
-				ForwardSlip = 0.01f * (RawRPM - currentRPM) / forwardCurveStretch;
+				sidewaysSlip = contactPoint.relativeVelocity.z * 0.1f / sidewaysCurveStretch;
+				forwardSlip = 0.01f * (RawRPM - currentRPM) / forwardCurveStretch;
 			}
 			else
 			{
-				SidewaysSlip = 0;
-				ForwardSlip = 0;
+				sidewaysSlip = 0;
+				forwardSlip = 0;
 			}
 		}
 
@@ -636,33 +661,31 @@ namespace RVP
 		{
 			if (grounded)
 			{
-				float forwardSlipFactor = (int)slipDependence == 0 || (int)slipDependence == 1 ? ForwardSlip - SidewaysSlip : ForwardSlip;
-				float sidewaysSlipFactor = (int)slipDependence == 0 || (int)slipDependence == 2 ? SidewaysSlip - ForwardSlip : SidewaysSlip;
-				float forwardSlipDependenceFactor = Mathf.Clamp01(forwardSlipDependence - Mathf.Clamp01(Mathf.Abs(SidewaysSlip)));
-				float sidewaysSlipDependenceFactor = Mathf.Clamp01(sidewaysSlipDependence - Mathf.Clamp01(Mathf.Abs(ForwardSlip)));
+				float forwardSlipFactor = (int)slipDependence == 0 || (int)slipDependence == 1 ? forwardSlip - sidewaysSlip : forwardSlip;
+				float sidewaysSlipFactor = (int)slipDependence == 0 || (int)slipDependence == 2 ? sidewaysSlip - forwardSlip : sidewaysSlip;
+				float forwardSlipDependenceFactor = Clamp01(forwardSlipDependence - Clamp01(Abs(sidewaysSlip)));
+				float sidewaysSlipDependenceFactor = Clamp01(sidewaysSlipDependence - Clamp01(Abs(forwardSlip)));
 
-				float targetForceX = forwardFrictionCurve.Evaluate(Mathf.Abs(forwardSlipFactor)) * -System.Math.Sign(ForwardSlip) *
-				                     (Popped ? forwardRimFriction : forwardFriction) * forwardSlipDependenceFactor *
-				                     -SuspensionParent.flippedSideFactor;
-				float targetForceZ = sidewaysFrictionCurve.Evaluate(Mathf.Abs(sidewaysSlipFactor)) * -System.Math.Sign(SidewaysSlip) *
-				                     (Popped ? sidewaysRimFriction : sidewaysFriction) * sidewaysSlipDependenceFactor *
-				                     normalFrictionCurve.Evaluate(Mathf.Clamp01(Vector3.Dot(contactPoint.normal, GlobalControl.worldUpDir))) *
-				                     (vp.Burnout > 0 && Mathf.Abs(TargetDrive.rpm) != 0 && actualEbrake * vp.EbrakeInput == 0 && Grounded
-					                     ? (1 - vp.Burnout) * (1 - Mathf.Abs(vp.AccelInput))
+				float targetForceX = forwardFrictionCurve.Evaluate(Abs(forwardSlipFactor)) * -Math.Sign(forwardSlip) *
+				                     (popped ? forwardRimFriction : forwardFriction) * forwardSlipDependenceFactor *
+				                     -suspensionParent.flippedSideFactor;
+				float targetForceZ = sidewaysFrictionCurve.Evaluate(Abs(sidewaysSlipFactor)) * -Math.Sign(sidewaysSlip) *
+				                     (popped ? sidewaysRimFriction : sidewaysFriction) * sidewaysSlipDependenceFactor *
+				                     normalFrictionCurve.Evaluate(Clamp01(Vector3.Dot(contactPoint.normal, GlobalControl.worldUpDir))) *
+				                     (vehicleParent.Burnout > 0 && Abs(TargetDrive.rpm) != 0 && actualEbrake * vehicleParent.EbrakeInput == 0 && Grounded
+					                     ? (1 - vehicleParent.Burnout) * (1 - Abs(vehicleParent.AccelInput))
 					                     : 1);
 
-				Vector3 targetForce = tr.TransformDirection(targetForceX, 0, targetForceZ);
+				Vector3 targetForce = wheelTransform.TransformDirection(targetForceX, 0, targetForceZ);
 				float targetForceMultiplier =
-					((1 - compressionFrictionFactor) + (1 - SuspensionParent.compression) * compressionFrictionFactor *
-						Mathf.Clamp01(Mathf.Abs(SuspensionParent.tr.InverseTransformDirection(localVel).z) * 10)) * contactPoint.surfaceFriction;
+					(1 - compressionFrictionFactor + (1 - suspensionParent.compression) * compressionFrictionFactor *
+						Clamp01(Abs(suspensionParent.tr.InverseTransformDirection(localVel).z) * 10)) * contactPoint.surfaceFriction;
 				frictionForce = Vector3.Lerp(frictionForce, targetForce * targetForceMultiplier, 1 - frictionSmoothness);
-				rb.AddForceAtPosition(frictionForce, forceApplicationPoint, vp.WheelForceMode);
+				wheelBody.AddForceAtPosition(frictionForce, forceApplicationPoint, vehicleParent.WheelForceMode);
 
 				// If resting on a rigidbody, apply opposing force to it
 				if (contactPoint.col.attachedRigidbody)
-				{
-					contactPoint.col.attachedRigidbody.AddForceAtPosition(-frictionForce, contactPoint.point, vp.WheelForceMode);
-				}
+					contactPoint.col.attachedRigidbody.AddForceAtPosition(-frictionForce, contactPoint.point, vehicleParent.WheelForceMode);
 			}
 		}
 
@@ -670,47 +693,39 @@ namespace RVP
 		void ApplyDrive()
 		{
 			float brakeForce = 0;
-			float brakeCheckValue = SuspensionParent.skidSteerBrake ? vp.LocalAngularVel.y : vp.LocalVelocity.z;
+			float brakeCheckValue = suspensionParent.SkidSteerBrake ? vehicleParent.LocalAngularVel.y : vehicleParent.LocalVelocity.z;
 
 			// Set brake force
-			if (vp.BrakeIsReverse)
+			if (vehicleParent.BrakeIsReverse)
 			{
 				if (brakeCheckValue > 0)
-				{
-					brakeForce = SuspensionParent.brakeForce * vp.BrakeInput;
-				}
-				else if (brakeCheckValue <= 0)
-				{
-					brakeForce = SuspensionParent.brakeForce * Mathf.Clamp01(vp.AccelInput);
-				}
+					brakeForce = suspensionParent.brakeForce * vehicleParent.BrakeInput;
+				else if (brakeCheckValue <= 0) brakeForce = suspensionParent.brakeForce * Clamp01(vehicleParent.AccelInput);
 			}
 			else
 			{
-				brakeForce = SuspensionParent.brakeForce * vp.BrakeInput;
+				brakeForce = suspensionParent.brakeForce * vehicleParent.BrakeInput;
 			}
 
-			brakeForce += axleFriction * 0.1f * (Mathf.Approximately(actualTorque, 0) ? 1 : 0);
+			brakeForce += axleFriction * 0.1f * (Approximately(actualTorque, 0) ? 1 : 0);
 
-			if (TargetDrive.rpm != 0)
-			{
-				brakeForce *= (1 - vp.Burnout);
-			}
+			if (TargetDrive.rpm != 0) brakeForce *= 1 - vehicleParent.Burnout;
 
 			// Set final RPM
-			if (!SuspensionParent.jammed && Connected)
+			if (!suspensionParent.Jammed && connected)
 			{
 				bool validTorque =
-					(!(Mathf.Approximately(actualTorque, 0) && Mathf.Abs(actualTargetRPM) < 0.01f) && !Mathf.Approximately(actualTargetRPM, 0)) ||
-					brakeForce + actualEbrake * vp.EbrakeInput > 0;
+					(!(Approximately(actualTorque, 0) && Abs(actualTargetRPM) < 0.01f) && !Approximately(actualTargetRPM, 0)) ||
+					brakeForce + actualEbrake * vehicleParent.EbrakeInput > 0;
 
-				currentRPM = Mathf.Lerp(RawRPM,
-					Mathf.Lerp(Mathf.Lerp(RawRPM, actualTargetRPM, validTorque ? EvaluateTorque(actualTorque) : actualTorque), 0,
-						Mathf.Max(brakeForce, actualEbrake * vp.EbrakeInput)),
+				currentRPM = Lerp(RawRPM,
+					Lerp(Lerp(RawRPM, actualTargetRPM, validTorque ? EvaluateTorque(actualTorque) : actualTorque), 0,
+						Max(brakeForce, actualEbrake * vehicleParent.EbrakeInput)),
 					validTorque
-						? EvaluateTorque(actualTorque + brakeForce + actualEbrake * vp.EbrakeInput)
-						: actualTorque + brakeForce + actualEbrake * vp.EbrakeInput);
+						? EvaluateTorque(actualTorque + brakeForce + actualEbrake * vehicleParent.EbrakeInput)
+						: actualTorque + brakeForce + actualEbrake * vehicleParent.EbrakeInput);
 
-				TargetDrive.feedbackRPM = Mathf.Lerp(currentRPM, RawRPM, feedbackRpmBias);
+				TargetDrive.feedbackRPM = Lerp(currentRPM, RawRPM, feedbackRpmBias);
 			}
 			else
 			{
@@ -722,59 +737,47 @@ namespace RVP
 		// Extra method for evaluating torque to make the ApplyDrive method more readable
 		float EvaluateTorque(float t)
 		{
-			float torque = Mathf.Lerp(rpmBiasCurve.Evaluate(t), t, RawRPM / (rpmBiasCurveLimit * Mathf.Sign(actualTargetRPM)));
+			float torque = Lerp(rpmBiasCurve.Evaluate(t), t, RawRPM / (rpmBiasCurveLimit * Sign(actualTargetRPM)));
 			return torque;
 		}
 
 		// Visual wheel positioning
 		void PositionWheel()
 		{
-			if (SuspensionParent)
-			{
-				Rim.position = SuspensionParent.maxCompressPoint +
-					SuspensionParent.springDirection * SuspensionParent.suspensionDistance *
-					(Application.isPlaying ? TravelDist : SuspensionParent.targetCompression) +
-					SuspensionParent.upDir *
-					Mathf.Pow(
-						Mathf.Max(Mathf.Abs(Mathf.Sin(SuspensionParent.sideAngle * Mathf.Deg2Rad)),
-							Mathf.Abs(Mathf.Sin(SuspensionParent.casterAngle * Mathf.Deg2Rad))), 2) * ActualRadius +
-					SuspensionParent.pivotOffset * SuspensionParent.tr.TransformDirection(Mathf.Sin(TR.localEulerAngles.y * Mathf.Deg2Rad), 0,
-						Mathf.Cos(TR.localEulerAngles.y * Mathf.Deg2Rad)) - SuspensionParent.pivotOffset *
-					(Application.isPlaying ? SuspensionParent.forwardDir : SuspensionParent.tr.forward);
-			}
+			if (suspensionParent)
+				rimTransform.position = suspensionParent.maxCompressPoint +
+					suspensionParent.springDirection * (suspensionParent.suspensionDistance *
+					                                    (Application.isPlaying ? TravelDist : suspensionParent.targetCompression)) +
+					suspensionParent.upDir * (Pow(
+						Max(Abs(Sin(suspensionParent.sideAngle * Deg2Rad)),
+							Abs(Sin(suspensionParent.casterAngle * Deg2Rad))), 2) * ActualRadius) +
+					suspensionParent.pivotOffset * suspensionParent.tr.TransformDirection(Sin(wheelTransform.localEulerAngles.y * Deg2Rad), 0,
+						Cos(wheelTransform.localEulerAngles.y * Deg2Rad)) - suspensionParent.pivotOffset *
+					(Application.isPlaying ? suspensionParent.forwardDir : suspensionParent.tr.forward);
 
-			if (Application.isPlaying && generateHardCollider && Connected)
-			{
-				sphereColTr.position = Rim.position;
-			}
+			if (Application.isPlaying && generateHardCollider && connected) sphereColTr.position = rimTransform.position;
 		}
 
-		// Visual wheel rotation
-		void RotateWheel()
+		void RotateVisualWheel()
 		{
-			if (TR && SuspensionParent)
+			if (wheelTransform && suspensionParent)
 			{
-				float ackermannVal = Mathf.Sign(SuspensionParent.steerAngle) == SuspensionParent.flippedSideFactor
-					? 1 + SuspensionParent.ackermannFactor
-					: 1 - SuspensionParent.ackermannFactor;
-				TR.localEulerAngles = new Vector3(
-					SuspensionParent.camberAngle + SuspensionParent.casterAngle * SuspensionParent.steerAngle * SuspensionParent.flippedSideFactor,
-					-SuspensionParent.toeAngle * SuspensionParent.flippedSideFactor + SuspensionParent.steerDegrees * ackermannVal, 0);
+				float ackermannVal = Approximately(Sign(suspensionParent.steerAngle), suspensionParent.flippedSideFactor)
+					? 1 + suspensionParent.ackermannFactor
+					: 1 - suspensionParent.ackermannFactor;
+				wheelTransform.localEulerAngles = new Vector3(
+					suspensionParent.camberAngle + suspensionParent.casterAngle * suspensionParent.steerAngle * suspensionParent.flippedSideFactor,
+					-suspensionParent.toeAngle * suspensionParent.flippedSideFactor + suspensionParent.steerDegrees * ackermannVal, 0);
 			}
 
 			if (Application.isPlaying)
 			{
-				Rim.Rotate(Vector3.forward, currentRPM * SuspensionParent.flippedSideFactor * Time.deltaTime);
+				rimTransform.Rotate(Vector3.forward, currentRPM * suspensionParent.flippedSideFactor * Time.deltaTime);
 
 				if (Damage > 0)
-				{
-					Rim.localEulerAngles = new Vector3(Mathf.Sin(-Rim.localEulerAngles.z * Mathf.Deg2Rad) * Mathf.Clamp(Damage, 0, 10),
-						Mathf.Cos(-Rim.localEulerAngles.z * Mathf.Deg2Rad) * Mathf.Clamp(Damage, 0, 10), Rim.localEulerAngles.z);
-				}
-				else if (Rim.localEulerAngles.x != 0 || Rim.localEulerAngles.y != 0)
-				{
-					Rim.localEulerAngles = new Vector3(0, 0, Rim.localEulerAngles.z);
-				}
+					rimTransform.localEulerAngles = new Vector3(Sin(-rimTransform.localEulerAngles.z * Deg2Rad) * Clamp(Damage, 0, 10),
+						Cos(-rimTransform.localEulerAngles.z * Deg2Rad) * Clamp(Damage, 0, 10), rimTransform.localEulerAngles.z);
+				else if (rimTransform.localEulerAngles.x != 0 || rimTransform.localEulerAngles.y != 0) rimTransform.localEulerAngles = new Vector3(0, 0, rimTransform.localEulerAngles.z);
 			}
 		}
 
@@ -792,7 +795,7 @@ namespace RVP
 
 		public void FixTire()
 		{
-			Popped = false;
+			popped = false;
 			TirePressure = initialTirePressure;
 			airLeakTime = -1;
 		}
@@ -800,36 +803,35 @@ namespace RVP
 		// Detach the wheel from the vehicle
 		public void Detach()
 		{
-			if (Connected && canDetach)
+			if (connected && canDetach)
 			{
-				Connected = false;
+				connected = false;
 				detachedWheel.SetActive(true);
-				detachedWheel.transform.position = Rim.position;
-				detachedWheel.transform.rotation = Rim.rotation;
-				detachedCol.sharedMaterial = Popped ? detachedRimMaterial : detachedTireMaterial;
+				detachedWheel.transform.position = rimTransform.position;
+				detachedWheel.transform.rotation = rimTransform.rotation;
+				detachedCol.sharedMaterial = popped ? detachedRimMaterial : detachedTireMaterial;
 
-				if (tire)
+				if (tireTransform)
 				{
-					detachedTire.SetActive(!Popped);
-					detachedCol.sharedMesh = airLeakTime >= 0 || Popped
-						? (rimMeshLoose ? rimMeshLoose : detachFilter.sharedMesh)
-						: (tireMeshLoose ? tireMeshLoose : detachTireFilter.sharedMesh);
+					detachedTire.SetActive(!popped);
+					detachedCol.sharedMesh = airLeakTime >= 0 || popped
+						? rimMeshLoose ? rimMeshLoose : detachFilter.sharedMesh
+						: tireMeshLoose
+							? tireMeshLoose
+							: detachTireFilter.sharedMesh;
 				}
 				else
 				{
 					detachedCol.sharedMesh = rimMeshLoose ? rimMeshLoose : detachFilter.sharedMesh;
 				}
 
-				rb.mass -= mass;
-				detachedBody.linearVelocity = rb.GetPointVelocity(Rim.position);
-				detachedBody.angularVelocity = rb.angularVelocity;
+				wheelBody.mass -= mass;
+				detachedBody.linearVelocity = wheelBody.GetPointVelocity(rimTransform.position);
+				detachedBody.angularVelocity = wheelBody.angularVelocity;
 
-				Rim.gameObject.SetActive(false);
+				rimTransform.gameObject.SetActive(false);
 
-				if (sphereColTr)
-				{
-					sphereColTr.gameObject.SetActive(false);
-				}
+				if (sphereColTr) sphereColTr.gameObject.SetActive(false);
 			}
 		}
 
@@ -850,12 +852,8 @@ namespace RVP
 				}
 
 				if (transform.GetChild(0).childCount > 0)
-				{
 					if (transform.GetChild(0).GetChild(0).GetComponent<MeshFilter>())
-					{
 						tireMesh = transform.GetChild(0).GetChild(0).GetComponent<MeshFilter>().sharedMesh;
-					}
-				}
 
 				checker = tireMesh ? tireMesh : rimMesh;
 
@@ -867,14 +865,9 @@ namespace RVP
 					foreach (Vector3 curVert in checker.vertices)
 					{
 						if (new Vector2(curVert.x * scaler.localScale.x, curVert.y * scaler.localScale.y).magnitude > maxRadius)
-						{
 							maxRadius = new Vector2(curVert.x * scaler.localScale.x, curVert.y * scaler.localScale.y).magnitude;
-						}
 
-						if (Mathf.Abs(curVert.z * scaler.localScale.z) > maxWidth)
-						{
-							maxWidth = Mathf.Abs(curVert.z * scaler.localScale.z);
-						}
+						if (Abs(curVert.z * scaler.localScale.z) > maxWidth) maxWidth = Abs(curVert.z * scaler.localScale.z);
 					}
 
 					TireRadius = maxRadius + radiusMargin;
@@ -888,14 +881,9 @@ namespace RVP
 						foreach (Vector3 curVert in rimMesh.vertices)
 						{
 							if (new Vector2(curVert.x * scaler.localScale.x, curVert.y * scaler.localScale.y).magnitude > maxRadius)
-							{
 								maxRadius = new Vector2(curVert.x * scaler.localScale.x, curVert.y * scaler.localScale.y).magnitude;
-							}
 
-							if (Mathf.Abs(curVert.z * scaler.localScale.z) > maxWidth)
-							{
-								maxWidth = Mathf.Abs(curVert.z * scaler.localScale.z);
-							}
+							if (Abs(curVert.z * scaler.localScale.z) > maxWidth) maxWidth = Abs(curVert.z * scaler.localScale.z);
 						}
 
 						RimRadius = maxRadius + radiusMargin;
@@ -917,68 +905,58 @@ namespace RVP
 		// Attach the wheel back onto its vehicle if detached
 		public void Reattach()
 		{
-			if (!Connected)
+			if (!connected)
 			{
-				Connected = true;
+				connected = true;
 				detachedWheel.SetActive(false);
-				rb.mass += mass;
-				Rim.gameObject.SetActive(true);
+				wheelBody.mass += mass;
+				rimTransform.gameObject.SetActive(true);
 
-				if (sphereColTr)
-				{
-					sphereColTr.gameObject.SetActive(true);
-				}
+				if (sphereColTr) sphereColTr.gameObject.SetActive(true);
 			}
 		}
 
 		// visualize wheel
 		void OnDrawGizmosSelected()
 		{
-			TR = transform;
+			wheelTransform = transform;
 
-			if (TR.childCount > 0)
+			if (wheelTransform.childCount > 0)
 			{
 				// Rim is the first child of this object
-				Rim = TR.GetChild(0);
+				rimTransform = wheelTransform.GetChild(0);
 
 				// Tire mesh should be first child of rim
-				if (Rim.childCount > 0)
-				{
-					tire = Rim.GetChild(0);
-				}
+				if (rimTransform.childCount > 0) tireTransform = rimTransform.GetChild(0);
 			}
 
-			float tireActualRadius = Mathf.Lerp(RimRadius, TireRadius, TirePressure);
+			float tireActualRadius = Lerp(RimRadius, TireRadius, TirePressure);
 
 			if (TirePressure < 1 && TirePressure > 0)
 			{
-				Gizmos.color = new Color(1, 1, 0, Popped ? 0.5f : 1);
-				GizmosExtra.DrawWireCylinder(Rim.position, Rim.forward, tireActualRadius, TireWidth * 2);
+				Gizmos.color = new Color(1, 1, 0, popped ? 0.5f : 1);
+				GizmosExtra.DrawWireCylinder(rimTransform.position, rimTransform.forward, tireActualRadius, TireWidth * 2);
 			}
 
 			Gizmos.color = Color.white;
-			GizmosExtra.DrawWireCylinder(Rim.position, Rim.forward, TireRadius, TireWidth * 2);
+			GizmosExtra.DrawWireCylinder(rimTransform.position, rimTransform.forward, TireRadius, TireWidth * 2);
 
-			Gizmos.color = TirePressure == 0 || Popped ? Color.green : Color.cyan;
-			GizmosExtra.DrawWireCylinder(Rim.position, Rim.forward, RimRadius, RimWidth * 2);
+			Gizmos.color = TirePressure == 0 || popped ? Color.green : Color.cyan;
+			GizmosExtra.DrawWireCylinder(rimTransform.position, rimTransform.forward, RimRadius, RimWidth * 2);
 
 			Gizmos.color = new Color(1, 1, 1, TirePressure < 1 ? 0.5f : 1);
-			GizmosExtra.DrawWireCylinder(Rim.position, Rim.forward, TireRadius, TireWidth * 2);
+			GizmosExtra.DrawWireCylinder(rimTransform.position, rimTransform.forward, TireRadius, TireWidth * 2);
 
-			Gizmos.color = TirePressure == 0 || Popped ? Color.green : Color.cyan;
-			GizmosExtra.DrawWireCylinder(Rim.position, Rim.forward, RimRadius, RimWidth * 2);
+			Gizmos.color = TirePressure == 0 || popped ? Color.green : Color.cyan;
+			GizmosExtra.DrawWireCylinder(rimTransform.position, rimTransform.forward, RimRadius, RimWidth * 2);
 		}
 
 		// Destroy detached wheel
 		void OnDestroy()
 		{
 			if (Application.isPlaying)
-			{
 				if (detachedWheel)
-				{
 					Destroy(detachedWheel);
-				}
-			}
 		}
 	}
 

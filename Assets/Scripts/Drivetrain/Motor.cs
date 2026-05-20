@@ -64,7 +64,7 @@ namespace RVP
 
             // Get boost sound
             if (boostLoopSnd) {
-                GameObject newBoost = Instantiate(boostLoopSnd.gameObject, boostLoopSnd.transform.position, boostLoopSnd.transform.rotation) as GameObject;
+                GameObject newBoost = Instantiate(boostLoopSnd.gameObject, boostLoopSnd.transform.position, boostLoopSnd.transform.rotation);
                 boostSnd = newBoost.GetComponent<AudioSource>();
                 boostSnd.transform.parent = boostLoopSnd.transform;
                 boostSnd.transform.localPosition = Vector3.zero;
@@ -85,7 +85,8 @@ namespace RVP
             boostPrev = boosting;
 
             if (canBoost && ignition && health > 0 && !vp.Crashing && boost > 0 && (vp.Hover ? vp.AccelInput != 0 || Mathf.Abs(vp.LocalVelocity.z) > 1 : vp.AccelInput > 0 || vp.LocalVelocity.z > 1)) {
-                if (((boostReleased && !boosting) || boosting) && vp.BoostButton) {
+                if (((boostReleased && !boosting) || boosting) && vp.BoostButton)
+                {
                     boosting = true;
                     boostReleased = false;
                 }

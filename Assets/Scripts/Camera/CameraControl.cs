@@ -1,122 +1,162 @@
 ﻿using UnityEngine;
+using static UnityEngine.Mathf;
 
 namespace RVP
 {
-    [RequireComponent(typeof(Camera))]
-    [RequireComponent(typeof(AudioListener))]
-    [DisallowMultipleComponent]
-    [AddComponentMenu("RVP/Camera/Camera Control", 0)]
+	[RequireComponent(typeof(Camera))]
+	[RequireComponent(typeof(AudioListener))]
+	[DisallowMultipleComponent]
+	[AddComponentMenu("RVP/Camera/Camera Control", 0)]
+	public class CameraControl : MonoBehaviour
+	{
+		[SerializeField] Camera vehicleCamera;
+		[SerializeField] Rigidbody targetBody;
+		[SerializeField] Transform camTransform;
+		[SerializeField] Transform targetVehicle;
+		[SerializeField] VehicleParent vehicleParent;
 
-    // Class for controlling the camera
-    public class CameraControl : MonoBehaviour
-    {
-        Transform tr;
-        Camera cam;
-        VehicleParent vp;
-        public Transform target; // The target vehicle
-        Rigidbody targetBody;
+		[SerializeField, Min(0)] float height;
+		[SerializeField, Min(0)] float distance;
 
-        public float height;
-        public float distance;
+		[SerializeField] float xInput; // READONLY
+		[SerializeField] float yInput; // READONLY
+		[SerializeField] Vector3 lookDir;
+		[SerializeField] float smoothYRot;
+		[SerializeField] Transform lookObj;
+		[SerializeField] Vector3 forwardLook;
+		[SerializeField] Vector3 upLook;
+		[SerializeField] Vector3 targetForward;
+		[SerializeField] Vector3 targetUp;
+		[Tooltip("Should the camera stay flat? (Local y-axis always points up)")]
+		[SerializeField] bool stayFlat;
 
-        float xInput;
-        float yInput;
+		[Tooltip("Mask for which objects will be checked in between the camera and target vehicle")]
+		[SerializeField] LayerMask castMask;
 
-        Vector3 lookDir;
-        float smoothYRot;
-        Transform lookObj;
-        Vector3 forwardLook;
-        Vector3 upLook;
-        Vector3 targetForward;
-        Vector3 targetUp;
-        [Tooltip("Should the camera stay flat? (Local y-axis always points up)")]
-        public bool stayFlat;
+		internal bool StayFlat { get => stayFlat; set => stayFlat = value; }
+		internal float Height => height;
+		internal float Distance => distance;
+		internal float XInput => xInput;
+		internal float YInput => yInput;
+		internal float SmoothYRot => smoothYRot;
+		internal Camera VehicleCamera => vehicleCamera;
+		internal Rigidbody TargetBody => targetBody;
+		internal Transform CamTransform => camTransform;
+		internal Transform TargetVehicle { get => targetVehicle; set => targetVehicle = value; }
+		internal Transform LookObj => lookObj;
+		internal VehicleParent VehicleParent => vehicleParent;
+		internal Vector3 UpLook => upLook;
+		internal Vector3 LookDir => lookDir;
+		internal Vector3 ForwardLook => forwardLook;
+		internal Vector3 TargetUp => targetUp;
+		internal Vector3 TargetForward => targetForward;
+		internal LayerMask CastMask => castMask;
 
-        [Tooltip("Mask for which objects will be checked in between the camera and target vehicle")]
-        public LayerMask castMask;
+		void Start()
+		{
+			camTransform = transform;
+			vehicleCamera = GetComponent<Camera>();
+			Initialize();
+		}
 
-        void Start() {
-            tr = transform;
-            cam = GetComponent<Camera>();
-            Initialize();
-        }
+		public void Initialize()
+		{
+			// lookObj is an object used to help position and rotate the camera
+			if (!lookObj)
+			{
+				GameObject lookTemp = new("Camera Looker");
+				lookObj = lookTemp.transform;
+			}
 
-        public void Initialize() {
-            // lookObj is an object used to help position and rotate the camera
-            if (!lookObj) {
-                GameObject lookTemp = new("Camera Looker");
-                lookObj = lookTemp.transform;
-            }
+			// Set variables based on target vehicle's properties
+			if (targetVehicle)
+			{
+				vehicleParent = targetVehicle.GetComponent<VehicleParent>();
+				distance += vehicleParent.CameraDistanceChange;
+				height += vehicleParent.CameraHeightChange;
+				forwardLook = targetVehicle.forward;
+				upLook = targetVehicle.up;
+				targetBody = targetVehicle.GetComponent<Rigidbody>();
+			}
 
-            // Set variables based on target vehicle's properties
-            if (target) {
-                vp = target.GetComponent<VehicleParent>();
-                distance += vp.CameraDistanceChange;
-                height += vp.CameraHeightChange;
-                forwardLook = target.forward;
-                upLook = target.up;
-                targetBody = target.GetComponent<Rigidbody>();
-            }
+			// Set the audio listener update mode to fixed, because the camera moves in FixedUpdate
+			// This is necessary for doppler effects to sound correct
+			GetComponent<AudioListener>().velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
 
-            // Set the audio listener update mode to fixed, because the camera moves in FixedUpdate
-            // This is necessary for doppler effects to sound correct
-            GetComponent<AudioListener>().velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
-        }
+			if (!targetVehicle || !targetBody)
+			{
+				Debug.LogError($"{name}: Target vehicle or target body not set.", this);
+			}
 
-        void FixedUpdate() {
-            if (target && targetBody && target.gameObject.activeSelf) {
-                if (vp.GroundedWheels > 0) {
-                    targetForward = stayFlat ? new Vector3(vp.Norm.up.x, 0, vp.Norm.up.z) : vp.Norm.up;
-                }
-                // Alternate case to have the airborne forward direction match the vehicle's velocity
-                /*else {
-                    targetForward = targetBody.linearVelocity.normalized;
-                }*/
+		}
 
-                targetUp = stayFlat ? GlobalControl.worldUpDir : vp.Norm.forward;
-                lookDir = Vector3.Slerp(lookDir, (xInput == 0 && yInput == 0 ? Vector3.forward : new Vector3(xInput, 0, yInput).normalized), 0.1f * TimeMaster.inverseFixedTimeFactor);
-                smoothYRot = Mathf.Lerp(smoothYRot, targetBody.angularVelocity.y, 0.02f * TimeMaster.inverseFixedTimeFactor);
+		void FixedUpdate()
+		{
+			if (targetVehicle.gameObject.activeSelf is false)
+				return;
 
-                // Determine the upwards direction of the camera
-                RaycastHit hit;
-                if (Physics.Raycast(target.position, -targetUp, out hit, 1, castMask) && !stayFlat) {
-                    upLook = Vector3.Lerp(upLook, (Vector3.Dot(hit.normal, targetUp) > 0.5 ? hit.normal : targetUp), 0.05f * TimeMaster.inverseFixedTimeFactor);
-                }
-                else {
-                    upLook = Vector3.Lerp(upLook, targetUp, 0.05f * TimeMaster.inverseFixedTimeFactor);
-                }
+			if (vehicleParent.GroundedWheels > 0)
+				targetForward = StayFlat
+					? new Vector3(vehicleParent.Norm.up.x, 0, vehicleParent.Norm.up.z)
+					: vehicleParent.Norm.up;
 
-                // Calculate rotation and position variables
-                forwardLook = Vector3.Lerp(forwardLook, targetForward, 0.05f * TimeMaster.inverseFixedTimeFactor);
-                lookObj.rotation = Quaternion.LookRotation(forwardLook, upLook);
-                lookObj.position = target.position;
-                Vector3 lookDirActual = (lookDir - new Vector3(Mathf.Sin(smoothYRot), 0, Mathf.Cos(smoothYRot)) * Mathf.Abs(smoothYRot) * 0.2f).normalized;
-                Vector3 forwardDir = lookObj.TransformDirection(lookDirActual);
-                Vector3 localOffset = lookObj.TransformPoint(-lookDirActual * distance - lookDirActual * Mathf.Min(targetBody.linearVelocity.magnitude * 0.05f, 2) + Vector3.up * height);
+			// Alternate case to have the airborne forward direction match the vehicle's velocity
+			/*else {
+				    targetForward = targetBody.linearVelocity.normalized;
+				}*/
 
-                // Check if there is an object between the camera and target vehicle and move the camera in front of it
-                if (Physics.Linecast(target.position, localOffset, out hit, castMask)) {
-                    tr.position = hit.point + (target.position - localOffset).normalized * (cam.nearClipPlane + 0.1f);
-                }
-                else {
-                    tr.position = localOffset;
-                }
+			targetUp = StayFlat
+				? GlobalControl.worldUpDir
+				: vehicleParent.Norm.forward;
+			lookDir = Vector3.Slerp(lookDir, xInput is 0 && yInput is 0
+					? Vector3.forward
+					: new Vector3(xInput, 0, yInput).normalized,
+				0.1f * TimeMaster.inverseFixedTimeFactor);
+			smoothYRot = Lerp(smoothYRot, targetBody.angularVelocity.y, 0.02f * TimeMaster.inverseFixedTimeFactor);
 
-                tr.rotation = Quaternion.LookRotation(forwardDir, lookObj.up);
-            }
-        }
+			// Determine the upwards direction of the camera
+			RaycastHit hit;
+			if (Physics.Raycast(targetVehicle.position, -targetUp, out hit, 1, castMask) && !StayFlat)
+				upLook = Vector3.Lerp(upLook, Vector3.Dot(hit.normal, targetUp) > 0.5
+						? hit.normal
+						: targetUp,
+					0.05f * TimeMaster.inverseFixedTimeFactor);
+			else
+				upLook = Vector3.Lerp(upLook, targetUp, 0.05f * TimeMaster.inverseFixedTimeFactor);
 
-        // function for setting the rotation input of the camera
-        public void SetInput(float x, float y) {
-            xInput = x;
-            yInput = y;
-        }
+			// Calculate rotation and position variables
+			forwardLook = Vector3.Lerp(forwardLook, targetForward, 0.05f * TimeMaster.inverseFixedTimeFactor);
+			lookObj.rotation = Quaternion.LookRotation(forwardLook, upLook);
+			lookObj.position = targetVehicle.position;
+			Vector3 lookDirActual = (lookDir - new Vector3(
+					Sin(smoothYRot),
+					0,
+					Cos(smoothYRot)) * (Abs(smoothYRot) * 0.2f))
+				.normalized;
+			Vector3 forwardDir = lookObj.TransformDirection(lookDirActual);
+			Vector3 localOffset = lookObj.TransformPoint(-lookDirActual * distance -
+				lookDirActual * Min(targetBody.linearVelocity.magnitude * 0.05f, 2) + Vector3.up * height);
 
-        // Destroy lookObj
-        void OnDestroy() {
-            if (lookObj) {
-                Destroy(lookObj.gameObject);
-            }
-        }
-    }
+			// Check if there is an object between the camera and target vehicle and move the camera in front of it
+			if (Physics.Linecast(targetVehicle.position, localOffset, out hit, castMask))
+				camTransform.position = hit.point + (targetVehicle.position - localOffset).normalized * (vehicleCamera.nearClipPlane + 0.1f);
+			else
+				camTransform.position = localOffset;
+
+			camTransform.rotation = Quaternion.LookRotation(forwardDir, lookObj.up);
+		}
+
+		/// Sets the rotation input of the <see cref="vehicleCamera"/>.
+		public void SetInput(float x, float y)
+		{
+			xInput = x;
+			yInput = y;
+		}
+
+		void OnDestroy()
+		{
+			if (lookObj)
+				Destroy(lookObj.gameObject);
+		}
+	}
 }
