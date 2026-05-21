@@ -170,29 +170,35 @@ namespace RVP
 				CalculateCamberAngle();
 
 				// Generate the hard collider
-				if (generateHardCollider)
-				{
-					GameObject cap = new("Compress Collider");
-					cap.layer = GlobalControl.ignoreWheelCastLayer;
-					compressTr = cap.transform;
-					compressTr.parent = tr;
-					compressTr.localPosition = Vector3.zero;
-					compressTr.localEulerAngles = new Vector3(camberAngle, 0, -casterAngle * flippedSideFactor);
-					compressCol = cap.AddComponent<CapsuleCollider>();
-					compressCol.direction = 1;
-					setHardColliderRadiusFactor = hardColliderRadiusFactor;
-					hardColliderRadiusFactorPrev = setHardColliderRadiusFactor;
-					compressCol.radius = wheel.RimWidth * hardColliderRadiusFactor;
-					compressCol.height = (wheel.Popped ? wheel.RimRadius : Lerp(wheel.RimRadius, wheel.TireRadius, wheel.TirePressure)) * 2;
-				}
+				CreateCompressCollider();
+				steerRangeMax = Max(steerRangeMin, steerRangeMax);
 
-				compressCol.sharedMaterial = GlobalControl.frictionlessMatStatic;
+				if (TryGetComponent(out properties))
+					UpdateToggleableProperties();
 			}
+		}
 
-			steerRangeMax = Max(steerRangeMin, steerRangeMax);
+		void CreateCompressCollider()
+		{
+			if (generateHardCollider is false)
+				return;
 
-			properties = GetComponent<SuspensionPropertyToggle>();
-			if (properties) UpdateToggleableProperties();
+			GameObject cap = new("Compress Collider", typeof(CapsuleCollider))
+			{
+				layer = GlobalControl.ignoreWheelCastLayer,
+			};
+
+			compressTr = cap.transform;
+			compressTr.parent = tr;
+			compressTr.localPosition = Vector3.zero;
+			compressTr.localEulerAngles = new Vector3(camberAngle, 0, -casterAngle * flippedSideFactor);
+			compressCol = cap.GetComponent<CapsuleCollider>();
+			compressCol.direction = 1;
+			setHardColliderRadiusFactor = hardColliderRadiusFactor;
+			hardColliderRadiusFactorPrev = setHardColliderRadiusFactor;
+			compressCol.radius = wheel.RimWidth * hardColliderRadiusFactor;
+			compressCol.height = (wheel.Popped ? wheel.RimRadius : Lerp(wheel.RimRadius, wheel.TireRadius, wheel.TirePressure)) * 2;
+			compressCol.sharedMaterial = GlobalControl.frictionlessMatStatic;
 		}
 
 		void FixedUpdate()

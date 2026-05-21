@@ -7,15 +7,6 @@
             "id": "1c7a7c8c-44ba-404e-ad3e-c0e1f4672ec7",
             "actions": [
                 {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "a68a2876-6fb4-409f-9191-b4c26a6c3216",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Yaw",
                     "type": "Button",
                     "id": "a083a2a9-8764-4558-976f-946494b771d0",
@@ -95,20 +86,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Next Preset",
+                    "type": "Button",
+                    "id": "7688ae72-4a50-425b-bc2b-46fade423191",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "fd5426cb-6db4-4d0a-9f9b-d32c90517598",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "a8e8d11b-f14c-4ba1-8190-d207531eaebe",
@@ -205,6 +194,17 @@
                     "processors": "",
                     "groups": ";KM",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "acab0b61-1e2a-4be6-bfa7-463298486536",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KM",
+                    "action": "Next Preset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1362,6 +1362,10 @@ PrefabInstance:
       propertyPath: vehicleCamera
       value: 
       objectReference: {fileID: 2011189579}
+    - target: {fileID: 12418828, guid: c2b8fc8bcbd9e414ca6d0e8d4e20add6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1559,7 +1563,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 63134385}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1758,7 +1762,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 63134389}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -4316,7 +4320,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 147891972}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -10387,7 +10391,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 207473795}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -22356,7 +22360,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 343106188}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -23405,7 +23409,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388243881}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -23604,7 +23608,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 388243885}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -24282,7 +24286,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 409571033}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -25707,7 +25711,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 492751146}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -32673,7 +32677,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 575813053}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -34582,7 +34586,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 622436123}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -35010,7 +35014,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647363256}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35209,7 +35213,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 647363260}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -41268,7 +41272,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705112015}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -41467,7 +41471,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 705112019}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -48407,7 +48411,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 790719287}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -54723,7 +54727,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 876192812}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -55337,7 +55341,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 894872269}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -57245,7 +57249,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 940515527}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -63182,7 +63186,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 981012236}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -63382,7 +63386,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1002468052}
   - component: {fileID: 1002468051}
-  - component: {fileID: 1002468049}
   - component: {fileID: 1002468053}
   m_Layer: 0
   m_Name: EventSystem
@@ -63391,20 +63394,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1002468049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1002468048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d49b7c1bcd2e07499844da127be038d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_ForceModuleActive: 0
 --- !u!114 &1002468051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68769,7 +68758,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1018711426}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -70943,7 +70932,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1135265716}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -71272,7 +71261,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152234339}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -71471,7 +71460,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1152234343}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -72209,7 +72198,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1157050348}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -79220,7 +79209,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1245196599}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -87732,7 +87721,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1411203091}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -88585,7 +88574,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1441820667}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -88888,7 +88877,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1452759019}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -89100,6 +89089,10 @@ PrefabInstance:
     - target: {fileID: 428504, guid: e33cb74b36f03154fbe8044f3d5a7842, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11405504, guid: e33cb74b36f03154fbe8044f3d5a7842, type: 3}
+      propertyPath: wheelCastMask.m_Bits
+      value: 513
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -96116,7 +96109,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1601708468}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -97066,7 +97059,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1676471505}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -108211,7 +108204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763440022}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.000000031023493, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -108410,7 +108403,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1763440026}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -114833,7 +114826,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1845571574}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -115228,7 +115221,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 1847453557}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -118024,7 +118017,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 2001062263}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -118345,7 +118338,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 2016397170}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -119234,7 +119227,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 2047148964}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -120680,7 +120673,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 2112994979}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -121100,7 +121093,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 2124292070}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
@@ -121600,7 +121593,7 @@ MonoBehaviour:
   <UpdatedSize>k__BackingField: 0
   <UpdatedPopped>k__BackingField: 0
   currentRPM: 0
-  targetDrive: {fileID: 0}
+  targetDrive: {fileID: 2131462246}
   rawRPM: 0
   airTime: 0
   upDir: {x: 0, y: 0, z: 0}
