@@ -403,9 +403,9 @@ namespace RVP
 									damagedSus.wheel.Detach();
 
 								foreach (SuspensionPart curPart in damagedSus.movingParts)
-									if (curPart.connectObj && !curPart.isHub && !curPart.solidAxle)
-										if (!curPart.connectObj.GetComponent<SuspensionPart>())
-											curPart.connectPoint += curPart.connectObj.InverseTransformDirection(clampedTranslation * surfaceDot *
+									if (curPart.connectObject && !curPart.isHub && !curPart.solidAxle)
+										if (!curPart.connectObject.GetComponent<SuspensionPart>())
+											curPart.connectPoint += curPart.connectObject.InverseTransformDirection(clampedTranslation * surfaceDot *
 												Mathf.Min(clampedColMag * 0.01f, distClamp) * massFactor);
 							}
 						}
@@ -516,8 +516,8 @@ namespace RVP
 					fixedSus.Jammed = false;
 
 					foreach (SuspensionPart curPart in fixedSus.movingParts)
-						if (curPart.connectObj && !curPart.isHub && !curPart.solidAxle)
-							if (!curPart.connectObj.GetComponent<SuspensionPart>())
+						if (curPart.connectObject && !curPart.isHub && !curPart.solidAxle)
+							if (!curPart.connectObject.GetComponent<SuspensionPart>())
 								curPart.connectPoint = curPart.initialConnectPoint;
 				}
 			}

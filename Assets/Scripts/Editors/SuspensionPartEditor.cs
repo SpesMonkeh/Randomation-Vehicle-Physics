@@ -23,8 +23,8 @@ namespace RVP
             Undo.RecordObject(targetScript, "Suspension Part Change");
 
             if (showHandles && targetScript.gameObject.activeInHierarchy) {
-                if (targetScript.connectObj && !targetScript.isHub && !targetScript.solidAxle && Tools.current == Tool.Move) {
-                    targetScript.connectPoint = targetScript.connectObj.InverseTransformPoint(Handles.PositionHandle(targetScript.connectObj.TransformPoint(targetScript.connectPoint), Tools.pivotRotation == PivotRotation.Local ? targetScript.connectObj.rotation : Quaternion.identity));
+                if (targetScript.connectObject && !targetScript.isHub && !targetScript.solidAxle && Tools.current == Tool.Move) {
+                    targetScript.connectPoint = targetScript.connectObject.InverseTransformPoint(Handles.PositionHandle(targetScript.connectObject.TransformPoint(targetScript.connectPoint), Tools.pivotRotation == PivotRotation.Local ? targetScript.connectObject.rotation : Quaternion.identity));
                 }
             }
 

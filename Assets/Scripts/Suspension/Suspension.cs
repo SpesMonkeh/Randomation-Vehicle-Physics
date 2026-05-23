@@ -72,8 +72,7 @@ namespace RVP
 
 		[Tooltip("Wheel offset from its pivot point")]
 		public float pivotOffset;
-		[NonSerialized]
-		public List<SuspensionPart> movingParts = new();
+		[SerializeField] List<SuspensionPart> movingParts = new(); // Originally [NonSerialized]
 
 		[Header("Spring")]
 		public float suspensionDistance;
@@ -154,6 +153,10 @@ namespace RVP
 		internal float AckermannFactor => ackermannFactor;
 		internal float CamberAngle => camberAngle;
 		internal Wheel Wheel => wheel;
+		internal List<SuspensionPart> MovingParts => movingParts;
+		internal Vector3 UpDirection => upDir;
+		internal float CasterAngle { get => casterAngle; set => casterAngle = value; }
+		internal float FlippedSideFactor => flippedSideFactor;
 
 		void Start()
 		{
